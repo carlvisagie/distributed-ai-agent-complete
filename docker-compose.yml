@@ -1,0 +1,140 @@
+version: '3.8'
+
+services:
+  # HP OMEN - Orchestrator (Command Center)
+  hp-omen:
+    build: ./hp_omen
+    container_name: hp_omen_orchestrator
+    ports:
+      - "8080:8080"
+    environment:
+      - LENOVO_API_URL=http://lenovo-api:8088
+      - HELIOS_WORKER_URL=ws://predator-helios:9000
+    depends_on:
+      - lenovo-api
+    networks:
+      - agent-network
+    restart: unless-stopped
+
+  # Predator Helios - AI Worker (Brain)
+  predator-helios:
+    build: ./predator_helios
+    container_name: predator_helios_worker
+    environment:
+      - OMEN_URL=ws://hp-omen:8080/ws
+    depends_on:
+      - hp-omen
+    networks:
+      - agent-network
+    restart: unless-stopped
+
+  # Lenovo - Production Server (API + Worker + DB + Redis)
+  lenovo-api:
+    build: ./lenovo
+    container_name: lenovo_api
+    ports:
+      - "8088:8088"
+    environment:
+      - ENV=production
+      - DATABASE_URL=postgresql://agent:agent@lenovo-db:5432/agentops
+      - REDIS_URL=redis://lenovo-redis:6379/0
+      - RUNNER_MODE=${RUNNER_MODE:-mock}
+      - LLM_MODEL=${LLM_MODEL:-}
+      - LLM_API_KEY=${LLM_API_KEY:-}
+      - LLM_BASE_URL=${LLM_BASE_URL:-https://api.anthropic.com/v1}
+    depends_on:
+      - lenovo-db
+      - lenovo-redis
+    networks:
+      - agent-network
+    restart: unless-stopped
+    command: ["uvicorn", "agent_ops.api:app", "--host", "0.0.0.0", "--port", "8088"]
+
+  lenovo-worker:
+    build: ./lenovo
+    container_name: lenovo_worker
+    environment:
+      - ENV=production
+      - DATABASE_URL=postgresql://agent:agent@lenovo-db:5432/agentops
+      - REDIS_URL=redis://lenovo-redis:6379/0
+      - RUNNER_MODE=${RUNNER_MODE:-mock}
+      - LLM_MODEL=${LLM_MODEL:-}
+      - LLM_API_KEY=${LLM_API_KEY:-}
+      - LLM_BASE_URL=${LLM_BASE_URL:-https://api.anthropic.com/v1}
+    depends_on:
+      - lenovo-db
+      - lenovo-redis
+    networks:
+      - agent-network
+    restart: unless-stopped
+    command: ["python", "-m", "agent_ops.worker"]
+
+  lenovo-db:
+    image: postgres:16.6
+    container_name: lenovo_db
+    environment:
+      POSTGRES_USER: agent
+      POSTGRES_PASSWORD: agent
+      POSTGRES_DB: agentops
+    volumes:
+      - lenovo_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "54328:5432"
+    networks:
+      - agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agent"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  lenovo-redis:
+    image: redis:7.4.2
+    container_name: lenovo_redis
+    ports:
+      - "63798:6379"
+    networks:
+      - agent-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Frontend - Chat Interface
+  frontend:
+    image: nginx:alpine
+    container_name: agent_frontend
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    networks:
+      - agent-network
+    restart: unless-stopped
+
+  # Health Monitor - Self-Healing Service
+  health-monitor:
+    image: python:3.12-slim
+    container_name: health_monitor
+    volumes:
+      - ./shared:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    working_dir: /app
+    command: >
+      sh -c "pip install httpx && python health_monitor.py"
+    networks:
+      - agent-network
+    restart: unless-stopped
+    depends_on:
+      - hp-omen
+      - lenovo-api
+
+networks:
+  agent-network:
+    driver: bridge
+
+volumes:
+  lenovo_postgres_data:

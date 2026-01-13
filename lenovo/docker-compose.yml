@@ -1,0 +1,41 @@
+services:
+  api:
+    build: .
+    container_name: agentops_api
+    env_file: .env
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "8088:8088"
+    command: ["uvicorn", "agent_ops.api:app", "--host", "0.0.0.0", "--port", "8088"]
+
+  worker:
+    build: .
+    container_name: agentops_worker
+    env_file: .env
+    depends_on:
+      - db
+      - redis
+    command: ["python", "-m", "agent_ops.worker"]
+
+  db:
+    image: postgres:16.6
+    container_name: agentops_db
+    environment:
+      POSTGRES_USER: agent
+      POSTGRES_PASSWORD: agent
+      POSTGRES_DB: agentops
+    volumes:
+      - agentops_pg:/var/lib/postgresql/data
+    ports:
+      - "54328:5432"
+
+  redis:
+    image: redis:7.4.2
+    container_name: agentops_redis
+    ports:
+      - "63798:6379"
+
+volumes:
+  agentops_pg:
