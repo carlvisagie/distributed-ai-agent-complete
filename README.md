@@ -326,6 +326,18 @@ distributed-ai-agent-system/
 
 ## 🎯 Features
 
+### 🤖 NEW: Autonomous Agent (MVP)
+- **Autonomous Website Analysis**: Scans and understands existing websites
+- **Smart Task Generation**: Creates prioritized task lists based on industry standards
+- **Auto-Execution**: Executes tasks autonomously with OpenHands SDK
+- **GitHub PR Workflow**: Automatically creates PRs for completed tasks
+- **Real-Time Progress**: Live updates via SSE streaming
+- **Industry Knowledge**: Pre-loaded coaching & consulting best practices
+- **Analyze-Only Mode**: Review tasks before execution
+- **Full Autonomous Mode**: Complete analyze → execute → PR workflow
+
+[📖 Read the Autonomous Agent Guide](docs/AUTONOMOUS_AGENT_GUIDE.md)
+
 ### ✅ Core Features
 - Real-time chat interface with SSE streaming
 - Distributed three-machine architecture

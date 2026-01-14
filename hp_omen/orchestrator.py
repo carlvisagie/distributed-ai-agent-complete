@@ -17,6 +17,14 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI(title="HP OMEN Orchestrator", version="1.0.0")
 
+# Import and include autonomous router
+try:
+    from autonomous_endpoint import router as autonomous_router
+    app.include_router(autonomous_router, tags=["autonomous"])
+    logger.info("Autonomous agent endpoints enabled")
+except ImportError as e:
+    logger.warning(f"Autonomous endpoints not available: {e}")
+
 # Configuration
 HELIOS_WORKER_URL = "http://predator-helios:9000"  # WebSocket worker
 LENOVO_API_URL = "http://lenovo:8088"  # Agent-ops API

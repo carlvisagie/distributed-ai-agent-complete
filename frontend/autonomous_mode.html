@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Agent - Distributed AI System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        
+        .checkbox-group label {
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .status.info {
+            background: #e3f2fd;
+            color: #1976d2;
+            border-left: 4px solid #1976d2;
+        }
+        
+        .status.success {
+            background: #e8f5e9;
+            color: #388e3c;
+            border-left: 4px solid #388e3c;
+        }
+        
+        .status.error {
+            background: #ffebee;
+            color: #d32f2f;
+            border-left: 4px solid #d32f2f;
+        }
+        
+        .results {
+            margin-top: 20px;
+        }
+        
+        .result-section {
+            margin-bottom: 20px;
+        }
+        
+        .result-section h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .result-item {
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .badge.critical {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .badge.high {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .badge.medium {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .badge.low {
+            background: #f1f8e9;
+            color: #689f38;
+        }
+        
+        .progress {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Autonomous Agent</h1>
+            <p>Analyze, Generate Tasks, and Execute Automatically</p>
+        </div>
+        
+        <div class="card">
+            <div class="input-group">
+                <label for="websiteUrl">Website URL</label>
+                <input 
+                    type="url" 
+                    id="websiteUrl" 
+                    placeholder="https://example.com"
+                    value="https://purposefullivecoaching.com"
+                >
+            </div>
+            
+            <div class="checkbox-group">
+                <input type="checkbox" id="autoPR" checked>
+                <label for="autoPR">Automatically create GitHub PRs for completed tasks</label>
+            </div>
+            
+            <button class="button" id="analyzeBtn" onclick="startAnalysis()">
+                🚀 Start Autonomous Analysis & Execution
+            </button>
+            
+            <button class="button" id="analyzeOnlyBtn" onclick="analyzeOnly()" style="margin-top: 10px; background: linear-gradient(135deg, #43a047 0%, #1b5e20 100%);">
+                🔍 Analyze Only (No Execution)
+            </button>
+            
+            <div class="status" id="status"></div>
+            
+            <div class="progress" id="progress" style="display: none;">
+                <div class="progress-bar" id="progressBar">0%</div>
+            </div>
+            
+            <div class="results" id="results"></div>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+            <p><a href="index.html" style="color: #667eea; text-decoration: none; font-weight: 600;">← Back to Chat Interface</a></p>
+        </div>
+    </div>
+    
+    <script>
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+        }
+        
+        function updateProgress(percent) {
+            const progress = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            progress.style.display = 'block';
+            progressBar.style.width = percent + '%';
+            progressBar.textContent = percent + '%';
+        }
+        
+        async function analyzeOnly() {
+            const url = document.getElementById('websiteUrl').value;
+            if (!url) {
+                showStatus('Please enter a website URL', 'error');
+                return;
+            }
+            
+            const analyzeOnlyBtn = document.getElementById('analyzeOnlyBtn');
+            analyzeOnlyBtn.disabled = true;
+            analyzeOnlyBtn.textContent = '🔍 Analyzing...';
+            
+            showStatus('Analyzing website...', 'info');
+            document.getElementById('results').innerHTML = '';
+            
+            try {
+                const response = await fetch('http://localhost:8080/v1/autonomous/analyze-only', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({website_url: url})
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    showStatus('Analysis complete!', 'success');
+                    displayAnalysisResults(data);
+                } else {
+                    showStatus('Analysis failed: ' + (data.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                showStatus('Error: ' + error.message, 'error');
+            } finally {
+                analyzeOnlyBtn.disabled = false;
+                analyzeOnlyBtn.textContent = '🔍 Analyze Only (No Execution)';
+            }
+        }
+        
+        async function startAnalysis() {
+            const url = document.getElementById('websiteUrl').value;
+            const autoPR = document.getElementById('autoPR').checked;
+            
+            if (!url) {
+                showStatus('Please enter a website URL', 'error');
+                return;
+            }
+            
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            analyzeBtn.disabled = true;
+            analyzeBtn.textContent = '🤖 Running...';
+            
+            showStatus('Starting autonomous workflow...', 'info');
+            document.getElementById('results').innerHTML = '';
+            updateProgress(0);
+            
+            try {
+                updateProgress(10);
+                showStatus('Analyzing website structure...', 'info');
+                
+                const response = await fetch('http://localhost:8080/v1/autonomous/analyze-and-fix', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        website_url: url,
+                        auto_pr: autoPR
+                    })
+                });
+                
+                updateProgress(50);
+                showStatus('Executing tasks...', 'info');
+                
+                const data = await response.json();
+                
+                updateProgress(100);
+                
+                if (data.status === 'success') {
+                    showStatus(data.message, 'success');
+                    displayResults(data);
+                } else {
+                    showStatus('Execution failed: ' + (data.error || 'Unknown error'), 'error');
+                }
+            } catch (error) {
+                showStatus('Error: ' + error.message, 'error');
+            } finally {
+                analyzeBtn.disabled = false;
+                analyzeBtn.textContent = '🚀 Start Autonomous Analysis & Execution';
+            }
+        }
+        
+        function displayAnalysisResults(data) {
+            const resultsDiv = document.getElementById('results');
+            
+            let html = '<div class="result-section">';
+            html += '<h3>📊 Website Analysis</h3>';
+            html += `<div class="result-item">Pages Found: ${data.analysis.pages_found}</div>`;
+            html += `<div class="result-item">Broken Links: ${data.analysis.broken_links}</div>`;
+            html += '</div>';
+            
+            html += '<div class="result-section">';
+            html += '<h3>📋 Generated Tasks (' + data.tasks.length + ')</h3>';
+            data.tasks.forEach(task => {
+                const badgeClass = task.priority;
+                html += `<div class="result-item">
+                    <span class="badge ${badgeClass}">${task.priority.toUpperCase()}</span>
+                    <strong>${task.title}</strong><br>
+                    <small>${task.description}</small><br>
+                    <small>⏱️ ${task.estimated_time}</small>
+                </div>`;
+            });
+            html += '</div>';
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            
+            let html = '<div class="result-section">';
+            html += '<h3>✅ Execution Summary</h3>';
+            html += `<div class="result-item">Tasks Generated: ${data.tasks_generated}</div>`;
+            html += `<div class="result-item">Tasks Completed: ${data.tasks_completed}</div>`;
+            html += `<div class="result-item">Tasks Failed: ${data.tasks_failed}</div>`;
+            html += `<div class="result-item">PRs Created: ${data.prs_created}</div>`;
+            html += '</div>';
+            
+            html += '<div class="result-section">';
+            html += '<h3>📊 Website Analysis</h3>';
+            html += `<div class="result-item">Pages Found: ${data.analysis_summary.pages_found}</div>`;
+            html += `<div class="result-item">Broken Links: ${data.analysis_summary.broken_links}</div>`;
+            html += '</div>';
+            
+            resultsDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
