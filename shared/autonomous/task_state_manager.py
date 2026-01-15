@@ -71,6 +71,7 @@ class TaskState:
     # Metadata
     tags: List[str] = field(default_factory=list)
     notes: str = ""
+    metadata: Dict[str, Any] = field(default_factory=dict)
     last_updated: float = field(default_factory=time.time)
     
     def to_dict(self) -> Dict[str, Any]:

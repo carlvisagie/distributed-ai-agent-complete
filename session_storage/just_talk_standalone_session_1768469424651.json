@@ -1,0 +1,34 @@
+{
+  "session_id": "just_talk_standalone_session_1768469424651",
+  "project_id": "just_talk_standalone",
+  "name": "Complete just_talk_standalone",
+  "description": "Autonomous completion execution",
+  "status": "running",
+  "created_at": 1768469424.65187,
+  "started_at": 1768469424.65209,
+  "completed_at": null,
+  "last_active": 1768469707.1853104,
+  "current_task_id": "task_6",
+  "completed_task_ids": [],
+  "failed_task_ids": [
+    "task_1",
+    "task_2",
+    "task_3",
+    "task_4",
+    "task_5"
+  ],
+  "skipped_task_ids": [],
+  "tasks_completed": 0,
+  "tasks_failed": 5,
+  "tasks_skipped": 0,
+  "tasks_total": 71,
+  "result": null,
+  "error": null,
+  "checkpoints": [
+    "just_talk_standalone_session_1768469424651_checkpoint_1768469705182"
+  ],
+  "last_checkpoint_id": "just_talk_standalone_session_1768469424651_checkpoint_1768469705182",
+  "tags": [],
+  "notes": "",
+  "version": 15
+}

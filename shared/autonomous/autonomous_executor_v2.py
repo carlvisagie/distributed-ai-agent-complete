@@ -242,15 +242,27 @@ class AutonomousExecutorV2:
                 self.session_mgr.start_session(self.session_id)
             
             # Initialize progress tracker
+            task_dicts = [{
+                'id': t.task_id,
+                'title': t.title,
+                'type': t.task_type,
+                'priority': t.priority
+            } for t in tasks]
             self.progress.start_execution(
-                total_tasks=len(tasks),
-                project_name=self.project_id
+                execution_id=self.session_id,
+                tasks=task_dicts
             )
             
             print(f"\n🤖 Starting execution of {len(tasks)} tasks...")
             print(f"   Session: {self.session_id}")
             print(f"   Auto PR: {auto_pr}")
             print(f"   Checkpoint interval: {checkpoint_interval} tasks")
+            
+            # 💾 SAVE INITIAL STATE (CONTINUITY)
+            self.context_mgr.save_context(self.project_id)
+            self.task_mgr.save_tasks(self.project_id)
+            self.session_mgr.save_session(self.session_id)
+            print(f"💾 Initial state saved to disk")
             
             # Execute tasks
             completed = 0
@@ -264,11 +276,7 @@ class AutonomousExecutorV2:
                 
                 try:
                     # Update progress
-                    self.progress.update_task(
-                        task_id=task.task_id,
-                        status="running",
-                        progress=0
-                    )
+                    self.progress.start_task(task.task_id)
                     
                     # Mark task as started
                     self.task_mgr.start_task(self.project_id, task.task_id)
@@ -296,6 +304,12 @@ class AutonomousExecutorV2:
                         completed += 1
                         print(f"✅ Task completed successfully")
                         
+                        # 💾 SAVE STATE TO DISK (CONTINUITY)
+                        self.context_mgr.save_context(self.project_id)
+                        self.task_mgr.save_tasks(self.project_id)
+                        self.session_mgr.save_session(self.session_id)
+                        print(f"💾 State saved to disk")
+                        
                         # Create PR if enabled
                         if auto_pr:
                             pr_result = await self._create_pr_for_task(task, result)
@@ -318,6 +332,12 @@ class AutonomousExecutorV2:
                         
                         failed += 1
                         print(f"❌ Task failed: {error_msg}")
+                        
+                        # 💾 SAVE STATE TO DISK (CONTINUITY)
+                        self.context_mgr.save_context(self.project_id)
+                        self.task_mgr.save_tasks(self.project_id)
+                        self.session_mgr.save_session(self.session_id)
+                        print(f"💾 State saved to disk")
                     
                     # Create checkpoint periodically
                     if (i + 1) % checkpoint_interval == 0:
@@ -331,6 +351,13 @@ class AutonomousExecutorV2:
                             }
                         )
                         print(f"   Checkpoint: {checkpoint_id}")
+                        
+                        # 💾 SAVE FULL STATE (CHECKPOINT)
+                        self.context_mgr.save_context(self.project_id)
+                        self.task_mgr.save_tasks(self.project_id)
+                        self.session_mgr.save_session(self.session_id)
+                        self.knowledge.save_to_file(f".agent_context/{self.project_id}_knowledge.json")
+                        print(f"💾 Full state checkpoint saved")
                     
                     # Small delay
                     await asyncio.sleep(2)
