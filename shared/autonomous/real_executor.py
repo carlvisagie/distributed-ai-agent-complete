@@ -7,6 +7,7 @@ import asyncio
 from typing import Dict, Any, Optional
 from datetime import datetime
 import logging
+from .code_executor import CodeExecutor
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -38,6 +39,9 @@ class RealExecutor:
         self.llm_api_key = llm_api_key or os.getenv("LLM_API_KEY") or os.getenv("ANTHROPIC_API_KEY")
         self.llm_model = llm_model or os.getenv("LLM_MODEL", "claude-sonnet-4-20250514")
         self.llm_base_url = llm_base_url or os.getenv("LLM_BASE_URL")
+        
+        # Initialize code executor for actual file writing
+        self.code_executor = CodeExecutor(workspace_path)
         
         # Check if OpenHands is available
         self.openhands_available = self._check_openhands()
@@ -221,25 +225,23 @@ Respond with a structured plan and implementation."""
             # Extract response
             content = response.content[0].text if response.content else ""
             
-            execution_time = (datetime.utcnow() - start_time).total_seconds()
+            # 🔥 ACTUALLY EXECUTE THE CODE!
+            logger.info("📝 Parsing LLM response and executing code...")
+            exec_result = self.code_executor.execute_task(content, task_id)
             
-            # Parse files from response (simple heuristic)
-            files_modified = []
-            for line in content.split('\n'):
-                if 'file:' in line.lower() or '.py' in line or '.js' in line or '.html' in line:
-                    # Extract potential filename
-                    words = line.split()
-                    for word in words:
-                        if '.' in word and '/' in word:
-                            files_modified.append(word)
+            execution_time = (datetime.utcnow() - start_time).total_seconds()
             
             return {
                 'mode': 'direct_llm',
                 'execution_time': f"{execution_time:.1f} seconds",
-                'files_modified': files_modified[:5],  # Limit to first 5
-                'response_length': len(content),
-                'details': f"Task completed via direct LLM call",
-                'implementation_plan': content[:500]  # First 500 chars
+                'files_modified': exec_result['files_written'],
+                'files_count': exec_result['files_count'],
+                'commands_executed': exec_result['commands_executed'],
+                'commands_succeeded': exec_result['commands_succeeded'],
+                'committed': exec_result['committed'],
+                'success': exec_result['success'],
+                'details': exec_result['summary'],
+                'llm_response_length': len(content)
             }
         
         except Exception as e:
