@@ -7,8 +7,8 @@
   "created_at": 1768467198.6926491,
   "started_at": 1768467198.6932113,
   "completed_at": 1768469464.4285762,
-  "last_active": 1768470672.5176654,
-  "current_task_id": "task_9",
+  "last_active": 1768470824.2074952,
+  "current_task_id": "task_12",
   "completed_task_ids": [],
   "failed_task_ids": [
     "task_1",
@@ -110,10 +110,11 @@
     "just_talk_standalone_session_1768467198692_checkpoint_1768469440385",
     "just_talk_standalone_session_1768467198692_checkpoint_1768469450403",
     "just_talk_standalone_session_1768467198692_checkpoint_1768469460421",
-    "just_talk_standalone_session_1768467198692_checkpoint_1768470511925"
+    "just_talk_standalone_session_1768467198692_checkpoint_1768470511925",
+    "just_talk_standalone_session_1768467198692_checkpoint_1768470771056"
   ],
-  "last_checkpoint_id": "just_talk_standalone_session_1768467198692_checkpoint_1768470511925",
+  "last_checkpoint_id": "just_talk_standalone_session_1768467198692_checkpoint_1768470771056",
   "tags": [],
   "notes": "",
-  "version": 186
+  "version": 193
 }

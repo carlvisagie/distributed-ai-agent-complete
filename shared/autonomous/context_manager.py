@@ -82,17 +82,28 @@ class ContextManager:
         """Generate unique project ID from path"""
         return hashlib.md5(project_path.encode()).hexdigest()[:16]
     
-    def save_context(self, context: ProjectContext) -> bool:
+    def save_context(self, context_or_id) -> bool:
         """
         Save project context to disk
         
         Args:
-            context: ProjectContext object to save
+            context_or_id: ProjectContext object OR project_id string
         
         Returns:
             True if successful, False otherwise
         """
         try:
+            # Handle both ProjectContext object and project_id string
+            if isinstance(context_or_id, str):
+                # It's a project_id, load from cache
+                context = self._cache.get(context_or_id)
+                if not context:
+                    print(f"Warning: No context found for project_id: {context_or_id}")
+                    return False
+            else:
+                # It's a ProjectContext object
+                context = context_or_id
+            
             context.last_updated = time.time()
             context.version += 1
             
@@ -108,6 +119,8 @@ class ContextManager:
         
         except Exception as e:
             print(f"Error saving context: {e}")
+            import traceback
+            traceback.print_exc()
             return False
     
     def load_context(self, project_id: str) -> Optional[ProjectContext]:

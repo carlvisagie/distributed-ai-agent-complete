@@ -165,17 +165,28 @@ class SessionManager:
         timestamp = int(time.time() * 1000)
         return f"{session_id}_checkpoint_{timestamp}"
     
-    def save_session(self, session: ExecutionSession) -> bool:
+    def save_session(self, session_or_id) -> bool:
         """
         Save session to disk
         
         Args:
-            session: ExecutionSession object to save
+            session_or_id: ExecutionSession object OR session_id string
         
         Returns:
             True if successful
         """
         try:
+            # Handle both ExecutionSession object and session_id string
+            if isinstance(session_or_id, str):
+                # It's a session_id, load from cache
+                session = self._cache.get(session_or_id)
+                if not session:
+                    print(f"Warning: No session found for session_id: {session_or_id}")
+                    return False
+            else:
+                # It's an ExecutionSession object
+                session = session_or_id
+            
             session.last_active = time.time()
             session.version += 1
             
@@ -191,6 +202,8 @@ class SessionManager:
         
         except Exception as e:
             print(f"Error saving session: {e}")
+            import traceback
+            traceback.print_exc()
             return False
     
     def load_session(self, session_id: str) -> Optional[ExecutionSession]:

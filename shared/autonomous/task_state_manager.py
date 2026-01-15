@@ -208,6 +208,28 @@ class TaskStateManager:
             print(f"Error loading task: {e}")
             return None
     
+    def save_tasks(self, project_id: str) -> bool:
+        """
+        Save all tasks for a project from cache to disk
+        
+        Args:
+            project_id: Project identifier
+        
+        Returns:
+            True if successful
+        """
+        try:
+            if project_id not in self._cache:
+                return True  # No tasks to save
+            
+            for task_id, task in self._cache[project_id].items():
+                self.save_task(task)
+            
+            return True
+        except Exception as e:
+            print(f"Error saving tasks: {e}")
+            return False
+    
     def load_all_tasks(self, project_id: str) -> List[TaskState]:
         """
         Load all tasks for a project
