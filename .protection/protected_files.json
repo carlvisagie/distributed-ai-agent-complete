@@ -1,0 +1,26 @@
+{
+  "protected_files": [
+    "shared/autonomous/session_manager.py",
+    "shared/protection/__init__.py",
+    "shared/autonomous/autonomous_executor.py",
+    "shared/autonomous/error_handler.py",
+    "shared/security/middleware.py",
+    "CONTINUITY_SYSTEM_README.md",
+    "shared/autonomous/coaching_standards.py",
+    "shared/autonomous/task_generator.py",
+    "shared/autonomous/website_analyzer.py",
+    "README.md",
+    "shared/security/auth.py",
+    "shared/autonomous/real_executor.py",
+    "shared/autonomous/__init__.py",
+    "shared/autonomous/context_manager.py",
+    "shared/autonomous/progress_tracker.py",
+    "shared/autonomous/task_state_manager.py",
+    "shared/autonomous/retry_decorator.py",
+    "shared/protection/code_protection.py",
+    "shared/autonomous/autonomous_executor_v2.py",
+    "shared/autonomous/knowledge_graph.py",
+    "SYSTEM_SUMMARY.md"
+  ],
+  "last_updated": "2026-01-15T08:12:44.516032"
+}

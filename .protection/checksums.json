@@ -1,0 +1,23 @@
+{
+  "shared/autonomous/website_analyzer.py": "6524db476eddb86ca52d25910363381f0e6f6846f2f831ad363e328826535389",
+  "shared/autonomous/coaching_standards.py": "c5e348024d1b495a25f527c21767250d55560da0793ced13d7ea089372441f1c",
+  "shared/autonomous/task_generator.py": "05a3a00c36681f379d155972e00984c965c9aaa7be62d5c570b9bc580ce47658",
+  "shared/autonomous/autonomous_executor.py": "15044e9fc9e06800133da1eca7a7c87e40c998f40052168dc4a49b4a78b024b3",
+  "shared/autonomous/__init__.py": "fc4d2dd728f7a0298eee6d93cd3888a6ab6d1d4894e7c452532f2e150fe7d7be",
+  "shared/autonomous/error_handler.py": "c851e69378f1e83b3232f72cc0a06adc6c2e7169e64bef76466e7d23dc6c10c4",
+  "shared/autonomous/retry_decorator.py": "e7c8207f85f5d1691974dc0fa0d0649fa91533fccd5b08cd69e3833f0ca293cc",
+  "shared/autonomous/progress_tracker.py": "90b020c0a7cf1b3256f4ab340b8ef537accba59bd860b1683e0343950dd75960",
+  "shared/autonomous/context_manager.py": "f777c52593c37d0377992beff29a9e65c2aa63cc86d616e2d48b79c5071daa6a",
+  "shared/autonomous/task_state_manager.py": "b90127fcd62378138f58c332fb3a9cdf431987b60a4f9f43926a02a617bfe693",
+  "shared/autonomous/session_manager.py": "2ed1ba2629dffd3f72f7c31f5b0290e55418307ea2844622ee057e3fa7ff55d3",
+  "shared/autonomous/knowledge_graph.py": "0a4519d13c5f36705d58793a93d05856ea21d3a5e90881767f88a058289566be",
+  "shared/autonomous/autonomous_executor_v2.py": "99b7ca6535890902c796972ad8434f2da9f04cfdc25569f77e2cb3a3d72116f6",
+  "shared/autonomous/real_executor.py": "b91217e8d69bbb6c1828c7079665bfc53e9d9bec3ac82d1b3400821495454d01",
+  "shared/security/auth.py": "dc5f67e526afab6877e6fd41c5d3dab83ac808e44740b41738572f8097a5e2bf",
+  "shared/security/middleware.py": "a37e909cb9755eafb093ba5d46a44744d3636c100f38ec26a677cedcb28d5948",
+  "shared/protection/code_protection.py": "b713b56c0a0de3ba448389ca73ba772ed6e8bd33171408cdd4e248f3956f1898",
+  "shared/protection/__init__.py": "05c51d1be000f8a8a05a5904d6094aa9dd7a0e98df809c6c8fa52a32d4831f98",
+  "README.md": "de240d620f211789a28102e185a691fe4195a9875a44fe5ce2cab9232dbab417",
+  "CONTINUITY_SYSTEM_README.md": "a0ab96ffb28b5cebccf27d0d7cc30d611851be88d1910c0200422bfd2618cf43",
+  "SYSTEM_SUMMARY.md": "1cc4da3e0891b08d898f678336ec84219eb9ba6fb211d8537b323402e9d1f73c"
+}
