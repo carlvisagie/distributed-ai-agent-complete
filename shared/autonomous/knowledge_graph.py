@@ -201,8 +201,24 @@ class KnowledgeGraph:
             for ext in ['*.tsx', '*.ts', '*.jsx', '*.js', '*.py']:
                 source_files.extend(project_path.rglob(ext))
             
-            # Analyze each file
+            # Filter out ignored paths
+            filtered_files = []
+            ignore_patterns = [
+                'node_modules', '.git', 'dist', 'build', '.next', 
+                'coverage', '.cache', 'tmp', 'temp', '.venv', 'venv',
+                '__pycache__', '.pytest_cache', '.mypy_cache'
+            ]
+            
             for file_path in source_files:
+                # Check if any ignore pattern is in the path
+                path_str = str(file_path)
+                if not any(pattern in path_str for pattern in ignore_patterns):
+                    filtered_files.append(file_path)
+            
+            print(f"   Found {len(source_files)} files, analyzing {len(filtered_files)} (filtered {len(source_files) - len(filtered_files)})")
+            
+            # Analyze each file
+            for file_path in filtered_files:
                 self._analyze_file(file_path, project_path)
             
             # Build dependency relationships

@@ -95,7 +95,6 @@ class AutonomousExecutorV2:
             if not context:
                 print("   Creating new project context...")
                 context = self.context_mgr.create_context(
-                    project_id=self.project_id,
                     project_name=self.project_id,
                     project_path=self.project_path
                 )

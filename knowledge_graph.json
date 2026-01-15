@@ -1,0 +1,3705 @@
+{
+  "components": {
+    "client_src_App.tsx": {
+      "component_id": "client_src_App.tsx",
+      "name": "App",
+      "path": "client/src/App.tsx",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_sonner.tsx",
+        "client_src_pages_NotFound.tsx",
+        "client_src_contexts_ThemeContext.tsx",
+        "server__core_context.ts",
+        "client_src_pages_Privacy.tsx",
+        "client_src_pages_Home.tsx",
+        "client_src_pages_Terms.tsx",
+        "client_src_pages_Admin.tsx",
+        "server_adminRouter.ts",
+        "client_src_components_ui_tooltip.tsx",
+        "client_src_components_AIChatBox.tsx",
+        "client_src_pages_Chat.tsx",
+        "client_src_components_ErrorBoundary.tsx"
+      ],
+      "used_by": [
+        "client_src_main.tsx"
+      ],
+      "imports": [
+        "@/components/ui/sonner",
+        "@/pages/NotFound",
+        "./contexts/ThemeContext",
+        "./pages/Privacy",
+        "./pages/Home",
+        "./pages/Terms",
+        "wouter",
+        "./pages/Admin",
+        "@/components/ui/tooltip",
+        "./pages/Chat",
+        "./components/ErrorBoundary"
+      ],
+      "exports": [
+        "App"
+      ],
+      "file_size": 1138,
+      "lines_of_code": 41,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_main.tsx": {
+      "component_id": "client_src_main.tsx",
+      "name": "main",
+      "path": "client/src/main.tsx",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_App.tsx",
+        "server__core_index.ts",
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "./App",
+        "./index.css",
+        "@tanstack/react-query",
+        "@/lib/trpc",
+        "superjson",
+        "@trpc/client",
+        "react-dom/client"
+      ],
+      "exports": [],
+      "file_size": 1336,
+      "lines_of_code": 48,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_AIChatBox.tsx": {
+      "component_id": "client_src_components_AIChatBox.tsx",
+      "name": "AIChatBox",
+      "path": "client/src/components/AIChatBox.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_textarea.tsx",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx",
+        "client_src_lib_utils.ts",
+        "client_src_components_ui_scroll-area.tsx"
+      ],
+      "used_by": [
+        "client_src_App.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/components/ui/textarea",
+        "streamdown",
+        "lucide-react",
+        "@/components/ui/button",
+        "@/lib/utils",
+        "@/components/ui/scroll-area",
+        "react"
+      ],
+      "exports": [
+        "AIChatBox"
+      ],
+      "file_size": 10851,
+      "lines_of_code": 336,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_DashboardLayout.tsx": {
+      "component_id": "client_src_components_DashboardLayout.tsx",
+      "name": "DashboardLayout",
+      "path": "client/src/components/DashboardLayout.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx",
+        "client_src_hooks_useMobile.tsx",
+        "client_src_components_DashboardLayoutSkeleton.tsx",
+        "client_src_components_ui_skeleton.tsx",
+        "client_src__core_hooks_useAuth.ts",
+        "client_src_components_ui_avatar.tsx"
+      ],
+      "used_by": [],
+      "imports": [
+        "./ui/button",
+        "wouter",
+        "lucide-react",
+        "@/hooks/useMobile",
+        "./DashboardLayoutSkeleton",
+        "@/_core/hooks/useAuth",
+        "react",
+        "@/components/ui/avatar"
+      ],
+      "exports": [
+        "function",
+        "DashboardLayout"
+      ],
+      "file_size": 9060,
+      "lines_of_code": 265,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_DashboardLayoutSkeleton.tsx": {
+      "component_id": "client_src_components_DashboardLayoutSkeleton.tsx",
+      "name": "DashboardLayoutSkeleton",
+      "path": "client/src/components/DashboardLayoutSkeleton.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_skeleton.tsx"
+      ],
+      "used_by": [
+        "client_src_components_DashboardLayout.tsx",
+        "client_src_components_ui_sidebar.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "./ui/skeleton"
+      ],
+      "exports": [
+        "DashboardLayoutSkeleton"
+      ],
+      "file_size": 1628,
+      "lines_of_code": 47,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ErrorBoundary.tsx": {
+      "component_id": "client_src_components_ErrorBoundary.tsx",
+      "name": "ErrorBoundary",
+      "path": "client/src/components/ErrorBoundary.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_App.tsx"
+      ],
+      "imports": [
+        "react",
+        "lucide-react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "ErrorBoundary"
+      ],
+      "file_size": 1688,
+      "lines_of_code": 63,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_Map.tsx": {
+      "component_id": "client_src_components_Map.tsx",
+      "name": "Map",
+      "path": "client/src/components/Map.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_hooks_usePersistFn.ts",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/hooks/usePersistFn",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "MapView"
+      ],
+      "file_size": 4932,
+      "lines_of_code": 156,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_accordion.tsx": {
+      "component_id": "client_src_components_ui_accordion.tsx",
+      "name": "accordion",
+      "path": "client/src/components/ui/accordion.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@radix-ui/react-accordion",
+        "@/lib/utils",
+        "lucide-react",
+        "react"
+      ],
+      "exports": [
+        "Accordion",
+        "AccordionItem",
+        "AccordionContent",
+        "AccordionTrigger"
+      ],
+      "file_size": 2048,
+      "lines_of_code": 65,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_alert-dialog.tsx": {
+      "component_id": "client_src_components_ui_alert-dialog.tsx",
+      "name": "alert-dialog",
+      "path": "client/src/components/ui/alert-dialog.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts",
+        "client_src_components_ui_alert.tsx",
+        "client_src_components_ui_dialog.tsx",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx"
+      ],
+      "used_by": [
+        "client_src_components_ui_input.tsx",
+        "client_src_components_ui_textarea.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/lib/utils",
+        "react",
+        "@radix-ui/react-alert-dialog",
+        "@/components/ui/button"
+      ],
+      "exports": [
+        "",
+        "AlertDialog",
+        "AlertDialogTrigger",
+        "AlertDialogCancel",
+        "AlertDialogOverlay",
+        "AlertDialogFooter",
+        "AlertDialogContent",
+        "AlertDialogHeader",
+        "AlertDialogTitle",
+        "AlertDialogDescription",
+        "AlertDialogAction",
+        "AlertDialogPortal"
+      ],
+      "file_size": 3866,
+      "lines_of_code": 156,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_alert.tsx": {
+      "component_id": "client_src_components_ui_alert.tsx",
+      "name": "alert",
+      "path": "client/src/components/ui/alert.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_alert-dialog.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "class-variance-authority",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "AlertTitle",
+        "Alert",
+        "AlertDescription"
+      ],
+      "file_size": 1622,
+      "lines_of_code": 67,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_aspect-ratio.tsx": {
+      "component_id": "client_src_components_ui_aspect-ratio.tsx",
+      "name": "aspect-ratio",
+      "path": "client/src/components/ui/aspect-ratio.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-aspect-ratio"
+      ],
+      "exports": [
+        "AspectRatio"
+      ],
+      "file_size": 269,
+      "lines_of_code": 10,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_avatar.tsx": {
+      "component_id": "client_src_components_ui_avatar.tsx",
+      "name": "avatar",
+      "path": "client/src/components/ui/avatar.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_DashboardLayout.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/lib/utils",
+        "react",
+        "@radix-ui/react-avatar"
+      ],
+      "exports": [
+        "Avatar",
+        "AvatarFallback",
+        "AvatarImage"
+      ],
+      "file_size": 1090,
+      "lines_of_code": 52,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_badge.tsx": {
+      "component_id": "client_src_components_ui_badge.tsx",
+      "name": "badge",
+      "path": "client/src/components/ui/badge.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "class-variance-authority",
+        "@/lib/utils",
+        "react",
+        "@radix-ui/react-slot"
+      ],
+      "exports": [
+        "badgeVariants",
+        "Badge"
+      ],
+      "file_size": 1639,
+      "lines_of_code": 47,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_breadcrumb.tsx": {
+      "component_id": "client_src_components_ui_breadcrumb.tsx",
+      "name": "breadcrumb",
+      "path": "client/src/components/ui/breadcrumb.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "lucide-react",
+        "react",
+        "@radix-ui/react-slot"
+      ],
+      "exports": [
+        "BreadcrumbEllipsis",
+        "BreadcrumbLink",
+        "",
+        "Breadcrumb",
+        "BreadcrumbList",
+        "BreadcrumbSeparator",
+        "BreadcrumbPage",
+        "BreadcrumbItem"
+      ],
+      "file_size": 2371,
+      "lines_of_code": 110,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_button-group.tsx": {
+      "component_id": "client_src_components_ui_button-group.tsx",
+      "name": "button-group",
+      "path": "client/src/components/ui/button-group.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_separator.tsx",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_AIChatBox.tsx",
+        "client_src_components_DashboardLayout.tsx",
+        "client_src_components_ui_alert-dialog.tsx",
+        "client_src_components_ui_calendar.tsx",
+        "client_src_components_ui_carousel.tsx",
+        "client_src_components_ui_input-group.tsx",
+        "client_src_components_ui_pagination.tsx",
+        "client_src_components_ui_sidebar.tsx",
+        "client_src_pages_Admin.tsx",
+        "client_src_pages_Chat.tsx",
+        "client_src_pages_ComponentShowcase.tsx",
+        "client_src_pages_Home.tsx",
+        "client_src_pages_NotFound.tsx",
+        "client_src_pages_Privacy.tsx",
+        "client_src_pages_Terms.tsx"
+      ],
+      "imports": [
+        "@/components/ui/separator",
+        "@/lib/utils",
+        "class-variance-authority",
+        "@radix-ui/react-slot"
+      ],
+      "exports": [
+        "",
+        "ButtonGroupText",
+        "buttonGroupVariants",
+        "ButtonGroup",
+        "ButtonGroupSeparator"
+      ],
+      "file_size": 2220,
+      "lines_of_code": 84,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_button.tsx": {
+      "component_id": "client_src_components_ui_button.tsx",
+      "name": "button",
+      "path": "client/src/components/ui/button.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_AIChatBox.tsx",
+        "client_src_components_DashboardLayout.tsx",
+        "client_src_components_ui_alert-dialog.tsx",
+        "client_src_components_ui_calendar.tsx",
+        "client_src_components_ui_carousel.tsx",
+        "client_src_components_ui_input-group.tsx",
+        "client_src_components_ui_pagination.tsx",
+        "client_src_components_ui_sidebar.tsx",
+        "client_src_pages_Admin.tsx",
+        "client_src_pages_Chat.tsx",
+        "client_src_pages_ComponentShowcase.tsx",
+        "client_src_pages_Home.tsx",
+        "client_src_pages_NotFound.tsx",
+        "client_src_pages_Privacy.tsx",
+        "client_src_pages_Terms.tsx"
+      ],
+      "imports": [
+        "class-variance-authority",
+        "@/lib/utils",
+        "react",
+        "@radix-ui/react-slot"
+      ],
+      "exports": [
+        "buttonVariants",
+        "Button"
+      ],
+      "file_size": 2097,
+      "lines_of_code": 61,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_calendar.tsx": {
+      "component_id": "client_src_components_ui_calendar.tsx",
+      "name": "calendar",
+      "path": "client/src/components/ui/calendar.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx"
+      ],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "react-day-picker",
+        "@/lib/utils",
+        "react",
+        "@/components/ui/button"
+      ],
+      "exports": [
+        "CalendarDayButton",
+        "Calendar"
+      ],
+      "file_size": 7663,
+      "lines_of_code": 212,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_card.tsx": {
+      "component_id": "client_src_components_ui_card.tsx",
+      "name": "card",
+      "path": "client/src/components/ui/card.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_hover-card.tsx",
+        "client_src_pages_Admin.tsx",
+        "client_src_pages_Home.tsx",
+        "client_src_pages_NotFound.tsx"
+      ],
+      "imports": [
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "CardHeader",
+        "",
+        "Card",
+        "CardDescription",
+        "CardContent",
+        "CardFooter",
+        "CardTitle",
+        "CardAction"
+      ],
+      "file_size": 1997,
+      "lines_of_code": 93,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_carousel.tsx": {
+      "component_id": "client_src_components_ui_carousel.tsx",
+      "name": "carousel",
+      "path": "client/src/components/ui/carousel.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "lucide-react",
+        "react",
+        "@/components/ui/button"
+      ],
+      "exports": [
+        "",
+        "Carousel",
+        "CarouselNext",
+        "type CarouselApi",
+        "CarouselContent",
+        "CarouselPrevious",
+        "CarouselItem"
+      ],
+      "file_size": 5603,
+      "lines_of_code": 240,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_chart.tsx": {
+      "component_id": "client_src_components_ui_chart.tsx",
+      "name": "chart",
+      "path": "client/src/components/ui/chart.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "recharts",
+        "react"
+      ],
+      "exports": [
+        "",
+        "ChartLegendContent",
+        "ChartContainer",
+        "ChartLegend",
+        "ChartStyle",
+        "ChartTooltip",
+        "ChartTooltipContent"
+      ],
+      "file_size": 10113,
+      "lines_of_code": 356,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_checkbox.tsx": {
+      "component_id": "client_src_components_ui_checkbox.tsx",
+      "name": "checkbox",
+      "path": "client/src/components/ui/checkbox.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-checkbox",
+        "lucide-react",
+        "react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Checkbox"
+      ],
+      "file_size": 1218,
+      "lines_of_code": 31,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_collapsible.tsx": {
+      "component_id": "client_src_components_ui_collapsible.tsx",
+      "name": "collapsible",
+      "path": "client/src/components/ui/collapsible.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [],
+      "imports": [
+        "@radix-ui/react-collapsible"
+      ],
+      "exports": [
+        "CollapsibleTrigger",
+        "Collapsible",
+        "CollapsibleContent"
+      ],
+      "file_size": 791,
+      "lines_of_code": 32,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_command.tsx": {
+      "component_id": "client_src_components_ui_command.tsx",
+      "name": "command",
+      "path": "client/src/components/ui/command.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "cmdk",
+        "@/lib/utils",
+        "lucide-react",
+        "react"
+      ],
+      "exports": [
+        "",
+        "CommandEmpty",
+        "CommandList",
+        "CommandDialog",
+        "CommandInput",
+        "CommandGroup",
+        "CommandItem",
+        "CommandShortcut",
+        "CommandSeparator",
+        "Command"
+      ],
+      "file_size": 4838,
+      "lines_of_code": 185,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_context-menu.tsx": {
+      "component_id": "client_src_components_ui_context-menu.tsx",
+      "name": "context-menu",
+      "path": "client/src/components/ui/context-menu.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts",
+        "server__core_context.ts"
+      ],
+      "used_by": [
+        "server_auth.logout.test.ts",
+        "server__core_index.ts",
+        "server__core_trpc.ts"
+      ],
+      "imports": [
+        "@/lib/utils",
+        "lucide-react",
+        "react",
+        "@radix-ui/react-context-menu"
+      ],
+      "exports": [
+        "",
+        "ContextMenuSub",
+        "ContextMenuSubTrigger",
+        "ContextMenuSubContent",
+        "ContextMenuCheckboxItem",
+        "ContextMenuItem",
+        "ContextMenuRadioGroup",
+        "ContextMenuSeparator",
+        "ContextMenuLabel",
+        "ContextMenuTrigger",
+        "ContextMenuShortcut",
+        "ContextMenuGroup",
+        "ContextMenuContent",
+        "ContextMenuPortal",
+        "ContextMenuRadioItem",
+        "ContextMenu"
+      ],
+      "file_size": 8284,
+      "lines_of_code": 251,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_dialog.tsx": {
+      "component_id": "client_src_components_ui_dialog.tsx",
+      "name": "dialog",
+      "path": "client/src/components/ui/dialog.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_alert-dialog.tsx",
+        "client_src_components_ui_input.tsx",
+        "client_src_components_ui_sheet.tsx",
+        "client_src_components_ui_textarea.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-dialog",
+        "react",
+        "lucide-react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "DialogHeader",
+        "DialogTitle",
+        "DialogFooter",
+        "DialogClose",
+        "DialogContent",
+        "DialogDescription",
+        "Dialog",
+        "DialogPortal",
+        "DialogTrigger",
+        "useDialogComposition",
+        "DialogOverlay"
+      ],
+      "file_size": 6024,
+      "lines_of_code": 210,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_drawer.tsx": {
+      "component_id": "client_src_components_ui_drawer.tsx",
+      "name": "drawer",
+      "path": "client/src/components/ui/drawer.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "react",
+        "vaul"
+      ],
+      "exports": [
+        "",
+        "DrawerPortal",
+        "DrawerDescription",
+        "Drawer",
+        "DrawerContent",
+        "DrawerFooter",
+        "DrawerTrigger",
+        "DrawerTitle",
+        "DrawerClose",
+        "DrawerHeader",
+        "DrawerOverlay"
+      ],
+      "file_size": 4255,
+      "lines_of_code": 134,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_dropdown-menu.tsx": {
+      "component_id": "client_src_components_ui_dropdown-menu.tsx",
+      "name": "dropdown-menu",
+      "path": "client/src/components/ui/dropdown-menu.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "@radix-ui/react-dropdown-menu",
+        "lucide-react",
+        "react"
+      ],
+      "exports": [
+        "",
+        "DropdownMenuContent",
+        "DropdownMenuRadioGroup",
+        "DropdownMenuSubContent",
+        "DropdownMenuLabel",
+        "DropdownMenuSeparator",
+        "DropdownMenuShortcut",
+        "DropdownMenu",
+        "DropdownMenuItem",
+        "DropdownMenuSubTrigger",
+        "DropdownMenuTrigger",
+        "DropdownMenuPortal",
+        "DropdownMenuGroup",
+        "DropdownMenuSub",
+        "DropdownMenuRadioItem",
+        "DropdownMenuCheckboxItem"
+      ],
+      "file_size": 8434,
+      "lines_of_code": 256,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_empty.tsx": {
+      "component_id": "client_src_components_ui_empty.tsx",
+      "name": "empty",
+      "path": "client/src/components/ui/empty.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "class-variance-authority"
+      ],
+      "exports": [
+        "",
+        "EmptyContent",
+        "Empty",
+        "EmptyTitle",
+        "EmptyHeader",
+        "EmptyDescription",
+        "EmptyMedia"
+      ],
+      "file_size": 2406,
+      "lines_of_code": 105,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_field.tsx": {
+      "component_id": "client_src_components_ui_field.tsx",
+      "name": "field",
+      "path": "client/src/components/ui/field.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts",
+        "client_src_components_ui_label.tsx",
+        "client_src_components_ui_separator.tsx"
+      ],
+      "used_by": [],
+      "imports": [
+        "class-variance-authority",
+        "@/lib/utils",
+        "@/components/ui/label",
+        "@/components/ui/separator",
+        "react"
+      ],
+      "exports": [
+        "FieldLegend",
+        "",
+        "FieldGroup",
+        "FieldLabel",
+        "FieldTitle",
+        "FieldSeparator",
+        "FieldSet",
+        "Field",
+        "FieldContent",
+        "FieldError",
+        "FieldDescription"
+      ],
+      "file_size": 6057,
+      "lines_of_code": 243,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_form.tsx": {
+      "component_id": "client_src_components_ui_form.tsx",
+      "name": "form",
+      "path": "client/src/components/ui/form.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_label.tsx",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@radix-ui/react-label",
+        "@/lib/utils",
+        "@/components/ui/label",
+        "@radix-ui/react-slot",
+        "react"
+      ],
+      "exports": [
+        "",
+        "FormField",
+        "Form",
+        "FormMessage",
+        "useFormField",
+        "FormDescription",
+        "FormItem",
+        "FormControl",
+        "FormLabel"
+      ],
+      "file_size": 3801,
+      "lines_of_code": 169,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_hover-card.tsx": {
+      "component_id": "client_src_components_ui_hover-card.tsx",
+      "name": "hover-card",
+      "path": "client/src/components/ui/hover-card.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_card.tsx",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_pages_Admin.tsx",
+        "client_src_pages_Home.tsx",
+        "client_src_pages_NotFound.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-hover-card",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "HoverCardTrigger",
+        "HoverCard",
+        "HoverCardContent"
+      ],
+      "file_size": 1525,
+      "lines_of_code": 43,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_input-group.tsx": {
+      "component_id": "client_src_components_ui_input-group.tsx",
+      "name": "input-group",
+      "path": "client/src/components/ui/input-group.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_textarea.tsx",
+        "client_src_components_ui_input-otp.tsx",
+        "client_src_components_ui_input.tsx",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_sidebar.tsx",
+        "client_src_pages_Admin.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/components/ui/textarea",
+        "class-variance-authority",
+        "@/components/ui/input",
+        "@/components/ui/button",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "",
+        "InputGroupTextarea",
+        "InputGroup",
+        "InputGroupAddon",
+        "InputGroupInput",
+        "InputGroupButton",
+        "InputGroupText"
+      ],
+      "file_size": 5066,
+      "lines_of_code": 169,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_input-otp.tsx": {
+      "component_id": "client_src_components_ui_input-otp.tsx",
+      "name": "input-otp",
+      "path": "client/src/components/ui/input-otp.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_input.tsx",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_input-group.tsx",
+        "client_src_components_ui_sidebar.tsx",
+        "client_src_pages_Admin.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "input-otp",
+        "@/lib/utils",
+        "lucide-react",
+        "react"
+      ],
+      "exports": [
+        "InputOTPSlot",
+        "InputOTPGroup",
+        "InputOTP",
+        "InputOTPSeparator"
+      ],
+      "file_size": 2253,
+      "lines_of_code": 76,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_input.tsx": {
+      "component_id": "client_src_components_ui_input.tsx",
+      "name": "input",
+      "path": "client/src/components/ui/input.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_alert-dialog.tsx",
+        "client_src_components_ui_dialog.tsx",
+        "client_src_hooks_useComposition.ts",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_input-group.tsx",
+        "client_src_components_ui_input-otp.tsx",
+        "client_src_components_ui_sidebar.tsx",
+        "client_src_pages_Admin.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/components/ui/dialog",
+        "@/hooks/useComposition",
+        "react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Input"
+      ],
+      "file_size": 2728,
+      "lines_of_code": 71,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_item.tsx": {
+      "component_id": "client_src_components_ui_item.tsx",
+      "name": "item",
+      "path": "client/src/components/ui/item.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts",
+        "client_src_components_ui_separator.tsx"
+      ],
+      "used_by": [],
+      "imports": [
+        "class-variance-authority",
+        "@/lib/utils",
+        "@radix-ui/react-slot",
+        "@/components/ui/separator",
+        "react"
+      ],
+      "exports": [
+        "",
+        "ItemHeader",
+        "ItemFooter",
+        "ItemActions",
+        "ItemGroup",
+        "ItemMedia",
+        "ItemDescription",
+        "ItemTitle",
+        "Item",
+        "ItemSeparator",
+        "ItemContent"
+      ],
+      "file_size": 4513,
+      "lines_of_code": 194,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_kbd.tsx": {
+      "component_id": "client_src_components_ui_kbd.tsx",
+      "name": "kbd",
+      "path": "client/src/components/ui/kbd.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils"
+      ],
+      "exports": [
+        "KbdGroup",
+        "Kbd"
+      ],
+      "file_size": 866,
+      "lines_of_code": 29,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_label.tsx": {
+      "component_id": "client_src_components_ui_label.tsx",
+      "name": "label",
+      "path": "client/src/components/ui/label.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_field.tsx",
+        "client_src_components_ui_form.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-label",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "Label"
+      ],
+      "file_size": 602,
+      "lines_of_code": 23,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_menubar.tsx": {
+      "component_id": "client_src_components_ui_menubar.tsx",
+      "name": "menubar",
+      "path": "client/src/components/ui/menubar.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "@radix-ui/react-menubar",
+        "lucide-react",
+        "react"
+      ],
+      "exports": [
+        "",
+        "MenubarSub",
+        "MenubarSeparator",
+        "MenubarGroup",
+        "MenubarTrigger",
+        "MenubarRadioItem",
+        "MenubarShortcut",
+        "MenubarLabel",
+        "MenubarCheckboxItem",
+        "MenubarSubTrigger",
+        "Menubar",
+        "MenubarRadioGroup",
+        "MenubarSubContent",
+        "MenubarItem",
+        "MenubarPortal",
+        "MenubarMenu",
+        "MenubarContent"
+      ],
+      "file_size": 8405,
+      "lines_of_code": 275,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_navigation-menu.tsx": {
+      "component_id": "client_src_components_ui_navigation-menu.tsx",
+      "name": "navigation-menu",
+      "path": "client/src/components/ui/navigation-menu.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "class-variance-authority",
+        "lucide-react",
+        "@/lib/utils",
+        "react",
+        "@radix-ui/react-navigation-menu"
+      ],
+      "exports": [
+        "",
+        "NavigationMenuTrigger",
+        "NavigationMenuIndicator",
+        "NavigationMenuViewport",
+        "NavigationMenuList",
+        "navigationMenuTriggerStyle",
+        "NavigationMenuContent",
+        "NavigationMenuItem",
+        "NavigationMenu",
+        "NavigationMenuLink"
+      ],
+      "file_size": 6680,
+      "lines_of_code": 169,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_pagination.tsx": {
+      "component_id": "client_src_components_ui_pagination.tsx",
+      "name": "pagination",
+      "path": "client/src/components/ui/pagination.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "react",
+        "@/components/ui/button"
+      ],
+      "exports": [
+        "",
+        "PaginationItem",
+        "Pagination",
+        "PaginationEllipsis",
+        "PaginationContent",
+        "PaginationLink",
+        "PaginationPrevious",
+        "PaginationNext"
+      ],
+      "file_size": 2726,
+      "lines_of_code": 128,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_popover.tsx": {
+      "component_id": "client_src_components_ui_popover.tsx",
+      "name": "popover",
+      "path": "client/src/components/ui/popover.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@radix-ui/react-popover",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "PopoverAnchor",
+        "PopoverTrigger",
+        "Popover",
+        "PopoverContent"
+      ],
+      "file_size": 1629,
+      "lines_of_code": 47,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_progress.tsx": {
+      "component_id": "client_src_components_ui_progress.tsx",
+      "name": "progress",
+      "path": "client/src/components/ui/progress.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/lib/utils",
+        "react",
+        "@radix-ui/react-progress"
+      ],
+      "exports": [
+        "Progress"
+      ],
+      "file_size": 731,
+      "lines_of_code": 30,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_radio-group.tsx": {
+      "component_id": "client_src_components_ui_radio-group.tsx",
+      "name": "radio-group",
+      "path": "client/src/components/ui/radio-group.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-radio-group",
+        "@/lib/utils",
+        "lucide-react",
+        "react"
+      ],
+      "exports": [
+        "RadioGroup",
+        "RadioGroupItem"
+      ],
+      "file_size": 1459,
+      "lines_of_code": 44,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_resizable.tsx": {
+      "component_id": "client_src_components_ui_resizable.tsx",
+      "name": "resizable",
+      "path": "client/src/components/ui/resizable.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "react-resizable-panels",
+        "lucide-react",
+        "react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "ResizablePanel",
+        "ResizableHandle",
+        "ResizablePanelGroup"
+      ],
+      "file_size": 2023,
+      "lines_of_code": 55,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_scroll-area.tsx": {
+      "component_id": "client_src_components_ui_scroll-area.tsx",
+      "name": "scroll-area",
+      "path": "client/src/components/ui/scroll-area.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_AIChatBox.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-scroll-area",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "ScrollArea",
+        "ScrollBar"
+      ],
+      "file_size": 1637,
+      "lines_of_code": 57,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_select.tsx": {
+      "component_id": "client_src_components_ui_select.tsx",
+      "name": "select",
+      "path": "client/src/components/ui/select.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@radix-ui/react-select",
+        "@/lib/utils",
+        "lucide-react",
+        "react"
+      ],
+      "exports": [
+        "",
+        "SelectScrollUpButton",
+        "SelectScrollDownButton",
+        "SelectSeparator",
+        "SelectContent",
+        "Select",
+        "SelectGroup",
+        "SelectItem",
+        "SelectLabel",
+        "SelectTrigger",
+        "SelectValue"
+      ],
+      "file_size": 6297,
+      "lines_of_code": 186,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_separator.tsx": {
+      "component_id": "client_src_components_ui_separator.tsx",
+      "name": "separator",
+      "path": "client/src/components/ui/separator.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_field.tsx",
+        "client_src_components_ui_item.tsx",
+        "client_src_components_ui_sidebar.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/lib/utils",
+        "react",
+        "@radix-ui/react-separator"
+      ],
+      "exports": [
+        "Separator"
+      ],
+      "file_size": 690,
+      "lines_of_code": 27,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_sheet.tsx": {
+      "component_id": "client_src_components_ui_sheet.tsx",
+      "name": "sheet",
+      "path": "client/src/components/ui/sheet.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_dialog.tsx",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@radix-ui/react-dialog",
+        "@/lib/utils",
+        "lucide-react",
+        "react"
+      ],
+      "exports": [
+        "",
+        "SheetFooter",
+        "Sheet",
+        "SheetTrigger",
+        "SheetTitle",
+        "SheetDescription",
+        "SheetHeader",
+        "SheetContent",
+        "SheetClose"
+      ],
+      "file_size": 4107,
+      "lines_of_code": 140,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_sidebar.tsx": {
+      "component_id": "client_src_components_ui_sidebar.tsx",
+      "name": "sidebar",
+      "path": "client/src/components/ui/sidebar.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_input-group.tsx",
+        "client_src_components_ui_input-otp.tsx",
+        "client_src_components_ui_input.tsx",
+        "client_src_hooks_useMobile.tsx",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx",
+        "client_src_components_DashboardLayoutSkeleton.tsx",
+        "client_src_components_ui_skeleton.tsx",
+        "client_src_lib_utils.ts",
+        "client_src_components_ui_separator.tsx"
+      ],
+      "used_by": [],
+      "imports": [
+        "class-variance-authority",
+        "@/components/ui/input",
+        "lucide-react",
+        "@/hooks/useMobile",
+        "@/components/ui/button",
+        "@/components/ui/skeleton",
+        "@/lib/utils",
+        "@radix-ui/react-slot",
+        "@/components/ui/separator",
+        "react"
+      ],
+      "exports": [
+        "SidebarRail",
+        "SidebarMenuButton",
+        "SidebarMenuAction",
+        "SidebarFooter",
+        "SidebarMenu",
+        "SidebarMenuSkeleton",
+        "SidebarMenuSubButton",
+        "SidebarSeparator",
+        "SidebarGroupContent",
+        "SidebarMenuBadge",
+        "SidebarMenuSub",
+        "SidebarInset",
+        "SidebarContent",
+        "SidebarProvider",
+        "SidebarMenuSubItem",
+        "SidebarMenuItem",
+        "SidebarTrigger",
+        "Sidebar",
+        "SidebarGroup",
+        "SidebarInput",
+        "SidebarGroupLabel",
+        "SidebarGroupAction",
+        "useSidebar",
+        "SidebarHeader"
+      ],
+      "file_size": 21947,
+      "lines_of_code": 735,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_skeleton.tsx": {
+      "component_id": "client_src_components_ui_skeleton.tsx",
+      "name": "skeleton",
+      "path": "client/src/components/ui/skeleton.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_DashboardLayout.tsx",
+        "client_src_components_DashboardLayoutSkeleton.tsx",
+        "client_src_components_ui_sidebar.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Skeleton"
+      ],
+      "file_size": 279,
+      "lines_of_code": 14,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_slider.tsx": {
+      "component_id": "client_src_components_ui_slider.tsx",
+      "name": "slider",
+      "path": "client/src/components/ui/slider.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-slider",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "Slider"
+      ],
+      "file_size": 1988,
+      "lines_of_code": 62,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_sonner.tsx": {
+      "component_id": "client_src_components_ui_sonner.tsx",
+      "name": "sonner",
+      "path": "client/src/components/ui/sonner.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "client_src_App.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "next-themes",
+        "sonner"
+      ],
+      "exports": [
+        "Toaster"
+      ],
+      "file_size": 561,
+      "lines_of_code": 24,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_spinner.tsx": {
+      "component_id": "client_src_components_ui_spinner.tsx",
+      "name": "spinner",
+      "path": "client/src/components/ui/spinner.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "lucide-react"
+      ],
+      "exports": [
+        "Spinner"
+      ],
+      "file_size": 335,
+      "lines_of_code": 17,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_switch.tsx": {
+      "component_id": "client_src_components_ui_switch.tsx",
+      "name": "switch",
+      "path": "client/src/components/ui/switch.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-switch",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "Switch"
+      ],
+      "file_size": 1168,
+      "lines_of_code": 30,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_table.tsx": {
+      "component_id": "client_src_components_ui_table.tsx",
+      "name": "table",
+      "path": "client/src/components/ui/table.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "",
+        "TableBody",
+        "TableRow",
+        "TableCaption",
+        "TableHead",
+        "TableHeader",
+        "Table",
+        "TableCell",
+        "TableFooter"
+      ],
+      "file_size": 2445,
+      "lines_of_code": 115,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_tabs.tsx": {
+      "component_id": "client_src_components_ui_tabs.tsx",
+      "name": "tabs",
+      "path": "client/src/components/ui/tabs.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-tabs",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "TabsContent",
+        "TabsList",
+        "TabsTrigger",
+        "Tabs"
+      ],
+      "file_size": 1963,
+      "lines_of_code": 65,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_textarea.tsx": {
+      "component_id": "client_src_components_ui_textarea.tsx",
+      "name": "textarea",
+      "path": "client/src/components/ui/textarea.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_alert-dialog.tsx",
+        "client_src_components_ui_dialog.tsx",
+        "client_src_hooks_useComposition.ts",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_AIChatBox.tsx",
+        "client_src_components_ui_input-group.tsx",
+        "client_src_pages_Chat.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/components/ui/dialog",
+        "@/hooks/useComposition",
+        "react",
+        "@/lib/utils"
+      ],
+      "exports": [
+        "Textarea"
+      ],
+      "file_size": 2613,
+      "lines_of_code": 68,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_toggle-group.tsx": {
+      "component_id": "client_src_components_ui_toggle-group.tsx",
+      "name": "toggle-group",
+      "path": "client/src/components/ui/toggle-group.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_toggle.tsx",
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "class-variance-authority",
+        "@/components/ui/toggle",
+        "@radix-ui/react-toggle-group",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "ToggleGroupItem",
+        "ToggleGroup"
+      ],
+      "file_size": 1936,
+      "lines_of_code": 74,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_toggle.tsx": {
+      "component_id": "client_src_components_ui_toggle.tsx",
+      "name": "toggle",
+      "path": "client/src/components/ui/toggle.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_toggle-group.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "class-variance-authority",
+        "@/lib/utils",
+        "react",
+        "@radix-ui/react-toggle"
+      ],
+      "exports": [
+        "toggleVariants",
+        "Toggle"
+      ],
+      "file_size": 1563,
+      "lines_of_code": 46,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_components_ui_tooltip.tsx": {
+      "component_id": "client_src_components_ui_tooltip.tsx",
+      "name": "tooltip",
+      "path": "client/src/components/ui/tooltip.tsx",
+      "component_type": "component",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_utils.ts"
+      ],
+      "used_by": [
+        "client_src_App.tsx"
+      ],
+      "imports": [
+        "@radix-ui/react-tooltip",
+        "@/lib/utils",
+        "react"
+      ],
+      "exports": [
+        "TooltipContent",
+        "Tooltip",
+        "TooltipProvider",
+        "TooltipTrigger"
+      ],
+      "file_size": 1886,
+      "lines_of_code": 60,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_contexts_ThemeContext.tsx": {
+      "component_id": "client_src_contexts_ThemeContext.tsx",
+      "name": "ThemeContext",
+      "path": "client/src/contexts/ThemeContext.tsx",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "client_src_App.tsx",
+        "client_src_pages_ComponentShowcase.tsx",
+        "server_auth.logout.test.ts",
+        "server__core_index.ts",
+        "server__core_trpc.ts"
+      ],
+      "imports": [
+        "react"
+      ],
+      "exports": [
+        "ThemeProvider",
+        "useTheme"
+      ],
+      "file_size": 1467,
+      "lines_of_code": 65,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_hooks_useMobile.tsx": {
+      "component_id": "client_src_hooks_useMobile.tsx",
+      "name": "useMobile",
+      "path": "client/src/hooks/useMobile.tsx",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "client_src_components_DashboardLayout.tsx",
+        "client_src_components_ui_sidebar.tsx"
+      ],
+      "imports": [
+        "react"
+      ],
+      "exports": [
+        "useIsMobile"
+      ],
+      "file_size": 584,
+      "lines_of_code": 22,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_pages_Admin.tsx": {
+      "component_id": "client_src_pages_Admin.tsx",
+      "name": "Admin",
+      "path": "client/src/pages/Admin.tsx",
+      "component_type": "page",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_input-group.tsx",
+        "client_src_components_ui_input-otp.tsx",
+        "client_src_components_ui_input.tsx",
+        "client_src_components_ui_card.tsx",
+        "client_src_components_ui_hover-card.tsx",
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx"
+      ],
+      "used_by": [
+        "client_src_App.tsx",
+        "server_routers.ts"
+      ],
+      "imports": [
+        "@/components/ui/input",
+        "lucide-react",
+        "@/components/ui/card",
+        "@/lib/trpc",
+        "@/components/ui/button",
+        "react"
+      ],
+      "exports": [
+        "Admin",
+        "function"
+      ],
+      "file_size": 10620,
+      "lines_of_code": 243,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "client_src_pages_Chat.tsx": {
+      "component_id": "client_src_pages_Chat.tsx",
+      "name": "Chat",
+      "path": "client/src/pages/Chat.tsx",
+      "component_type": "page",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_textarea.tsx",
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx"
+      ],
+      "used_by": [
+        "client_src_App.tsx",
+        "client_src_pages_ComponentShowcase.tsx"
+      ],
+      "imports": [
+        "@/components/ui/textarea",
+        "streamdown",
+        "lucide-react",
+        "@/lib/trpc",
+        "@/components/ui/button",
+        "react"
+      ],
+      "exports": [
+        "Chat",
+        "function"
+      ],
+      "file_size": 16830,
+      "lines_of_code": 467,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "client_src_pages_ComponentShowcase.tsx": {
+      "component_id": "client_src_pages_ComponentShowcase.tsx",
+      "name": "ComponentShowcase",
+      "path": "client/src/pages/ComponentShowcase.tsx",
+      "component_type": "page",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_textarea.tsx",
+        "client_src_components_ui_toggle-group.tsx",
+        "client_src_components_ui_toggle.tsx",
+        "client_src_components_ui_input-group.tsx",
+        "client_src_components_ui_input-otp.tsx",
+        "client_src_components_ui_input.tsx",
+        "client_src_components_ui_radio-group.tsx",
+        "client_src_components_ui_calendar.tsx",
+        "client_src_components_ui_aspect-ratio.tsx",
+        "client_src_components_ui_checkbox.tsx",
+        "client_src_components_ui_progress.tsx",
+        "client_src_components_DashboardLayoutSkeleton.tsx",
+        "client_src_components_ui_skeleton.tsx",
+        "client_src_components_ui_badge.tsx",
+        "client_src_components_AIChatBox.tsx",
+        "client_src_pages_Chat.tsx",
+        "client_src_contexts_ThemeContext.tsx",
+        "server__core_context.ts",
+        "client_src_components_ui_sonner.tsx",
+        "client_src_components_ui_alert-dialog.tsx",
+        "client_src_components_ui_alert.tsx",
+        "client_src_components_ui_slider.tsx",
+        "client_src_components_ui_avatar.tsx",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx",
+        "client_src_components_ui_switch.tsx",
+        "client_src_components_ui_label.tsx",
+        "client_src_components_ui_scroll-area.tsx",
+        "client_src_components_ui_separator.tsx",
+        "client_src_components_ui_tabs.tsx"
+      ],
+      "used_by": [],
+      "imports": [
+        "@/components/ui/textarea",
+        "@/components/ui/toggle",
+        "@/components/ui/input",
+        "@/components/ui/radio-group",
+        "@/components/ui/calendar",
+        "@/components/ui/aspect-ratio",
+        "@/components/ui/checkbox",
+        "@/components/ui/progress",
+        "@/components/ui/skeleton",
+        "@/components/ui/badge",
+        "@/components/AIChatBox",
+        "date-fns",
+        "react",
+        "@/components/ui/toggle-group",
+        "@/contexts/ThemeContext",
+        "sonner",
+        "@/components/ui/alert",
+        "@/components/ui/slider",
+        "@/components/ui/avatar",
+        "@/components/ui/button",
+        "date-fns/locale",
+        "@/components/ui/switch",
+        "@/components/ui/label",
+        "@/components/ui/scroll-area",
+        "@/components/ui/separator",
+        "@/components/ui/tabs"
+      ],
+      "exports": [
+        "ComponentsShowcase",
+        "function"
+      ],
+      "file_size": 58315,
+      "lines_of_code": 1438,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "client_src_pages_Home.tsx": {
+      "component_id": "client_src_pages_Home.tsx",
+      "name": "Home",
+      "path": "client/src/pages/Home.tsx",
+      "component_type": "page",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts",
+        "client_src_components_ui_card.tsx",
+        "client_src_components_ui_hover-card.tsx",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx",
+        "client_src_hooks_use-toast.ts"
+      ],
+      "used_by": [
+        "client_src_App.tsx"
+      ],
+      "imports": [
+        "wouter",
+        "lucide-react",
+        "@/lib/trpc",
+        "@/components/ui/card",
+        "@/components/ui/button",
+        "@/hooks/use-toast"
+      ],
+      "exports": [
+        "Home",
+        "function"
+      ],
+      "file_size": 23944,
+      "lines_of_code": 464,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "client_src_pages_NotFound.tsx": {
+      "component_id": "client_src_pages_NotFound.tsx",
+      "name": "NotFound",
+      "path": "client/src/pages/NotFound.tsx",
+      "component_type": "page",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_card.tsx",
+        "client_src_components_ui_hover-card.tsx",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx"
+      ],
+      "used_by": [
+        "client_src_App.tsx"
+      ],
+      "imports": [
+        "wouter",
+        "lucide-react",
+        "@/components/ui/card",
+        "@/components/ui/button"
+      ],
+      "exports": [
+        "NotFound",
+        "function"
+      ],
+      "file_size": 1819,
+      "lines_of_code": 53,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "client_src_pages_Privacy.tsx": {
+      "component_id": "client_src_pages_Privacy.tsx",
+      "name": "Privacy",
+      "path": "client/src/pages/Privacy.tsx",
+      "component_type": "page",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx"
+      ],
+      "used_by": [
+        "client_src_App.tsx"
+      ],
+      "imports": [
+        "wouter",
+        "lucide-react",
+        "@/components/ui/button"
+      ],
+      "exports": [
+        "Privacy",
+        "function"
+      ],
+      "file_size": 11828,
+      "lines_of_code": 223,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "client_src_pages_Terms.tsx": {
+      "component_id": "client_src_pages_Terms.tsx",
+      "name": "Terms",
+      "path": "client/src/pages/Terms.tsx",
+      "component_type": "page",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx"
+      ],
+      "used_by": [
+        "client_src_App.tsx"
+      ],
+      "imports": [
+        "wouter",
+        "lucide-react",
+        "@/components/ui/button"
+      ],
+      "exports": [
+        "Terms",
+        "function"
+      ],
+      "file_size": 9681,
+      "lines_of_code": 188,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "drizzle.config.ts": {
+      "component_id": "drizzle.config.ts",
+      "name": "drizzle.config",
+      "path": "drizzle.config.ts",
+      "component_type": "config",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "vitest.config.ts",
+        "server__core_index.ts"
+      ],
+      "imports": [
+        "drizzle-kit"
+      ],
+      "exports": [
+        "defineConfig"
+      ],
+      "file_size": 358,
+      "lines_of_code": 16,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "vite.config.ts": {
+      "component_id": "vite.config.ts",
+      "name": "vite.config",
+      "path": "vite.config.ts",
+      "component_type": "config",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server__core_vite.ts",
+        "vitest.config.ts"
+      ],
+      "used_by": [
+        "vitest.config.ts",
+        "server__core_index.ts",
+        "server__core_vite.ts"
+      ],
+      "imports": [
+        "@vitejs/plugin-react",
+        "@builder.io/vite-plugin-jsx-loc",
+        "@tailwindcss/vite",
+        "path",
+        "vite"
+      ],
+      "exports": [
+        "defineConfig"
+      ],
+      "file_size": 1089,
+      "lines_of_code": 41,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "vitest.config.ts": {
+      "component_id": "vitest.config.ts",
+      "name": "vitest.config",
+      "path": "vitest.config.ts",
+      "component_type": "test",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "drizzle.config.ts",
+        "vite.config.ts",
+        "server__core_apiConfig.ts"
+      ],
+      "used_by": [
+        "vite.config.ts",
+        "server_auth.logout.test.ts",
+        "server__core_index.ts",
+        "server__core_vite.ts"
+      ],
+      "imports": [
+        "vitest/config",
+        "path"
+      ],
+      "exports": [
+        "defineConfig"
+      ],
+      "file_size": 499,
+      "lines_of_code": 20,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "client_src_const.ts": {
+      "component_id": "client_src_const.ts",
+      "name": "const",
+      "path": "client/src/const.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "server_auth.logout.test.ts",
+        "server__core_trpc.ts"
+      ],
+      "imports": [],
+      "exports": [
+        "COOKIE_NAME",
+        "ONE_YEAR_MS"
+      ],
+      "file_size": 105,
+      "lines_of_code": 4,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src__core_hooks_useAuth.ts": {
+      "component_id": "client_src__core_hooks_useAuth.ts",
+      "name": "useAuth",
+      "path": "client/src/_core/hooks/useAuth.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts"
+      ],
+      "used_by": [
+        "client_src_components_DashboardLayout.tsx"
+      ],
+      "imports": [
+        "@trpc/client",
+        "react",
+        "@/lib/trpc"
+      ],
+      "exports": [
+        "useAuth"
+      ],
+      "file_size": 1326,
+      "lines_of_code": 57,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_hooks_use-toast.ts": {
+      "component_id": "client_src_hooks_use-toast.ts",
+      "name": "use-toast",
+      "path": "client/src/hooks/use-toast.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "client_src_pages_Home.tsx"
+      ],
+      "imports": [],
+      "exports": [
+        "useToast"
+      ],
+      "file_size": 332,
+      "lines_of_code": 10,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_hooks_useComposition.ts": {
+      "component_id": "client_src_hooks_useComposition.ts",
+      "name": "useComposition",
+      "path": "client/src/hooks/useComposition.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_hooks_usePersistFn.ts"
+      ],
+      "used_by": [
+        "client_src_components_ui_input.tsx",
+        "client_src_components_ui_textarea.tsx"
+      ],
+      "imports": [
+        "react",
+        "./usePersistFn"
+      ],
+      "exports": [
+        "useComposition"
+      ],
+      "file_size": 2333,
+      "lines_of_code": 82,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_hooks_usePersistFn.ts": {
+      "component_id": "client_src_hooks_usePersistFn.ts",
+      "name": "usePersistFn",
+      "path": "client/src/hooks/usePersistFn.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "client_src_components_Map.tsx",
+        "client_src_hooks_useComposition.ts"
+      ],
+      "imports": [
+        "react"
+      ],
+      "exports": [
+        "usePersistFn"
+      ],
+      "file_size": 471,
+      "lines_of_code": 21,
+      "last_modified": 1767867706.5858505,
+      "description": "",
+      "tags": []
+    },
+    "client_src_lib_trpc.ts": {
+      "component_id": "client_src_lib_trpc.ts",
+      "name": "trpc",
+      "path": "client/src/lib/trpc.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server_routers.ts"
+      ],
+      "used_by": [
+        "client_src_main.tsx",
+        "client_src_pages_Admin.tsx",
+        "client_src_pages_Chat.tsx",
+        "client_src_pages_Home.tsx",
+        "client_src__core_hooks_useAuth.ts",
+        "server_adminRouter.ts",
+        "server_healthRouter.ts",
+        "server_routers.ts",
+        "server_stripeRouter.ts",
+        "server_ttsRouter.ts",
+        "server__core_systemRouter.ts"
+      ],
+      "imports": [
+        "../../../server/routers",
+        "@trpc/react-query"
+      ],
+      "exports": [
+        "trpc"
+      ],
+      "file_size": 162,
+      "lines_of_code": 5,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "client_src_lib_utils.ts": {
+      "component_id": "client_src_lib_utils.ts",
+      "name": "utils",
+      "path": "client/src/lib/utils.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "client_src_components_AIChatBox.tsx",
+        "client_src_components_ErrorBoundary.tsx",
+        "client_src_components_Map.tsx",
+        "client_src_components_ui_accordion.tsx",
+        "client_src_components_ui_alert-dialog.tsx",
+        "client_src_components_ui_alert.tsx",
+        "client_src_components_ui_avatar.tsx",
+        "client_src_components_ui_badge.tsx",
+        "client_src_components_ui_breadcrumb.tsx",
+        "client_src_components_ui_button-group.tsx",
+        "client_src_components_ui_button.tsx",
+        "client_src_components_ui_calendar.tsx",
+        "client_src_components_ui_card.tsx",
+        "client_src_components_ui_carousel.tsx",
+        "client_src_components_ui_chart.tsx",
+        "client_src_components_ui_checkbox.tsx",
+        "client_src_components_ui_command.tsx",
+        "client_src_components_ui_context-menu.tsx",
+        "client_src_components_ui_dialog.tsx",
+        "client_src_components_ui_drawer.tsx",
+        "client_src_components_ui_dropdown-menu.tsx",
+        "client_src_components_ui_empty.tsx",
+        "client_src_components_ui_field.tsx",
+        "client_src_components_ui_form.tsx",
+        "client_src_components_ui_hover-card.tsx",
+        "client_src_components_ui_input-group.tsx",
+        "client_src_components_ui_input-otp.tsx",
+        "client_src_components_ui_input.tsx",
+        "client_src_components_ui_item.tsx",
+        "client_src_components_ui_kbd.tsx",
+        "client_src_components_ui_label.tsx",
+        "client_src_components_ui_menubar.tsx",
+        "client_src_components_ui_navigation-menu.tsx",
+        "client_src_components_ui_pagination.tsx",
+        "client_src_components_ui_popover.tsx",
+        "client_src_components_ui_progress.tsx",
+        "client_src_components_ui_radio-group.tsx",
+        "client_src_components_ui_resizable.tsx",
+        "client_src_components_ui_scroll-area.tsx",
+        "client_src_components_ui_select.tsx",
+        "client_src_components_ui_separator.tsx",
+        "client_src_components_ui_sheet.tsx",
+        "client_src_components_ui_sidebar.tsx",
+        "client_src_components_ui_skeleton.tsx",
+        "client_src_components_ui_slider.tsx",
+        "client_src_components_ui_spinner.tsx",
+        "client_src_components_ui_switch.tsx",
+        "client_src_components_ui_table.tsx",
+        "client_src_components_ui_tabs.tsx",
+        "client_src_components_ui_textarea.tsx",
+        "client_src_components_ui_toggle-group.tsx",
+        "client_src_components_ui_toggle.tsx",
+        "client_src_components_ui_tooltip.tsx"
+      ],
+      "imports": [
+        "tailwind-merge",
+        "clsx"
+      ],
+      "exports": [
+        "cn"
+      ],
+      "file_size": 169,
+      "lines_of_code": 7,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "drizzle_relations.ts": {
+      "component_id": "drizzle_relations.ts",
+      "name": "relations",
+      "path": "drizzle/relations.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "drizzle_schema.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "./schema"
+      ],
+      "exports": [],
+      "file_size": 27,
+      "lines_of_code": 2,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "drizzle_schema.ts": {
+      "component_id": "drizzle_schema.ts",
+      "name": "schema",
+      "path": "drizzle/schema.ts",
+      "component_type": "database",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "drizzle_relations.ts",
+        "server_adminRouter.ts",
+        "server_crisisDetection.ts",
+        "server_db.ts",
+        "server_routers.ts",
+        "server_twilioIntegration.ts",
+        "server_voiceRecognition.ts",
+        "server__core_context.ts",
+        "server_webhooks_stripeWebhook.ts"
+      ],
+      "imports": [
+        "drizzle-orm/pg-core",
+        "drizzle-orm"
+      ],
+      "exports": [
+        "user",
+        "behavioralPattern",
+        "conversation",
+        "subscription",
+        "voiceSignature",
+        "crisisLog",
+        "clientProfile",
+        "interactionLog",
+        "message"
+      ],
+      "file_size": 12081,
+      "lines_of_code": 296,
+      "last_modified": 1767867706.5898523,
+      "description": "",
+      "tags": []
+    },
+    "server_adminRouter.ts": {
+      "component_id": "server_adminRouter.ts",
+      "name": "adminRouter",
+      "path": "server/adminRouter.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "drizzle_schema.ts",
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts",
+        "server_db.ts",
+        "server__core_db.ts",
+        "server__core_dbHealth.ts"
+      ],
+      "used_by": [
+        "client_src_App.tsx",
+        "server_routers.ts"
+      ],
+      "imports": [
+        "../drizzle/schema",
+        "drizzle-orm",
+        "./_core/trpc",
+        "zod",
+        "./_core/db"
+      ],
+      "exports": [
+        "adminRouter"
+      ],
+      "file_size": 3707,
+      "lines_of_code": 108,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_auth.logout.test.ts": {
+      "component_id": "server_auth.logout.test.ts",
+      "name": "auth.logout.test",
+      "path": "server/auth.logout.test.ts",
+      "component_type": "test",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_const.ts",
+        "shared_const.ts",
+        "client_src_components_ui_context-menu.tsx",
+        "client_src_contexts_ThemeContext.tsx",
+        "server__core_context.ts",
+        "vitest.config.ts",
+        "server__core_vite.ts",
+        "server_routers.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "../shared/const",
+        "./_core/context",
+        "vitest",
+        "./routers"
+      ],
+      "exports": [],
+      "file_size": 1625,
+      "lines_of_code": 63,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_crisisDetection.ts": {
+      "component_id": "server_crisisDetection.ts",
+      "name": "crisisDetection",
+      "path": "server/crisisDetection.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "drizzle_schema.ts",
+        "server_db.ts",
+        "server__core_db.ts"
+      ],
+      "used_by": [
+        "server_routers.ts"
+      ],
+      "imports": [
+        "../drizzle/schema",
+        "./_core/db.js",
+        "drizzle-orm"
+      ],
+      "exports": [
+        "detectCrisis",
+        "getCrisisResponseGuidance"
+      ],
+      "file_size": 9179,
+      "lines_of_code": 333,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_db.ts": {
+      "component_id": "server_db.ts",
+      "name": "db",
+      "path": "server/db.ts",
+      "component_type": "database",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "drizzle_schema.ts",
+        "server__core_db.ts"
+      ],
+      "used_by": [
+        "server_adminRouter.ts",
+        "server_crisisDetection.ts",
+        "server_healthRouter.ts",
+        "server_profileGuard.ts",
+        "server_routers.ts",
+        "server_twilioIntegration.ts",
+        "server_voiceRecognition.ts",
+        "server__core_dbHealth.ts",
+        "server__core_index.ts",
+        "server_webhooks_stripeWebhook.ts"
+      ],
+      "imports": [
+        "../drizzle/schema",
+        "./_core/db.js",
+        "drizzle-orm",
+        "crypto"
+      ],
+      "exports": [],
+      "file_size": 3611,
+      "lines_of_code": 121,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_guardrails.ts": {
+      "component_id": "server_guardrails.ts",
+      "name": "guardrails",
+      "path": "server/guardrails.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "server_routers.ts"
+      ],
+      "imports": [],
+      "exports": [
+        "checkGuardrails",
+        "getMandatoryDisclaimers",
+        "buildGuardrailsSystemPrompt"
+      ],
+      "file_size": 15654,
+      "lines_of_code": 412,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_healthRouter.ts": {
+      "component_id": "server_healthRouter.ts",
+      "name": "healthRouter",
+      "path": "server/healthRouter.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server_db.ts",
+        "server__core_db.ts",
+        "server__core_dbHealth.ts",
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts"
+      ],
+      "used_by": [
+        "server_routers.ts"
+      ],
+      "imports": [
+        "./_core/dbHealth",
+        "./_core/trpc"
+      ],
+      "exports": [
+        "healthRouter"
+      ],
+      "file_size": 1346,
+      "lines_of_code": 49,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_profileGuard.ts": {
+      "component_id": "server_profileGuard.ts",
+      "name": "profileGuard",
+      "path": "server/profileGuard.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server_db.ts",
+        "server__core_db.ts",
+        "server__core_dbHealth.ts"
+      ],
+      "used_by": [
+        "server_twilioIntegration.ts",
+        "server_webhooks_stripeWebhook.ts"
+      ],
+      "imports": [
+        "./_core/db",
+        "drizzle-orm"
+      ],
+      "exports": [],
+      "file_size": 11144,
+      "lines_of_code": 379,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_routers.ts": {
+      "component_id": "server_routers.ts",
+      "name": "routers",
+      "path": "server/routers.ts",
+      "component_type": "api",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_pages_Admin.tsx",
+        "server_adminRouter.ts",
+        "drizzle_schema.ts",
+        "server_crisisDetection.ts",
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts",
+        "server__core_apiConfig.ts",
+        "server_ttsRouter.ts",
+        "server__core_llm.ts",
+        "server_stripeRouter.ts",
+        "server_guardrails.ts",
+        "server_healthRouter.ts",
+        "server_db.ts",
+        "server__core_db.ts",
+        "server__core_dbHealth.ts"
+      ],
+      "used_by": [
+        "client_src_lib_trpc.ts",
+        "server_auth.logout.test.ts",
+        "server__core_index.ts"
+      ],
+      "imports": [
+        "./adminRouter",
+        "../drizzle/schema",
+        "./crisisDetection",
+        "drizzle-orm",
+        "./_core/trpc",
+        "zod",
+        "./_core/apiConfig",
+        "./ttsRouter",
+        "./_core/llm",
+        "./stripeRouter",
+        "./guardrails",
+        "./healthRouter",
+        "./_core/db"
+      ],
+      "exports": [
+        "appRouter"
+      ],
+      "file_size": 9878,
+      "lines_of_code": 297,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_storage.ts": {
+      "component_id": "server_storage.ts",
+      "name": "storage",
+      "path": "server/storage.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [],
+      "imports": [],
+      "exports": [],
+      "file_size": 52,
+      "lines_of_code": 2,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_stripeRouter.ts": {
+      "component_id": "server_stripeRouter.ts",
+      "name": "stripeRouter",
+      "path": "server/stripeRouter.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server_webhooks_stripeWebhook.ts",
+        "server__core_apiConfig.ts",
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts",
+        "server__core_env.ts"
+      ],
+      "used_by": [
+        "server_routers.ts",
+        "server_webhooks_stripeWebhook.ts"
+      ],
+      "imports": [
+        "stripe",
+        "./_core/apiConfig",
+        "./_core/trpc",
+        "./_core/env",
+        "zod"
+      ],
+      "exports": [
+        "stripeRouter"
+      ],
+      "file_size": 5572,
+      "lines_of_code": 165,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_ttsRouter.ts": {
+      "component_id": "server_ttsRouter.ts",
+      "name": "ttsRouter",
+      "path": "server/ttsRouter.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server__core_env.ts",
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts"
+      ],
+      "used_by": [
+        "server_routers.ts"
+      ],
+      "imports": [
+        "./_core/env",
+        "zod",
+        "./_core/trpc"
+      ],
+      "exports": [
+        "ttsRouter"
+      ],
+      "file_size": 2010,
+      "lines_of_code": 63,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_twilioIntegration.ts": {
+      "component_id": "server_twilioIntegration.ts",
+      "name": "twilioIntegration",
+      "path": "server/twilioIntegration.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "drizzle_schema.ts",
+        "server_db.ts",
+        "server__core_db.ts",
+        "server_profileGuard.ts",
+        "server__core_llm.ts"
+      ],
+      "used_by": [
+        "server_webhooks_stripeWebhook.ts"
+      ],
+      "imports": [
+        "../drizzle/schema",
+        "./_core/db.js",
+        "drizzle-orm",
+        "./profileGuard",
+        "./_core/llm"
+      ],
+      "exports": [],
+      "file_size": 11086,
+      "lines_of_code": 382,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_twilioRoutes.ts": {
+      "component_id": "server_twilioRoutes.ts",
+      "name": "twilioRoutes",
+      "path": "server/twilioRoutes.ts",
+      "component_type": "page",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "server__core_index.ts"
+      ],
+      "imports": [
+        "express"
+      ],
+      "exports": [
+        "setupTwilioRoutes"
+      ],
+      "file_size": 3034,
+      "lines_of_code": 106,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_voiceRecognition.ts": {
+      "component_id": "server_voiceRecognition.ts",
+      "name": "voiceRecognition",
+      "path": "server/voiceRecognition.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "drizzle_schema.ts",
+        "server_db.ts",
+        "server__core_db.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "../drizzle/schema",
+        "./_core/db.js",
+        "drizzle-orm"
+      ],
+      "exports": [],
+      "file_size": 2613,
+      "lines_of_code": 95,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_apiConfig.ts": {
+      "component_id": "server__core_apiConfig.ts",
+      "name": "apiConfig",
+      "path": "server/_core/apiConfig.ts",
+      "component_type": "api",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "vitest.config.ts",
+        "server_routers.ts",
+        "server_stripeRouter.ts",
+        "server__core_index.ts"
+      ],
+      "imports": [],
+      "exports": [
+        "RETRY_CONFIG",
+        "withTimeout",
+        "API_TIMEOUTS"
+      ],
+      "file_size": 2038,
+      "lines_of_code": 77,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_context.ts": {
+      "component_id": "server__core_context.ts",
+      "name": "context",
+      "path": "server/_core/context.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "drizzle_schema.ts"
+      ],
+      "used_by": [
+        "client_src_App.tsx",
+        "client_src_components_ui_context-menu.tsx",
+        "client_src_pages_ComponentShowcase.tsx",
+        "server_auth.logout.test.ts",
+        "server__core_index.ts",
+        "server__core_trpc.ts"
+      ],
+      "imports": [
+        "@trpc/server/adapters/express",
+        "../../drizzle/schema"
+      ],
+      "exports": [],
+      "file_size": 526,
+      "lines_of_code": 22,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_cookies.ts": {
+      "component_id": "server__core_cookies.ts",
+      "name": "cookies",
+      "path": "server/_core/cookies.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [],
+      "imports": [
+        "express"
+      ],
+      "exports": [
+        "getSessionCookieOptions"
+      ],
+      "file_size": 1298,
+      "lines_of_code": 49,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_db.ts": {
+      "component_id": "server__core_db.ts",
+      "name": "db",
+      "path": "server/_core/db.ts",
+      "component_type": "database",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server__core_env.ts"
+      ],
+      "used_by": [
+        "server_adminRouter.ts",
+        "server_crisisDetection.ts",
+        "server_db.ts",
+        "server_healthRouter.ts",
+        "server_profileGuard.ts",
+        "server_routers.ts",
+        "server_twilioIntegration.ts",
+        "server_voiceRecognition.ts",
+        "server__core_dbHealth.ts",
+        "server__core_index.ts",
+        "server_webhooks_stripeWebhook.ts"
+      ],
+      "imports": [
+        "postgres",
+        "drizzle-orm/postgres-js",
+        "./env"
+      ],
+      "exports": [
+        "db"
+      ],
+      "file_size": 324,
+      "lines_of_code": 14,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_dbHealth.ts": {
+      "component_id": "server__core_dbHealth.ts",
+      "name": "dbHealth",
+      "path": "server/_core/dbHealth.ts",
+      "component_type": "database",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server_db.ts",
+        "server__core_db.ts"
+      ],
+      "used_by": [
+        "server_adminRouter.ts",
+        "server_healthRouter.ts",
+        "server_profileGuard.ts",
+        "server_routers.ts",
+        "server__core_index.ts",
+        "server_webhooks_stripeWebhook.ts"
+      ],
+      "imports": [
+        "drizzle-orm",
+        "./db"
+      ],
+      "exports": [
+        "getHealthStatus",
+        "startHealthMonitoring"
+      ],
+      "file_size": 3649,
+      "lines_of_code": 144,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_env.ts": {
+      "component_id": "server__core_env.ts",
+      "name": "env",
+      "path": "server/_core/env.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "server_stripeRouter.ts",
+        "server_ttsRouter.ts",
+        "server__core_db.ts",
+        "server__core_llm.ts",
+        "server__core_runMigrations.ts",
+        "server_routes_webhookRoutes.ts",
+        "server_webhooks_stripeWebhook.ts"
+      ],
+      "imports": [],
+      "exports": [
+        "ENV"
+      ],
+      "file_size": 553,
+      "lines_of_code": 14,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_index.ts": {
+      "component_id": "server__core_index.ts",
+      "name": "index",
+      "path": "server/_core/index.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "vite.config.ts",
+        "vitest.config.ts",
+        "server__core_vite.ts",
+        "server_routers.ts",
+        "server_db.ts",
+        "server__core_db.ts",
+        "server__core_dbHealth.ts",
+        "server_twilioRoutes.ts",
+        "client_src_components_ui_context-menu.tsx",
+        "client_src_contexts_ThemeContext.tsx",
+        "server__core_context.ts",
+        "drizzle.config.ts",
+        "server__core_apiConfig.ts",
+        "server_routes_webhookRoutes.ts"
+      ],
+      "used_by": [
+        "client_src_main.tsx"
+      ],
+      "imports": [
+        "@trpc/server/adapters/express",
+        "./vite",
+        "express",
+        "../routers",
+        "net",
+        "./db",
+        "../twilioRoutes",
+        "./context",
+        "dotenv/config",
+        "http",
+        "../routes/webhookRoutes"
+      ],
+      "exports": [],
+      "file_size": 3930,
+      "lines_of_code": 122,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_llm.ts": {
+      "component_id": "server__core_llm.ts",
+      "name": "llm",
+      "path": "server/_core/llm.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server__core_env.ts"
+      ],
+      "used_by": [
+        "server_routers.ts",
+        "server_twilioIntegration.ts"
+      ],
+      "imports": [
+        "./env"
+      ],
+      "exports": [],
+      "file_size": 7080,
+      "lines_of_code": 327,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_notification.ts": {
+      "component_id": "server__core_notification.ts",
+      "name": "notification",
+      "path": "server/_core/notification.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "server__core_systemRouter.ts"
+      ],
+      "imports": [],
+      "exports": [],
+      "file_size": 312,
+      "lines_of_code": 16,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_runMigrations.ts": {
+      "component_id": "server__core_runMigrations.ts",
+      "name": "runMigrations",
+      "path": "server/_core/runMigrations.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server__core_env.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "postgres",
+        "drizzle-orm/postgres-js",
+        "fs",
+        "drizzle-orm/postgres-js/migrator",
+        "path",
+        "./env"
+      ],
+      "exports": [],
+      "file_size": 2327,
+      "lines_of_code": 65,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_systemRouter.ts": {
+      "component_id": "server__core_systemRouter.ts",
+      "name": "systemRouter",
+      "path": "server/_core/systemRouter.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_lib_trpc.ts",
+        "server__core_trpc.ts",
+        "server__core_notification.ts"
+      ],
+      "used_by": [],
+      "imports": [
+        "./trpc",
+        "zod",
+        "./notification"
+      ],
+      "exports": [
+        "systemRouter"
+      ],
+      "file_size": 709,
+      "lines_of_code": 30,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_trpc.ts": {
+      "component_id": "server__core_trpc.ts",
+      "name": "trpc",
+      "path": "server/_core/trpc.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "client_src_const.ts",
+        "shared_const.ts",
+        "client_src_components_ui_context-menu.tsx",
+        "client_src_contexts_ThemeContext.tsx",
+        "server__core_context.ts"
+      ],
+      "used_by": [
+        "client_src_main.tsx",
+        "client_src_pages_Admin.tsx",
+        "client_src_pages_Chat.tsx",
+        "client_src_pages_Home.tsx",
+        "client_src__core_hooks_useAuth.ts",
+        "server_adminRouter.ts",
+        "server_healthRouter.ts",
+        "server_routers.ts",
+        "server_stripeRouter.ts",
+        "server_ttsRouter.ts",
+        "server__core_systemRouter.ts"
+      ],
+      "imports": [
+        "@shared/const",
+        "./context",
+        "@trpc/server",
+        "superjson"
+      ],
+      "exports": [
+        "publicProcedure",
+        "adminProcedure",
+        "router",
+        "protectedProcedure"
+      ],
+      "file_size": 1033,
+      "lines_of_code": 46,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_vite.ts": {
+      "component_id": "server__core_vite.ts",
+      "name": "vite",
+      "path": "server/_core/vite.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "vite.config.ts",
+        "vitest.config.ts"
+      ],
+      "used_by": [
+        "vite.config.ts",
+        "server_auth.logout.test.ts",
+        "server__core_index.ts"
+      ],
+      "imports": [
+        "fs",
+        "express",
+        "../../vite.config",
+        "nanoid",
+        "path",
+        "http",
+        "vite"
+      ],
+      "exports": [
+        "serveStatic"
+      ],
+      "file_size": 1901,
+      "lines_of_code": 68,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_voiceTranscription.ts": {
+      "component_id": "server__core_voiceTranscription.ts",
+      "name": "voiceTranscription",
+      "path": "server/_core/voiceTranscription.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [],
+      "imports": [],
+      "exports": [],
+      "file_size": 64,
+      "lines_of_code": 2,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server__core_types_cookie.d.ts": {
+      "component_id": "server__core_types_cookie.d.ts",
+      "name": "cookie.d",
+      "path": "server/_core/types/cookie.d.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [],
+      "imports": [],
+      "exports": [
+        "parse"
+      ],
+      "file_size": 137,
+      "lines_of_code": 7,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_routes_webhookRoutes.ts": {
+      "component_id": "server_routes_webhookRoutes.ts",
+      "name": "webhookRoutes",
+      "path": "server/routes/webhookRoutes.ts",
+      "component_type": "page",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server__core_env.ts",
+        "server_webhooks_stripeWebhook.ts"
+      ],
+      "used_by": [
+        "server__core_index.ts"
+      ],
+      "imports": [
+        "express",
+        "../_core/env",
+        "../webhooks/stripeWebhook"
+      ],
+      "exports": [
+        "router"
+      ],
+      "file_size": 952,
+      "lines_of_code": 36,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "server_webhooks_stripeWebhook.ts": {
+      "component_id": "server_webhooks_stripeWebhook.ts",
+      "name": "stripeWebhook",
+      "path": "server/webhooks/stripeWebhook.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [
+        "server_profileGuard.ts",
+        "server_stripeRouter.ts",
+        "drizzle_schema.ts",
+        "server_db.ts",
+        "server__core_db.ts",
+        "server__core_dbHealth.ts",
+        "server__core_env.ts",
+        "server_twilioIntegration.ts"
+      ],
+      "used_by": [
+        "server_stripeRouter.ts",
+        "server_routes_webhookRoutes.ts"
+      ],
+      "imports": [
+        "drizzle-orm",
+        "../profileGuard",
+        "stripe",
+        "express",
+        "../../drizzle/schema",
+        "../_core/db",
+        "../_core/env",
+        "../twilioIntegration"
+      ],
+      "exports": [],
+      "file_size": 8789,
+      "lines_of_code": 241,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "shared_const.ts": {
+      "component_id": "shared_const.ts",
+      "name": "const",
+      "path": "shared/const.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [
+        "server_auth.logout.test.ts",
+        "server__core_trpc.ts"
+      ],
+      "imports": [],
+      "exports": [
+        "NOT_ADMIN_ERR_MSG",
+        "ONE_YEAR_MS",
+        "AXIOS_TIMEOUT_MS",
+        "COOKIE_NAME",
+        "UNAUTHED_ERR_MSG"
+      ],
+      "file_size": 275,
+      "lines_of_code": 6,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "shared_types.ts": {
+      "component_id": "shared_types.ts",
+      "name": "types",
+      "path": "shared/types.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [],
+      "imports": [],
+      "exports": [],
+      "file_size": 158,
+      "lines_of_code": 8,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    },
+    "shared__core_errors.ts": {
+      "component_id": "shared__core_errors.ts",
+      "name": "errors",
+      "path": "shared/_core/errors.ts",
+      "component_type": "utility",
+      "status": "incomplete",
+      "completion_percentage": 0.0,
+      "depends_on": [],
+      "used_by": [],
+      "imports": [],
+      "exports": [
+        "UnauthorizedError",
+        "ForbiddenError",
+        "NotFoundError",
+        "HttpError",
+        "BadRequestError"
+      ],
+      "file_size": 601,
+      "lines_of_code": 20,
+      "last_modified": 1767867706.5938544,
+      "description": "",
+      "tags": []
+    }
+  },
+  "features": {}
+}
