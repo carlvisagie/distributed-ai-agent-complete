@@ -1,0 +1,30 @@
+{
+  "session_id": "test_project_session_1768458473818",
+  "project_id": "test_project",
+  "name": "Test Execution",
+  "description": "Testing session management",
+  "status": "paused",
+  "created_at": 1768458473.8188698,
+  "started_at": 1768458473.8190792,
+  "completed_at": null,
+  "last_active": 1768458473.8207664,
+  "current_task_id": "task_001",
+  "completed_task_ids": [
+    "task_001"
+  ],
+  "failed_task_ids": [],
+  "skipped_task_ids": [],
+  "tasks_completed": 1,
+  "tasks_failed": 0,
+  "tasks_skipped": 0,
+  "tasks_total": 10,
+  "result": null,
+  "error": null,
+  "checkpoints": [
+    "test_project_session_1768458473818_checkpoint_1768458473819"
+  ],
+  "last_checkpoint_id": "test_project_session_1768458473818_checkpoint_1768458473819",
+  "tags": [],
+  "notes": "",
+  "version": 7
+}

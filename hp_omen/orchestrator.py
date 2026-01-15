@@ -4,13 +4,20 @@ Coordinates tasks between chat interface and Predator Helios worker
 """
 import asyncio
 import httpx
+import sys
+import os
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, JSONResponse
 from pydantic import BaseModel, Field
-from typing import AsyncGenerator
+from typing import AsyncGenerator, Optional
 import json
 import logging
 from datetime import datetime
+
+# Add shared directory to path
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'shared'))
+
+from autonomous.progress_tracker import progress_tracker, TaskStatus as ProgressTaskStatus
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -140,6 +147,73 @@ async def get_task(task_id: str):
     except httpx.HTTPStatusError as e:
         raise HTTPException(status_code=e.response.status_code, detail=str(e))
     except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/progress")
+async def get_progress():
+    """Get current execution progress"""
+    try:
+        progress = progress_tracker.get_progress()
+        return JSONResponse(content=progress)
+    except Exception as e:
+        logger.error(f"Error getting progress: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/progress/stream")
+async def stream_progress():
+    """Stream progress updates via SSE"""
+    async def generate():
+        try:
+            while True:
+                progress = progress_tracker.get_progress()
+                yield f"data: {json.dumps(progress)}\n\n"
+                
+                # Check if execution is complete
+                if progress.get('is_complete'):
+                    break
+                
+                await asyncio.sleep(2)  # Update every 2 seconds
+        except Exception as e:
+            logger.error(f"Error streaming progress: {e}")
+            yield f"data: {{\"error\": \"{str(e)}\"}}\n\n"
+    
+    return StreamingResponse(
+        generate(),
+        media_type="text/event-stream"
+    )
+
+@app.get("/api/tasks")
+async def get_all_tasks():
+    """Get all tasks"""
+    try:
+        tasks = progress_tracker.get_task_details()
+        return JSONResponse(content=tasks)
+    except Exception as e:
+        logger.error(f"Error getting tasks: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/tasks/{task_id}")
+async def get_task_details(task_id: str):
+    """Get specific task details"""
+    try:
+        task = progress_tracker.get_task_details(task_id)
+        if not task:
+            raise HTTPException(status_code=404, detail="Task not found")
+        return JSONResponse(content=task)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error getting task {task_id}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/summary")
+async def get_execution_summary():
+    """Get complete execution summary"""
+    try:
+        summary = progress_tracker.get_summary()
+        return JSONResponse(content=summary)
+    except Exception as e:
+        logger.error(f"Error getting summary: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":

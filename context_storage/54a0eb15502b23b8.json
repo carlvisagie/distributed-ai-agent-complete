@@ -1,0 +1,38 @@
+{
+  "project_id": "54a0eb15502b23b8",
+  "project_name": "Test Project",
+  "project_path": "/home/ubuntu/test-project",
+  "repository_url": null,
+  "analyzed_at": 1768458473.8152158,
+  "codebase_structure": {
+    "pages": 10,
+    "components": 25,
+    "apis": 8
+  },
+  "features_found": [
+    {
+      "name": "Login",
+      "status": "complete"
+    }
+  ],
+  "gaps_identified": [
+    {
+      "name": "Dashboard",
+      "status": "missing"
+    }
+  ],
+  "domain_knowledge": {},
+  "industry_standards": {},
+  "requirements": {},
+  "tech_stack": [],
+  "dependencies": {},
+  "database_schema": {},
+  "api_endpoints": [],
+  "completion_percentage": 0.0,
+  "total_features": 0,
+  "completed_features": 0,
+  "missing_features": [],
+  "created_at": 1768458473.814661,
+  "last_updated": 1768458473.8152256,
+  "version": 3
+}

@@ -1,0 +1,31 @@
+{
+  "task_id": "task_001",
+  "project_id": "test_project",
+  "title": "Create login page",
+  "description": "Build login page with authentication",
+  "task_type": "create_page",
+  "priority": "high",
+  "status": "completed",
+  "progress": 100.0,
+  "current_step": "",
+  "created_at": 1768458473.8160172,
+  "started_at": 1768458473.8171952,
+  "completed_at": 1768458473.8175635,
+  "estimated_duration": 600,
+  "result": {
+    "files_created": 3,
+    "lines_added": 250
+  },
+  "error": null,
+  "retry_count": 0,
+  "max_retries": 3,
+  "branch_name": null,
+  "pr_url": null,
+  "pr_number": null,
+  "commit_sha": null,
+  "depends_on": [],
+  "blocks": [],
+  "tags": [],
+  "notes": "",
+  "last_updated": 1768458473.8175712
+}

@@ -1,0 +1,16 @@
+{
+  "checkpoint_id": "test_project_session_1768458473818_checkpoint_1768458473819",
+  "session_id": "test_project_session_1768458473818",
+  "created_at": 1768458473.8199875,
+  "current_task_id": "task_001",
+  "completed_task_ids": [
+    "task_001"
+  ],
+  "failed_task_ids": [],
+  "tasks_completed": 1,
+  "tasks_failed": 0,
+  "tasks_total": 10,
+  "context_snapshot": {
+    "note": "Test checkpoint"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "task_id": "task_002",
+  "project_id": "test_project",
+  "title": "Add user dashboard",
+  "description": "Create user dashboard with widgets",
+  "task_type": "create_page",
+  "priority": "medium",
+  "status": "pending",
+  "progress": 0.0,
+  "current_step": "",
+  "created_at": 1768458473.8166804,
+  "started_at": null,
+  "completed_at": null,
+  "estimated_duration": 900,
+  "result": null,
+  "error": null,
+  "retry_count": 0,
+  "max_retries": 3,
+  "branch_name": null,
+  "pr_url": null,
+  "pr_number": null,
+  "commit_sha": null,
+  "depends_on": [
+    "task_001"
+  ],
+  "blocks": [],
+  "tags": [],
+  "notes": "",
+  "last_updated": 1768458473.8166852
+}

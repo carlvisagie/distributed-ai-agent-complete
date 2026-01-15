@@ -1,0 +1,19 @@
+{
+  "project_id": "test_project",
+  "total_tasks": 2,
+  "last_updated": 1768458473.8178875,
+  "tasks": [
+    {
+      "task_id": "task_001",
+      "title": "Create login page",
+      "status": "completed",
+      "priority": "high"
+    },
+    {
+      "task_id": "task_002",
+      "title": "Add user dashboard",
+      "status": "pending",
+      "priority": "medium"
+    }
+  ]
+}

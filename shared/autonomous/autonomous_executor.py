@@ -4,8 +4,16 @@ Executes tasks autonomously and creates GitHub PRs
 """
 import asyncio
 import json
+import sys
+import os
 from typing import Dict, List
 from datetime import datetime
+
+# Add parent directory to path for imports
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from autonomous.error_handler import error_handler, AgentError
+from autonomous.retry_decorator import retry, retry_on_network_error, retry_on_git_error
 
 
 class AutonomousExecutor:
@@ -98,6 +106,7 @@ class AutonomousExecutor:
         
         return results
     
+    @retry(max_attempts=3, base_delay=2.0, operation_name="execute_task")
     async def _execute_single_task(self, task: Dict) -> Dict:
         """
         Execute a single task
@@ -276,6 +285,7 @@ class AutonomousExecutor:
                 "error": str(e)
             }
     
+    @retry_on_git_error(max_attempts=3, base_delay=2.0)
     async def _create_pr_for_task(self, task: Dict, task_result: Dict) -> Dict:
         """
         Create GitHub PR for completed task

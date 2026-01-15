@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Agent - Real-Time Progress</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .progress-section {
+            margin-bottom: 25px;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 40px;
+            background: #e0e0e0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .current-task {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+        }
+        
+        .current-task h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .current-task-progress {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .task-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .task-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #ccc;
+            transition: all 0.3s;
+        }
+        
+        .task-item.pending {
+            border-left-color: #9e9e9e;
+            opacity: 0.6;
+        }
+        
+        .task-item.running {
+            border-left-color: #2196f3;
+            background: #e3f2fd;
+            animation: pulse 2s infinite;
+        }
+        
+        .task-item.completed {
+            border-left-color: #4caf50;
+            background: #e8f5e9;
+        }
+        
+        .task-item.failed {
+            border-left-color: #f44336;
+            background: #ffebee;
+        }
+        
+        .task-item.retrying {
+            border-left-color: #ff9800;
+            background: #fff3e0;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .task-title {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .task-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .task-status.pending { background: #e0e0e0; color: #666; }
+        .task-status.running { background: #2196f3; color: white; }
+        .task-status.completed { background: #4caf50; color: white; }
+        .task-status.failed { background: #f44336; color: white; }
+        .task-status.retrying { background: #ff9800; color: white; }
+        
+        .task-meta {
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .eta-section {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .eta-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1976d2;
+        }
+        
+        .eta-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+        
+        .button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .error-log {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #fff5f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #f44336;
+        }
+        
+        .error-item {
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+        
+        .error-item .error-task {
+            font-weight: 600;
+            color: #f44336;
+        }
+        
+        .error-item .error-message {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .no-errors {
+            text-align: center;
+            color: #4caf50;
+            font-weight: 600;
+            padding: 20px;
+        }
+        
+        .timestamp {
+            font-size: 0.8em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Autonomous Agent Execution</h1>
+            <p>Real-Time Progress Monitoring</p>
+        </div>
+        
+        <div class="grid">
+            <!-- Left Column: Progress & Current Task -->
+            <div>
+                <div class="card">
+                    <h2>📊 Execution Progress</h2>
+                    
+                    <div class="progress-section">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="overallProgress">0%</div>
+                        </div>
+                        
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-value" id="totalTasks">0</div>
+                                <div class="stat-label">Total Tasks</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="completedTasks">0</div>
+                                <div class="stat-label">Completed</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="failedTasks">0</div>
+                                <div class="stat-label">Failed</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-value" id="runningTasks">0</div>
+                                <div class="stat-label">Running</div>
+                            </div>
+                        </div>
+                        
+                        <div class="eta-section">
+                            <div class="eta-value" id="etaValue">--</div>
+                            <div class="eta-label">Estimated Time Remaining</div>
+                        </div>
+                        
+                        <div class="eta-section" style="background: #f5f5f5;">
+                            <div class="eta-value" id="elapsedValue" style="color: #666;">--</div>
+                            <div class="eta-label">Time Elapsed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="current-task" id="currentTaskSection" style="display: none;">
+                        <h3>🔨 Current Task</h3>
+                        <div class="task-title" id="currentTaskTitle">--</div>
+                        <div class="current-task-progress">
+                            <div id="currentTaskStep">--</div>
+                            <div class="progress-bar-container" style="height: 20px; margin-top: 10px;">
+                                <div class="progress-bar" id="currentTaskProgress" style="font-size: 12px;">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="button" id="refreshBtn" onclick="refreshProgress()">
+                        🔄 Refresh Progress
+                    </button>
+                </div>
+                
+                <div class="card" style="margin-top: 20px;">
+                    <h2>🔴 Error Log</h2>
+                    <div class="error-log" id="errorLog">
+                        <div class="no-errors">✅ No errors</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column: Task List -->
+            <div>
+                <div class="card">
+                    <h2>📋 Task List</h2>
+                    <div class="task-list" id="taskList">
+                        <div style="text-align: center; padding: 40px; color: #999;">
+                            <p>No tasks yet</p>
+                            <p style="font-size: 0.9em; margin-top: 10px;">Start an execution to see tasks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+            <p><a href="autonomous_mode.html" style="color: #667eea; text-decoration: none; font-weight: 600;">← Back to Autonomous Mode</a> | 
+            <a href="index.html" style="color: #667eea; text-decoration: none; font-weight: 600;">Chat Interface</a></p>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:8080';
+        let eventSource = null;
+        let isStreaming = false;
+        
+        // Start streaming progress updates
+        function startProgressStream() {
+            if (isStreaming) return;
+            
+            isStreaming = true;
+            eventSource = new EventSource(`${API_URL}/api/progress/stream`);
+            
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                updateUI(data);
+            };
+            
+            eventSource.onerror = (error) => {
+                console.error('SSE Error:', error);
+                isStreaming = false;
+                eventSource.close();
+                
+                // Retry after 5 seconds
+                setTimeout(() => {
+                    if (!isStreaming) {
+                        startProgressStream();
+                    }
+                }, 5000);
+            };
+        }
+        
+        // Update UI with progress data
+        function updateUI(data) {
+            // Update overall progress
+            const progress = data.overall_progress || 0;
+            document.getElementById('overallProgress').style.width = progress + '%';
+            document.getElementById('overallProgress').textContent = progress + '%';
+            
+            // Update metrics
+            const metrics = data.metrics || {};
+            document.getElementById('totalTasks').textContent = metrics.total_tasks || 0;
+            document.getElementById('completedTasks').textContent = metrics.completed || 0;
+            document.getElementById('failedTasks').textContent = metrics.failed || 0;
+            document.getElementById('runningTasks').textContent = metrics.running || 0;
+            
+            // Update ETA
+            if (data.eta) {
+                document.getElementById('etaValue').textContent = data.eta.formatted;
+            } else {
+                document.getElementById('etaValue').textContent = '--';
+            }
+            
+            // Update elapsed time
+            if (data.elapsed) {
+                document.getElementById('elapsedValue').textContent = data.elapsed.formatted;
+            } else {
+                document.getElementById('elapsedValue').textContent = '--';
+            }
+            
+            // Stop streaming if complete
+            if (data.is_complete && eventSource) {
+                eventSource.close();
+                isStreaming = false;
+            }
+        }
+        
+        // Refresh progress manually
+        async function refreshProgress() {
+            try {
+                const response = await fetch(`${API_URL}/api/progress`);
+                const data = await response.json();
+                updateUI(data);
+                
+                // Also refresh task list
+                await refreshTaskList();
+            } catch (error) {
+                console.error('Error refreshing progress:', error);
+            }
+        }
+        
+        // Refresh task list
+        async function refreshTaskList() {
+            try {
+                const response = await fetch(`${API_URL}/api/tasks`);
+                const data = await response.json();
+                
+                const taskList = document.getElementById('taskList');
+                const tasks = data.tasks || [];
+                
+                if (tasks.length === 0) {
+                    taskList.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: #999;">
+                            <p>No tasks yet</p>
+                            <p style="font-size: 0.9em; margin-top: 10px;">Start an execution to see tasks</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                taskList.innerHTML = tasks.map(task => {
+                    const duration = task.duration ? `${Math.round(task.duration)}s` : '--';
+                    const retryInfo = task.retry_count > 0 ? ` (Retry ${task.retry_count})` : '';
+                    
+                    return `
+                        <div class="task-item ${task.status}">
+                            <div class="task-header">
+                                <div class="task-title">${task.title}</div>
+                                <div class="task-status ${task.status}">${task.status}${retryInfo}</div>
+                            </div>
+                            <div class="task-meta">
+                                Type: ${task.type} | Priority: ${task.priority} | Duration: ${duration}
+                            </div>
+                            ${task.current_step ? `<div class="task-meta" style="margin-top: 5px;">Step: ${task.current_step}</div>` : ''}
+                            ${task.error ? `<div class="task-meta" style="color: #f44336; margin-top: 5px;">Error: ${task.error}</div>` : ''}
+                        </div>
+                    `;
+                }).join('');
+                
+                // Update current task
+                const currentTask = tasks.find(t => t.status === 'running');
+                const currentTaskSection = document.getElementById('currentTaskSection');
+                
+                if (currentTask) {
+                    currentTaskSection.style.display = 'block';
+                    document.getElementById('currentTaskTitle').textContent = currentTask.title;
+                    document.getElementById('currentTaskStep').textContent = 
+                        currentTask.current_step || `Step ${currentTask.steps_completed} of ${currentTask.total_steps}`;
+                    document.getElementById('currentTaskProgress').style.width = currentTask.progress + '%';
+                    document.getElementById('currentTaskProgress').textContent = currentTask.progress + '%';
+                } else {
+                    currentTaskSection.style.display = 'none';
+                }
+                
+                // Update error log
+                const failedTasks = tasks.filter(t => t.status === 'failed');
+                const errorLog = document.getElementById('errorLog');
+                
+                if (failedTasks.length === 0) {
+                    errorLog.innerHTML = '<div class="no-errors">✅ No errors</div>';
+                } else {
+                    errorLog.innerHTML = failedTasks.map(task => `
+                        <div class="error-item">
+                            <div class="error-task">${task.title}</div>
+                            <div class="error-message">${task.error || 'Unknown error'}</div>
+                            <div class="timestamp">${new Date(task.end_time * 1000).toLocaleString()}</div>
+                        </div>
+                    `).join('');
+                }
+                
+            } catch (error) {
+                console.error('Error refreshing task list:', error);
+            }
+        }
+        
+        // Auto-refresh task list every 3 seconds
+        setInterval(refreshTaskList, 3000);
+        
+        // Initial load
+        refreshProgress();
+        startProgressStream();
+    </script>
+</body>
+</html>
