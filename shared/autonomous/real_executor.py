@@ -13,6 +13,8 @@ from .project_memory import ProjectMemory
 from .research_engine import ResearchEngine
 from .llm_retry import retry_with_exponential_backoff
 from .learning_engine import LearningEngine
+from .file_editor import FileEditor
+from .file_extractor import extract_files_from_understanding
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -64,6 +66,10 @@ class RealExecutor:
         # Initialize learning engine for pattern extraction
         self.learning_engine = LearningEngine()
         logger.info("🧠 Learning engine initialized for active pattern extraction")
+        
+        # Initialize file editor for smart file modifications
+        self.file_editor = FileEditor(workspace_path)
+        logger.info("📝 File editor initialized for targeted modifications")
         
         # Check if OpenHands is available
         self.openhands_available = self._check_openhands()
@@ -215,9 +221,12 @@ WHEN ADDING CODE:
             # TypeScript errors are CRITICAL
             if ts_result.returncode != 0:
                 # Parse errors and filter to only NEW files (not existing broken code)
+                all_ts_errors = []
                 new_errors = []
+                
                 for line in (ts_result.stdout + ts_result.stderr).split('\n'):
                     if 'error TS' in line or ': error' in line:
+                        all_ts_errors.append(line.strip())
                         # Check if error is in a file we just modified
                         # For now, collect all errors but only fail on server/ and client/src/pages/ files
                         # (skip client/src/components/ui/ which has pre-existing React 19 issues)
@@ -225,7 +234,8 @@ WHEN ADDING CODE:
                             new_errors.append(f"[TypeScript] {line.strip()}")
                 
                 if new_errors:
-                    logger.warning(f"❌ TypeScript check failed with {len(new_errors)} NEW errors (ignoring {len(all_errors) - len(new_errors)} pre-existing UI component errors)")
+                    ignored_count = len(all_ts_errors) - len(new_errors)
+                    logger.warning(f"❌ TypeScript check failed with {len(new_errors)} NEW errors (ignoring {ignored_count} pre-existing UI component errors)")
                     return {
                         'success': False,
                         'stdout': '\n'.join(all_stdout),
@@ -233,7 +243,7 @@ WHEN ADDING CODE:
                         'errors': new_errors[:20]  # Limit to first 20 errors to avoid overwhelming LLM
                     }
                 else:
-                    logger.info("✅ TypeScript check passed (ignoring pre-existing UI component errors)")
+                    logger.info(f"✅ TypeScript check passed (ignoring {len(all_ts_errors)} pre-existing UI component errors)")
             else:
                 logger.info("✅ TypeScript check passed")
         
@@ -564,6 +574,23 @@ Be thorough, specific, and evidence-based.
             understanding = understanding_response.content[0].text if understanding_response.content else ""
             logger.info(f"✅ Understanding complete ({len(understanding)} chars)")
             
+            # Read files that will be modified (from understanding phase)
+            logger.info("📝 Reading files that will be modified...")
+            files_to_read = extract_files_from_understanding(understanding)
+            file_contents = {}
+            for file_path in files_to_read:
+                content = self.file_editor.read_file(file_path)
+                if content:
+                    file_contents[file_path] = content[:2000]  # First 2000 chars
+                    logger.info(f"   Read {file_path} ({len(content)} chars)")
+            
+            # Format file contents for LLM
+            current_files_context = ""
+            if file_contents:
+                current_files_context = "\n\n### CURRENT FILE CONTENTS (files you will modify):\n"
+                for file_path, content in file_contents.items():
+                    current_files_context += f"\n#### {file_path}\n```\n{content}\n```\n"
+            
             # 🎯 PHASE 2: OPTIMAL IMPLEMENTATION
             logger.info("🚀 Phase 2: Optimal Implementation...")
             implementation_prompt = f"""You are an ENTERPRISE-LEVEL senior software engineer implementing a feature.
@@ -572,6 +599,7 @@ PROJECT WORKSPACE: {self.workspace_path}
 
 YOUR UNDERSTANDING (from Phase 1):
 {understanding}
+{current_files_context}
 
 TASK: {title}
 {prompt}

@@ -7,8 +7,8 @@
   "created_at": 1768544130.8695674,
   "started_at": 1768544130.8700197,
   "completed_at": null,
-  "last_active": 1768549739.581565,
-  "current_task_id": "task_13",
+  "last_active": 1768550910.3016057,
+  "current_task_id": "task_15",
   "completed_task_ids": [
     "task_5",
     "task_6",
@@ -23,11 +23,13 @@
     "task_7",
     "task_8",
     "task_11",
-    "task_12"
+    "task_12",
+    "task_13",
+    "task_14"
   ],
   "skipped_task_ids": [],
   "tasks_completed": 4,
-  "tasks_failed": 8,
+  "tasks_failed": 10,
   "tasks_skipped": 0,
   "tasks_total": 64,
   "result": null,
@@ -41,5 +43,5 @@
   "last_checkpoint_id": "just_talk_standalone_session_1768544130869_checkpoint_1768549737565",
   "tags": [],
   "notes": "",
-  "version": 49
+  "version": 55
 }
