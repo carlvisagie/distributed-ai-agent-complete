@@ -19,6 +19,7 @@ import logging
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 import anthropic
+import re
 from .smart_editor import SmartEditor
 
 logger = logging.getLogger(__name__)
@@ -164,14 +165,7 @@ Keep it minimal - only list files you'll actually modify. Maximum 10 files."""
         )
         
         analysis_text = response.content[0].text
-        
-        # Extract JSON
-        import re
-        json_match = re.search(r'\{.*\}', analysis_text, re.DOTALL)
-        if json_match:
-            return json.loads(json_match.group())
-        else:
-            raise ValueError("Failed to parse analysis response")
+        return self._parse_json_robust(analysis_text, "analysis")
     
     def _generate_edits(self, task: Dict[str, Any], analysis: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
@@ -237,14 +231,12 @@ CRITICAL RULES:
         )
         
         edits_text = response.content[0].text
+        result = self._parse_json_robust(edits_text, "edits")
         
-        # Extract JSON array
-        import re
-        json_match = re.search(r'\[.*\]', edits_text, re.DOTALL)
-        if json_match:
-            return json.loads(json_match.group())
-        else:
-            raise ValueError("Failed to parse edits response")
+        # Ensure it's a list
+        if isinstance(result, dict):
+            return [result]
+        return result
     
     def _apply_edits_incrementally(self, edits: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -318,6 +310,65 @@ CRITICAL RULES:
         
         if not result["success"]:
             raise ValueError(result["message"])
+    
+    def _parse_json_robust(self, text: str, context: str) -> Any:
+        """
+        Robust JSON parsing with error recovery
+        
+        Handles:
+        - JSON in markdown code blocks
+        - Unterminated strings
+        - Missing brackets
+        - Trailing commas
+        """
+        # Remove markdown code blocks
+        code_match = re.search(r'```(?:json)?\s*([\s\S]*?)```', text)
+        if code_match:
+            text = code_match.group(1)
+        
+        # Try patterns
+        patterns = [r'\{[\s\S]*\}', r'\[[\s\S]*\]']
+        
+        for pattern in patterns:
+            for match in re.finditer(pattern, text):
+                json_str = match.group()
+                
+                # Try direct parse
+                try:
+                    return json.loads(json_str)
+                except json.JSONDecodeError:
+                    # Try fixes
+                    fixed = self._fix_json_errors(json_str)
+                    if fixed:
+                        try:
+                            return json.loads(fixed)
+                        except:
+                            continue
+        
+        logger.error(f"JSON parse failed for {context}: {text[:300]}...")
+        raise ValueError(f"Invalid JSON in {context} response")
+    
+    def _fix_json_errors(self, json_str: str) -> Optional[str]:
+        """Fix common JSON errors"""
+        try:
+            # Remove trailing commas
+            json_str = re.sub(r',\s*([\]}])', r'\1', json_str)
+            
+            # Close unclosed braces
+            open_b = json_str.count('{') - json_str.count('\\{')
+            close_b = json_str.count('}') - json_str.count('\\}')
+            if open_b > close_b:
+                json_str += '}' * (open_b - close_b)
+            
+            # Close unclosed brackets
+            open_br = json_str.count('[') - json_str.count('\\[')
+            close_br = json_str.count(']') - json_str.count('\\]')
+            if open_br > close_br:
+                json_str += ']' * (open_br - close_br)
+            
+            return json_str
+        except:
+            return None
     
     def _validate_file(self, file_path: Path) -> Dict[str, Any]:
         """
