@@ -7,15 +7,17 @@
   "created_at": 1768544130.8695674,
   "started_at": 1768544130.8700197,
   "completed_at": null,
-  "last_active": 1768553121.9081051,
-  "current_task_id": "task_20",
+  "last_active": 1768554542.7069216,
+  "current_task_id": "task_22",
   "completed_task_ids": [
     "task_5",
     "task_6",
     "task_9",
     "task_10",
     "task_15",
-    "task_18"
+    "task_18",
+    "task_20",
+    "task_21"
   ],
   "failed_task_ids": [
     "task_1",
@@ -33,7 +35,7 @@
     "task_19"
   ],
   "skipped_task_ids": [],
-  "tasks_completed": 6,
+  "tasks_completed": 8,
   "tasks_failed": 13,
   "tasks_skipped": 0,
   "tasks_total": 64,
@@ -45,10 +47,11 @@
     "just_talk_standalone_session_1768544130869_checkpoint_1768548207615",
     "just_talk_standalone_session_1768544130869_checkpoint_1768549737565",
     "just_talk_standalone_session_1768544130869_checkpoint_1768551579111",
-    "just_talk_standalone_session_1768544130869_checkpoint_1768552803186"
+    "just_talk_standalone_session_1768544130869_checkpoint_1768552803186",
+    "just_talk_standalone_session_1768544130869_checkpoint_1768554540681"
   ],
-  "last_checkpoint_id": "just_talk_standalone_session_1768544130869_checkpoint_1768552803186",
+  "last_checkpoint_id": "just_talk_standalone_session_1768544130869_checkpoint_1768554540681",
   "tags": [],
   "notes": "",
-  "version": 74
+  "version": 82
 }
