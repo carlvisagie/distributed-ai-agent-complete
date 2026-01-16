@@ -1,0 +1,46 @@
+{
+  "checkpoint_id": "just_talk_standalone_session_1768544130869_checkpoint_1768547198959",
+  "session_id": "just_talk_standalone_session_1768544130869",
+  "created_at": 1768547198.9592483,
+  "current_task_id": "task_6",
+  "completed_task_ids": [
+    "task_5",
+    "task_6"
+  ],
+  "failed_task_ids": [
+    "task_1",
+    "task_2",
+    "task_3",
+    "task_4"
+  ],
+  "tasks_completed": 2,
+  "tasks_failed": 4,
+  "tasks_total": 64,
+  "context_snapshot": {
+    "completed": 2,
+    "failed": 4,
+    "progress": {
+      "execution_id": "just_talk_standalone_session_1768544130869",
+      "overall_progress": 3,
+      "metrics": {
+        "total_tasks": 64,
+        "completed": 2,
+        "failed": 4,
+        "skipped": 0,
+        "retrying": 0,
+        "running": 0,
+        "pending": 58
+      },
+      "elapsed": {
+        "seconds": 3068,
+        "formatted": "51m 8s"
+      },
+      "eta": {
+        "seconds": 95110,
+        "formatted": "26h 25m"
+      },
+      "is_complete": false,
+      "timestamp": "2026-01-16T07:06:38.954225"
+    }
+  }
+}

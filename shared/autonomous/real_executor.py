@@ -11,6 +11,8 @@ import logging
 from .code_executor import CodeExecutor
 from .project_memory import ProjectMemory
 from .research_engine import ResearchEngine
+from .llm_retry import retry_with_exponential_backoff
+from .learning_engine import LearningEngine
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -58,6 +60,10 @@ class RealExecutor:
             llm_model=self.llm_model
         )
         logger.info("🔬 Research engine initialized for evidence-based implementation")
+        
+        # Initialize learning engine for pattern extraction
+        self.learning_engine = LearningEngine()
+        logger.info("🧠 Learning engine initialized for active pattern extraction")
         
         # Check if OpenHands is available
         self.openhands_available = self._check_openhands()
@@ -461,6 +467,7 @@ What exactly needs to be done?
    - What patterns are currently used?
    - What similar features already exist?
    - CRITICAL: Use PROJECT STRUCTURE MAP to identify EXISTING files
+   - CRITICAL: Review PROJECT MEMORY below for established patterns and lessons
 
 1.3 **Context & Dependencies**
    - What is the architecture? (React + tRPC + Express + Drizzle ORM)
@@ -532,13 +539,16 @@ MUST INCLUDE:
 Be thorough, specific, and evidence-based.
 """
 
-            understanding_response = client.messages.create(
-                model=self.llm_model,
-                max_tokens=4096,
-                messages=[{
-                    "role": "user",
-                    "content": understanding_prompt
-                }]
+            understanding_response = retry_with_exponential_backoff(
+                lambda timeout: client.messages.create(
+                    model=self.llm_model,
+                    max_tokens=4096,
+                    timeout=timeout,
+                    messages=[{
+                        "role": "user",
+                        "content": understanding_prompt
+                    }]
+                )
             )
             
             understanding = understanding_response.content[0].text if understanding_response.content else ""
@@ -609,13 +619,17 @@ RULES:
 
 Now implement this task with ENTERPRISE QUALITY based on your deep understanding:"""
 
-            implementation_response = client.messages.create(
-                model=self.llm_model,
-                max_tokens=8192,  # More tokens for complete implementations
-                messages=[{
-                    "role": "user",
-                    "content": implementation_prompt
-                }]
+            # Evidence-based retry with exponential backoff
+            implementation_response = retry_with_exponential_backoff(
+                lambda timeout: client.messages.create(
+                    model=self.llm_model,
+                    max_tokens=8192,
+                    timeout=timeout,
+                    messages=[{
+                        "role": "user",
+                        "content": implementation_prompt
+                    }]
+                )
             )
             
             implementation = implementation_response.content[0].text if implementation_response.content else ""
@@ -670,13 +684,13 @@ IMPORTANT:
 
 Provide the corrected code now:"""
 
-                fix_response = client.messages.create(
-                    model=self.llm_model,
-                    max_tokens=8192,
-                    messages=[{
-                        "role": "user",
-                        "content": fix_prompt
-                    }]
+                fix_response = retry_with_exponential_backoff(
+                    lambda timeout: client.messages.create(
+                        model=self.llm_model,
+                        max_tokens=8192,
+                        timeout=timeout,
+                        messages=[{"role": "user", "content": fix_prompt}]
+                    )
                 )
                 
                 fix_implementation = fix_response.content[0].text if fix_response.content else ""
@@ -723,16 +737,48 @@ Provide the corrected code now:"""
                 if committed:
                     logger.info("✅ Changes committed successfully!")
                     
-                    # ITERATION 4: Record task completion in project memory
+                    # ACTIVE LEARNING: Extract patterns, lessons, and decisions
+                    logger.info("🧠 Extracting knowledge from execution...")
+                    
+                    # Extract patterns from successful implementation
+                    patterns = self.learning_engine.extract_patterns_from_code(
+                        implementation, title
+                    )
+                    
+                    # Extract lessons from error recovery (if any)
+                    initial_errors = build_result.get('errors', []) if fix_attempt > 0 else []
+                    lessons = self.learning_engine.extract_lessons_from_errors(
+                        initial_errors=initial_errors,
+                        fix_attempts=[{'attempt': i} for i in range(fix_attempt)],
+                        final_success=True
+                    )
+                    
+                    # Extract decisions from understanding phase
+                    decisions = self.learning_engine.extract_decisions_from_understanding(
+                        understanding, title
+                    )
+                    
+                    # Calculate performance metrics
+                    metrics = self.learning_engine.calculate_performance_metrics(
+                        execution_time=execution_time,
+                        fix_attempts=fix_attempt,
+                        final_success=True
+                    )
+                    
+                    logger.info(f"📊 Learned: {len(patterns)} patterns, {len(lessons)} lessons, {len(decisions)} decisions")
+                    logger.info(f"🎯 Performance: {metrics['efficiency_score']:.1%} efficiency, {fix_attempt} fixes needed")
+                    
+                    # Record task completion with extracted knowledge
                     self.project_memory.record_task_completion(task_id, {
                         'title': title,
                         'files_created': [f for f in exec_result['files_written'] if 'created' in str(f).lower()],
                         'files_modified': exec_result['files_written'],
-                        'patterns_used': [],  # Could extract from understanding phase
-                        'decisions': [{'decision': f"Completed {title}", 'rationale': prompt[:200]}],
-                        'lessons': []  # Could extract from self-correction attempts
+                        'patterns_used': patterns,
+                        'decisions': decisions if decisions else [{'decision': f"Completed {title}", 'rationale': prompt[:200]}],
+                        'lessons': lessons,
+                        'performance': metrics
                     })
-                    logger.info("🧠 Project memory updated!")
+                    logger.info("🧠 Project memory updated with active learning!")
                 else:
                     logger.error("❌ Commit failed!")
             
