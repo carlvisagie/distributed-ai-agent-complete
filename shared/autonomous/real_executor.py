@@ -427,8 +427,8 @@ WHEN ADDING CODE:
             # ITERATION 4: Get project memory for cross-task continuity
             project_memory_context = self.project_memory.get_context_for_task(task_id, title)
             
-            # 🎯 PHASE 1: DEEP UNDERSTANDING
-            logger.info("🔍 Phase 1: Deep Understanding...")
+            # 🎯 PHASE 1: DEEP UNDERSTANDING (Three-Step Framework)
+            logger.info("🔍 Phase 1: Deep Understanding (Job → Outcome → Method)...")
             understanding_prompt = f"""You are an ENTERPRISE-LEVEL senior software engineer analyzing a codebase.
 
 PROJECT WORKSPACE: {self.workspace_path}
@@ -441,45 +441,95 @@ PROJECT CONTEXT (Key Files):
 TASK TO UNDERSTAND: {title}
 {prompt}
 
-PHASE 1 OBJECTIVE: DEEP UNDERSTANDING
-Before writing any code, you must thoroughly understand:
+PHASE 1 OBJECTIVE: THREE-STEP DEEP UNDERSTANDING
+You MUST complete these three steps IN ORDER before any implementation:
 
-1. **Architecture Analysis**
-   - What is the overall architecture? (React + tRPC + Express + Drizzle ORM)
-   - What patterns are used? (tRPC procedures, React hooks, etc.)
-   - How do components communicate?
+═══════════════════════════════════════════════════════════════
+STEP 1: UNDERSTAND THE JOB COMPLETELY
+═══════════════════════════════════════════════════════════════
+What exactly needs to be done?
 
-2. **Existing Implementations**
+1.1 **Exact Requirements**
+   - What is being asked for? (Be specific)
+   - What are the explicit requirements?
+   - What are the implicit requirements?
+   - What constraints exist?
+
+1.2 **Current State Analysis**
+   - What exists now in the codebase?
+   - What files are relevant?
+   - What patterns are currently used?
    - What similar features already exist?
-   - What patterns do they follow?
-   - What utilities/helpers are available?
-   - CRITICAL: What files already exist in server/ directory?
+   - CRITICAL: Use PROJECT STRUCTURE MAP to identify EXISTING files
 
-3. **Database Schema**
-   - What tables exist?
-   - What fields are relevant to this task?
-   - What relationships exist?
-
-4. **Dependencies & Integration Points**
-   - What files will need to be modified?
-   - What existing code will this interact with?
+1.3 **Context & Dependencies**
+   - What is the architecture? (React + tRPC + Express + Drizzle ORM)
+   - What will this interact with?
+   - What database tables are involved?
    - What imports/exports are needed?
-   - CRITICAL: Use the PROJECT STRUCTURE MAP above to check what files EXIST!
-   - CRITICAL: Use the IMPORT PATHS GUIDE to use correct import paths!
+   - CRITICAL: Use IMPORT PATHS GUIDE for correct paths
 
-5. **Best Approach**
-   - What is the OPTIMAL way to implement this?
-   - Should I modify existing files or create new ones?
-   - What edge cases need handling?
+═══════════════════════════════════════════════════════════════
+STEP 2: UNDERSTAND THE INTENDED OUTCOME
+═══════════════════════════════════════════════════════════════
+What should the result look like?
+
+2.1 **Success Criteria**
+   - What does "done" mean for this task?
+   - What should work when complete?
+   - What should the user experience be?
+   - What are the acceptance criteria?
+
+2.2 **Problem Being Solved**
+   - What problem does this solve?
+   - Why is this needed?
+   - What value does it provide?
+   - What pain point does it address?
+
+2.3 **Integration Requirements**
+   - How should this integrate with existing code?
+   - What files need modification vs creation?
+   - What patterns should be followed?
+   - What could break if done wrong?
+
+═══════════════════════════════════════════════════════════════
+STEP 3: UNDERSTAND THE BEST RELIABLE WAY
+═══════════════════════════════════════════════════════════════
+What is the proven, evidence-based approach?
+
+3.1 **Research-Backed Approach**
+   - What does research say works? (see research guidance below)
+   - What are proven patterns for this?
+   - What are evidence-based best practices?
+   - What approaches have been validated?
+
+3.2 **Optimal Implementation Strategy**
+   - Should I modify existing files or create new ones? (Prefer modify)
+   - What is the most reliable implementation path?
+   - What patterns from the codebase should I follow?
+   - What utilities/helpers are available?
+
+3.3 **Risk Mitigation**
    - What could go wrong?
+   - What edge cases need handling?
+   - What validation is needed?
+   - How do I ensure production quality?
 
-OUTPUT: Provide a detailed analysis covering all 5 points above. Be thorough and specific.
+═══════════════════════════════════════════════════════════════
+
+OUTPUT REQUIREMENTS:
+Provide a detailed analysis covering ALL THREE STEPS above.
 
 MUST INCLUDE:
-- List of EXISTING files that will be MODIFIED (from project map)
-- List of NEW files that will be CREATED (if any)
-- EXACT import paths for each file (based on project structure)
-- Explanation of WHY you chose to modify vs create new files
+- STEP 1 SUMMARY: Complete job understanding
+- STEP 2 SUMMARY: Clear intended outcome
+- STEP 3 SUMMARY: Best reliable approach with justification
+- List of EXISTING files to MODIFY (from project map)
+- List of NEW files to CREATE (if any)
+- EXACT import paths for each file
+- Explanation of WHY this approach is most reliable
+
+Be thorough, specific, and evidence-based.
 """
 
             understanding_response = client.messages.create(
