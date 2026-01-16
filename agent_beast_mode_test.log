@@ -6266,3 +6266,130 @@ INFO:autonomous.real_executor:🔍 Phase 1: Deep Understanding (Job → Outcome 
 INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
 INFO:autonomous.real_executor:✅ Understanding complete (7445 chars)
 INFO:autonomous.real_executor:🚀 Phase 2: Optimal Implementation...
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.470133 seconds
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.755652 seconds
+ERROR:autonomous.real_executor:Three-phase LLM execution failed: Connection error.
+ERROR:autonomous.real_executor:Traceback: Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/http11.py", line 231, in _receive_event
+    raise RemoteProtocolError(msg)
+httpcore.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_base_client.py", line 1069, in request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/distributed-ai-agent-complete/shared/autonomous/real_executor.py", line 612, in _execute_with_three_phase_llm
+    {understanding}
+                   
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_utils/_utils.py", line 282, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/resources/messages/messages.py", line 932, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_base_client.py", line 1361, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_base_client.py", line 1101, in request
+    raise APIConnectionError(request=request) from err
+anthropic.APIConnectionError: Connection error.
+
+ERROR:autonomous.real_executor:Task task_43 failed: Connection error.
+INFO:autonomous.autonomous_executor_v2:[REAL EXECUTION] Task task_44
+INFO:autonomous.real_executor:Executing task task_44: Build habit reminder system
+INFO:autonomous.real_executor:🔬 Researching evidence-based approaches for: Build habit reminder system
+INFO:autonomous.real_executor:📊 Project map generated: 358 files analyzed
+INFO:autonomous.research_engine:🔬 Researching empirical evidence for: Build habit reminder system
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.research_engine:✅ Research completed for: Build habit reminder system
+INFO:autonomous.research_engine:   - 5 key findings
+INFO:autonomous.research_engine:   - 6 best practices
+INFO:autonomous.real_executor:📚 Building project context...
+INFO:autonomous.real_executor:📊 Project map generated: 358 files analyzed
+INFO:autonomous.real_executor:🔍 Phase 1: Deep Understanding (Job → Outcome → Method)...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:✅ Understanding complete (10409 chars)
+INFO:autonomous.real_executor:🚀 Phase 2: Optimal Implementation...
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.486563 seconds
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.802564 seconds
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:✅ Implementation complete (27654 chars)
+INFO:autonomous.real_executor:📝 Parsing and executing code...
+INFO:autonomous.code_executor:📄 Parsed file: drizzle/schema.ts (typescript, 6129 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/habitSystem.ts (typescript, 18408 chars)
+INFO:autonomous.code_executor:📊 Parsed: 2 files, 0 commands
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/drizzle/schema.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/habitSystem.ts
+INFO:autonomous.real_executor:🔍 Phase 3: Verification & Self-Correction...
+INFO:autonomous.real_executor:📊 Running build to verify code quality...
+INFO:autonomous.real_executor:🔍 Running TypeScript type check...
+WARNING:autonomous.real_executor:❌ TypeScript check failed with 0 errors
+INFO:autonomous.real_executor:📊 Build result: ❌ FAILED
+WARNING:autonomous.real_executor:⚠️  Build errors detected: 0 errors
+WARNING:autonomous.real_executor:⚠️  Build failed! Starting self-correction attempt 1/5...
+INFO:autonomous.real_executor:🧠 Analyzing errors and generating fix...
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.415589 seconds
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:🔧 Fix attempt 1 generated (25443 chars)
+INFO:autonomous.real_executor:📝 Executing fix attempt 1...
+INFO:autonomous.code_executor:📄 Parsed file: index.html (html, 4015 chars)
+INFO:autonomous.code_executor:📄 Parsed file: styles.css (css, 5520 chars)
+INFO:autonomous.code_executor:📄 Parsed file: script.js (javascript, 14664 chars)
+INFO:autonomous.code_executor:📊 Parsed: 3 files, 0 commands
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/index.html
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/styles.css
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/script.js
+INFO:autonomous.real_executor:✅ Fix executed, wrote 3 files
+INFO:autonomous.real_executor:📊 Re-running build to verify fix...
+INFO:autonomous.real_executor:🔍 Running TypeScript type check...
+WARNING:autonomous.real_executor:❌ TypeScript check failed with 0 errors
+INFO:autonomous.real_executor:📊 Build result after fix: ❌ FAILED
+WARNING:autonomous.real_executor:❌ Fix attempt 1 failed, trying again...
+WARNING:autonomous.real_executor:⚠️  Build failed! Starting self-correction attempt 2/5...
+INFO:autonomous.real_executor:🧠 Analyzing errors and generating fix...

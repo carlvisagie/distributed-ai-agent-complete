@@ -177,15 +177,29 @@ Keep it minimal - only list files you'll actually modify. Maximum 10 files."""
         """
         relevant_files = analysis["relevant_files"]
         
-        # Read only relevant files
+        # Verify files exist and read contents
         file_contents = {}
+        verified_files = []
+        
         for file_info in relevant_files:
             file_path = self.workspace / file_info["path"]
             if file_path.exists():
                 with open(file_path, 'r') as f:
-                    file_contents[file_info["path"]] = f.read()
-            else:
+                    content = f.read()
+                    file_contents[file_info["path"]] = content
+                    verified_files.append(file_info)
+                    logger.info(f"✓ Found {file_info['path']} ({len(content)} chars)")
+            elif file_info.get("operation") == "create":
                 file_contents[file_info["path"]] = "// NEW FILE"
+                verified_files.append(file_info)
+                logger.info(f"+ Will create {file_info['path']}")
+            else:
+                logger.warning(f"✗ File not found: {file_info['path']} (skipping)")
+        
+        if not verified_files:
+            raise ValueError("No valid files found to modify")
+        
+        relevant_files = verified_files
         
         # Build minimal prompt
         files_context = "\n\n".join([
@@ -200,6 +214,9 @@ REQUIREMENTS:
 {task.get('requirements', task.get('description', ''))}
 
 APPROACH: {analysis['approach']}
+
+VERIFIED FILES (these exist in the project):
+{', '.join([f['path'] for f in relevant_files])}
 
 CURRENT FILES:
 {files_context}
@@ -412,20 +429,30 @@ CRITICAL RULES:
     def _get_file_tree(self) -> str:
         """Get lightweight file tree (paths only, no contents)"""
         tree_lines = []
+        all_files = []
         
         for root, dirs, files in os.walk(self.workspace):
             # Skip node_modules, .git, etc
             dirs[:] = [d for d in dirs if d not in ['.git', 'node_modules', 'dist', 'build', '.next']]
             
-            level = root.replace(str(self.workspace), '').count(os.sep)
-            indent = '  ' * level
-            tree_lines.append(f'{indent}{os.path.basename(root)}/')
-            
-            subindent = '  ' * (level + 1)
-            for file in files[:20]:  # Limit files per directory
-                tree_lines.append(f'{subindent}{file}')
+            for file in files:
+                if file.endswith(('.ts', '.tsx', '.js', '.jsx', '.json')):
+                    rel_path = os.path.relpath(os.path.join(root, file), self.workspace)
+                    all_files.append(rel_path)
         
-        return '\n'.join(tree_lines[:200])  # Limit total lines
+        # Group by directory
+        tree_lines.append("\nKEY FILES (by directory):")
+        tree_lines.append("="*60)
+        
+        dirs_seen = set()
+        for file_path in sorted(all_files)[:100]:  # Limit to 100 files
+            dir_name = os.path.dirname(file_path) or "."
+            if dir_name not in dirs_seen:
+                tree_lines.append(f"\n{dir_name}/")
+                dirs_seen.add(dir_name)
+            tree_lines.append(f"  - {os.path.basename(file_path)}")
+        
+        return '\n'.join(tree_lines)
     
     def get_metrics(self) -> Dict[str, Any]:
         """Get agent performance metrics"""
