@@ -46,6 +46,13 @@ class ProductionAgent:
         self.model = model
         self.client = anthropic.Anthropic(api_key=api_key or os.getenv("ANTHROPIC_API_KEY"))
         
+        # Cursor's approach: AI-assisted file surgery
+        self.surgeon = AIFileSurgeon(
+            api_key=api_key or os.getenv("ANTHROPIC_API_KEY"),
+            model=model
+        )
+        self.shadow = ShadowWorkspace(self.workspace)
+        
         # Metrics
         self.metrics = {
             "tasks_completed": 0,
@@ -257,58 +264,84 @@ CRITICAL RULES:
     
     def _apply_edits_incrementally(self, edits: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
-        Phase 3: Apply edits one at a time with validation
+        Phase 3: Apply edits using AI Surgeon (Cursor's approach)
         
-        Incremental strategy:
-        - Apply one edit
-        - Validate that specific file
-        - If error: rollback and try different approach
-        - If success: commit and move to next edit
+        Strategy:
+        - Load file into shadow workspace
+        - Use AI Surgeon to apply intent to file
+        - Validate result
+        - If success: commit to real filesystem
+        - If failure: rollback shadow workspace
         """
         results = []
         
         for i, edit in enumerate(edits):
-            logger.info(f"📝 Applying edit {i+1}/{len(edits)}: {edit['file']}")
+            logger.info(f"📝 AI Surgeon working on {i+1}/{len(edits)}: {edit['file']}")
             
             file_path = self.workspace / edit["file"]
-            backup_content = None
+            rel_path = edit["file"]
             
             try:
-                # Backup current content
-                backup_content = SmartEditor.backup_file(file_path)
+                if edit["operation"] == "create":
+                    # Create new file
+                    result = self.surgeon.create_file(
+                        file_path=file_path,
+                        intent=edit["intent"]
+                    )
+                    
+                    if result["success"]:
+                        self.shadow.update_file(rel_path, result["content"])
+                    else:
+                        raise ValueError(result["error"])
                 
-                # Apply edit
-                self._apply_single_edit(edit, file_path)
-                
-                # Validate
-                validation = self._validate_file(file_path)
-                
-                if validation["success"]:
-                    logger.info(f"✅ Edit {i+1} applied successfully")
-                    results.append({
-                        "edit": edit,
-                        "success": True,
-                        "validation": validation
-                    })
                 else:
-                    # Rollback
-                    logger.warning(f"⚠️  Edit {i+1} failed validation, rolling back")
-                    SmartEditor.restore_backup(file_path, backup_content)
+                    # Modify existing file
+                    current_content = self.shadow.load_file(rel_path)
                     
-                    results.append({
-                        "edit": edit,
-                        "success": False,
-                        "validation": validation,
-                        "rolled_back": True
-                    })
+                    result = self.surgeon.apply_edit(
+                        file_path=file_path,
+                        intent=edit["intent"],
+                        current_content=current_content
+                    )
                     
-                    self.metrics["failed_edits"] += 1
+                    if result["success"]:
+                        self.shadow.update_file(rel_path, result["new_content"])
+                    else:
+                        raise ValueError(result["error"])
+                
+                # Commit to real filesystem
+                if self.shadow.commit(rel_path):
+                    # Validate
+                    validation = self._validate_file(file_path)
+                    
+                    if validation["success"]:
+                        logger.info(f"✅ Edit {i+1} applied successfully")
+                        results.append({
+                            "edit": edit,
+                            "success": True,
+                            "validation": validation
+                        })
+                    else:
+                        # Validation failed - rollback
+                        logger.warning(f"⚠️  Edit {i+1} failed validation, rolling back")
+                        self.shadow.rollback(rel_path)
+                        
+                        results.append({
+                            "edit": edit,
+                            "success": False,
+                            "validation": validation,
+                            "rolled_back": True
+                        })
+                        
+                        self.metrics["failed_edits"] += 1
+                else:
+                    raise ValueError("Failed to commit file")
                     
             except Exception as e:
                 logger.error(f"❌ Edit {i+1} failed: {e}")
                 
-                # Rollback on error
-                SmartEditor.restore_backup(file_path, backup_content)
+                # Rollback shadow
+                self.shadow.rollback(rel_path)
                 
                 results.append({
                     "edit": edit,
