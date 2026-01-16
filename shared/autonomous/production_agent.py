@@ -19,8 +19,9 @@ import logging
 from typing import Dict, List, Any, Optional
 from pathlib import Path
 import anthropic
+import subprocess
 import re
-from .smart_editor import SmartEditor
+from .ai_file_surgeon import AIFileSurgeon, ShadowWorkspace
 
 logger = logging.getLogger(__name__)
 
@@ -228,24 +229,38 @@ VERIFIED FILES (these exist in the project):
 CURRENT FILES:
 {files_context}
 
-Output JSON array of edit instructions:
+Output JSON array of NATURAL LANGUAGE edit intents (for AI Surgeon):
 [
   {{
-    "file": "server/utils.ts",
-    "operation": "insert_after" | "replace" | "create",
-    "marker": "export function existingFunction",  // For insert_after
-    "find": "old code",  // For replace
-    "content": "new code to insert or replace with"
+    "file": "server/routers.ts",
+    "operation": "modify" | "create",
+    "intent": "Describe what to change in natural language. Be specific about:
+               - Which function/section to modify
+               - What the change should accomplish
+               - Important context or constraints"
   }}
 ]
 
+EXAMPLE (modify existing file):
+{{
+  "file": "server/routers.ts",
+  "operation": "modify",
+  "intent": "In the sendMessage procedure, change it from publicProcedure to protectedProcedure so only authenticated users can send messages. Keep all the existing input validation and response logic."
+}}
+
+EXAMPLE (create new file):
+{{
+  "file": "server/utils.ts",
+  "operation": "create",
+  "intent": "Create a utility file with a generateSessionId function that creates anonymous session IDs using crypto.randomBytes. Export the function and include proper TypeScript types."
+}}
+
 CRITICAL RULES:
-1. Output EDIT INSTRUCTIONS, not full files
-2. Use insert_after to add new code after a marker line
-3. Use replace to change specific code sections
-4. Use create for new files
-5. Keep edits surgical - don't rewrite entire files
-6. Include proper TypeScript types"""
+1. Use natural language intents (AI Surgeon will apply them)
+2. Be specific about WHAT to change and WHY
+3. Include context (which function, which section)
+4. Don't include actual code - just describe the change
+5. One intent per file modification"""
 
         response = self.client.messages.create(
             model=self.model,

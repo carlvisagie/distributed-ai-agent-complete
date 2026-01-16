@@ -1,0 +1,85 @@
+{
+  "checkpoint_id": "just_talk_standalone_session_1768544130869_checkpoint_1768564095871",
+  "session_id": "just_talk_standalone_session_1768544130869",
+  "created_at": 1768564095.8714685,
+  "current_task_id": "task_45",
+  "completed_task_ids": [
+    "task_5",
+    "task_6",
+    "task_9",
+    "task_10",
+    "task_15",
+    "task_18",
+    "task_20",
+    "task_21",
+    "task_22",
+    "task_23",
+    "task_24",
+    "task_25",
+    "task_29",
+    "task_30",
+    "task_31",
+    "task_32",
+    "task_35",
+    "task_40",
+    "task_41",
+    "task_42"
+  ],
+  "failed_task_ids": [
+    "task_1",
+    "task_2",
+    "task_3",
+    "task_4",
+    "task_7",
+    "task_8",
+    "task_11",
+    "task_12",
+    "task_13",
+    "task_14",
+    "task_16",
+    "task_17",
+    "task_19",
+    "task_26",
+    "task_27",
+    "task_28",
+    "task_33",
+    "task_34",
+    "task_36",
+    "task_37",
+    "task_38",
+    "task_39",
+    "task_43",
+    "task_44",
+    "task_45"
+  ],
+  "tasks_completed": 20,
+  "tasks_failed": 25,
+  "tasks_total": 64,
+  "context_snapshot": {
+    "completed": 20,
+    "failed": 25,
+    "progress": {
+      "execution_id": "just_talk_standalone_session_1768544130869",
+      "overall_progress": 31,
+      "metrics": {
+        "total_tasks": 64,
+        "completed": 20,
+        "failed": 25,
+        "skipped": 0,
+        "retrying": 0,
+        "running": 0,
+        "pending": 19
+      },
+      "elapsed": {
+        "seconds": 19965,
+        "formatted": "5h 32m"
+      },
+      "eta": {
+        "seconds": 43923,
+        "formatted": "12h 12m"
+      },
+      "is_complete": false,
+      "timestamp": "2026-01-16T11:48:15.871438"
+    }
+  }
+}
