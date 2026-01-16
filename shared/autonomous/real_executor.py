@@ -116,18 +116,29 @@ class RealExecutor:
                     logger.warning(f"Could not read {file_path}: {e}")
         
         # ITERATION 3: Comprehensive project structure mapping with import analysis
-        context_parts.append("\n### 📁 COMPLETE PROJECT STRUCTURE MAP")
+        context_parts.append("\n### 📁 PROJECT STRUCTURE MAP (Key Files)")
         
-        # Map all TypeScript/JavaScript files with their exports and imports
+        # Map TypeScript/JavaScript files with their exports and imports
+        # LIMIT to prevent context overflow
         project_map = {}
-        for directory in ['server', 'client/src', 'drizzle']:
+        file_count = 0
+        max_files = 100  # Prevent LLM timeout
+        
+        for directory in ['server', 'drizzle', 'shared']:  # Skip client/src to reduce size
             dir_path = os.path.join(self.workspace_path, directory)
             if os.path.exists(dir_path):
                 for root, dirs, filenames in os.walk(dir_path):
+                    # Skip node_modules and other noise
+                    dirs[:] = [d for d in dirs if d not in ['node_modules', '__pycache__', 'dist', 'build']]
+                    
                     for filename in filenames:
+                        if file_count >= max_files:
+                            break
+                            
                         if filename.endswith(('.ts', '.tsx', '.js', '.jsx')):
                             file_path = os.path.join(root, filename)
                             rel_path = os.path.relpath(file_path, self.workspace_path)
+                            file_count += 1
                             
                             # Analyze file for imports and exports
                             try:

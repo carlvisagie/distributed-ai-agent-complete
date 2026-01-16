@@ -1,0 +1,58 @@
+{
+  "checkpoint_id": "just_talk_standalone_session_1768544130869_checkpoint_1768552803186",
+  "session_id": "just_talk_standalone_session_1768544130869",
+  "created_at": 1768552803.186685,
+  "current_task_id": "task_18",
+  "completed_task_ids": [
+    "task_5",
+    "task_6",
+    "task_9",
+    "task_10",
+    "task_15",
+    "task_18"
+  ],
+  "failed_task_ids": [
+    "task_1",
+    "task_2",
+    "task_3",
+    "task_4",
+    "task_7",
+    "task_8",
+    "task_11",
+    "task_12",
+    "task_13",
+    "task_14",
+    "task_16",
+    "task_17"
+  ],
+  "tasks_completed": 6,
+  "tasks_failed": 12,
+  "tasks_total": 64,
+  "context_snapshot": {
+    "completed": 6,
+    "failed": 12,
+    "progress": {
+      "execution_id": "just_talk_standalone_session_1768544130869",
+      "overall_progress": 9,
+      "metrics": {
+        "total_tasks": 64,
+        "completed": 6,
+        "failed": 12,
+        "skipped": 0,
+        "retrying": 0,
+        "running": 0,
+        "pending": 46
+      },
+      "elapsed": {
+        "seconds": 8672,
+        "formatted": "2h 24m"
+      },
+      "eta": {
+        "seconds": 83832,
+        "formatted": "23h 17m"
+      },
+      "is_complete": false,
+      "timestamp": "2026-01-16T08:40:03.186654"
+    }
+  }
+}
