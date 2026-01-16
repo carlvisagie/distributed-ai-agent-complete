@@ -1,0 +1,18 @@
+{
+  "project_id": "my_project",
+  "project_path": "/absolute/path/to/your/project",
+  "project_name": "My Project Name",
+  "auto_pr": true,
+  "checkpoint_interval": 5,
+  "todo_file": "todo.md",
+  "github": {
+    "enabled": true,
+    "branch_prefix": "agent",
+    "create_pr": true
+  },
+  "execution": {
+    "max_retries": 3,
+    "retry_delay": 2,
+    "timeout": 300
+  }
+}

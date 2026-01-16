@@ -168,6 +168,17 @@ class ProgressTracker:
         with self.lock:
             self.end_time = time.time()
     
+    def complete_execution(self) -> None:
+        """Alias for end_execution() for compatibility"""
+        self.end_execution()
+    
+    def update_task(self, task_id: str, **kwargs) -> None:
+        """Alias for update_task_progress() for compatibility"""
+        progress = kwargs.get('progress', None)
+        current_step = kwargs.get('current_step', None)
+        if progress is not None:
+            self.update_task_progress(task_id, progress, current_step)
+    
     def _update_metrics(self) -> None:
         """Update metrics based on current task statuses"""
         self.metrics = {

@@ -140,6 +140,16 @@ class KnowledgeGraph:
             print(f"Error saving knowledge graph: {e}")
             return False
     
+    def save_to_file(self, filepath: Optional[str] = None) -> bool:
+        """Alias for save() for compatibility"""
+        if filepath and filepath != self.storage_file:
+            old_file = self.storage_file
+            self.storage_file = filepath
+            result = self.save()
+            self.storage_file = old_file
+            return result
+        return self.save()
+    
     def load(self) -> bool:
         """Load knowledge graph from disk"""
         if not os.path.exists(self.storage_file):

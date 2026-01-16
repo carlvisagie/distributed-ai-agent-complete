@@ -1,0 +1,46 @@
+{
+  "project_id": "just-talk-standalone",
+  "created_at": 1768532205.463388,
+  "last_updated": 1768532878.665902,
+  "tasks_completed": 2,
+  "architectural_decisions": [
+    {
+      "task_id": "test_task_1",
+      "decision": "Completed Create Stripe webhook handler",
+      "rationale": "Create a webhook handler in server/webhooks/stripeWebhook.ts that handles checkout.session.completed events",
+      "files_affected": [],
+      "timestamp": 1768532366.409512
+    },
+    {
+      "task_id": "test_task_3",
+      "decision": "Completed Add detailed logging to webhook",
+      "rationale": "Add structured logging to track webhook events, including timestamps, event types, and outcomes",
+      "files_affected": [],
+      "timestamp": 1768532878.665225
+    }
+  ],
+  "implementation_patterns": {},
+  "file_ownership": {
+    "/home/ubuntu/just-talk-standalone/server/webhooks/stripeWebhook.ts": {
+      "created_by": "unknown",
+      "purpose": "Modified by test_task_1",
+      "last_modified_by": "test_task_3",
+      "dependencies": []
+    },
+    "/home/ubuntu/just-talk-standalone/server/_core/env.ts": {
+      "created_by": "unknown",
+      "purpose": "Modified by test_task_1",
+      "last_modified_by": "test_task_1",
+      "dependencies": []
+    },
+    "/home/ubuntu/just-talk-standalone/drizzle/schema.ts": {
+      "created_by": "unknown",
+      "purpose": "Modified by test_task_1",
+      "last_modified_by": "test_task_1",
+      "dependencies": []
+    }
+  },
+  "learned_lessons": [],
+  "feature_map": {},
+  "integration_points": []
+}

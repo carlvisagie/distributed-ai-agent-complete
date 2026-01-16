@@ -1,0 +1,38 @@
+
+======================================================================
+🧪 TESTING SINGLE TASK EXECUTION
+======================================================================
+
+WARNING:autonomous.real_executor:OpenHands SDK not available, will use fallback execution
+Task: Fix trial banner display issue
+Description: The trial banner should show remaining messages but it's not displaying.
+
+Current issue:
+- Trial fields exist in database (trialMessagesRemaining, trialStartDate)
+- Frontend has TrialBanner component
+...
+
+======================================================================
+🚀 EXECUTING...
+======================================================================
+
+INFO:autonomous.real_executor:Executing task test_001: Fix trial banner display issue
+INFO:autonomous.real_executor:📚 Building project context...
+INFO:autonomous.real_executor:🔍 Phase 1: Deep Understanding...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:✅ Understanding complete (6182 chars)
+INFO:autonomous.real_executor:🚀 Phase 2: Optimal Implementation...
+ERROR:autonomous.real_executor:Two-phase LLM execution failed: name 'router' is not defined
+ERROR:autonomous.real_executor:Task test_001 failed: name 'router' is not defined
+
+======================================================================
+📊 RESULTS
+======================================================================
+Status: failed
+Files modified: []
+Execution time: unknown
+Details: N/A
+
+❌ Task failed: name 'router' is not defined
+======================================================================
+

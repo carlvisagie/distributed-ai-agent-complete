@@ -1,0 +1,71 @@
+{
+  "checkpoint_id": "just_talk_standalone_session_1768474999657_checkpoint_1768475808621",
+  "session_id": "just_talk_standalone_session_1768474999657",
+  "created_at": 1768475808.6214387,
+  "current_task_id": "task_35",
+  "completed_task_ids": [],
+  "failed_task_ids": [
+    "task_1",
+    "task_2",
+    "task_3",
+    "task_4",
+    "task_5",
+    "task_6",
+    "task_7",
+    "task_8",
+    "task_9",
+    "task_10",
+    "task_11",
+    "task_12",
+    "task_13",
+    "task_14",
+    "task_15",
+    "task_16",
+    "task_17",
+    "task_18",
+    "task_19",
+    "task_20",
+    "task_21",
+    "task_22",
+    "task_23",
+    "task_24",
+    "task_25",
+    "task_26",
+    "task_27",
+    "task_28",
+    "task_29",
+    "task_30",
+    "task_31",
+    "task_32",
+    "task_33",
+    "task_34",
+    "task_35"
+  ],
+  "tasks_completed": 0,
+  "tasks_failed": 35,
+  "tasks_total": 71,
+  "context_snapshot": {
+    "completed": 0,
+    "failed": 41,
+    "progress": {
+      "execution_id": "just_talk_standalone_session_1768474999657",
+      "overall_progress": 0,
+      "metrics": {
+        "total_tasks": 71,
+        "completed": 0,
+        "failed": 35,
+        "skipped": 0,
+        "retrying": 0,
+        "running": 0,
+        "pending": 36
+      },
+      "elapsed": {
+        "seconds": 808,
+        "formatted": "13m 28s"
+      },
+      "eta": null,
+      "is_complete": false,
+      "timestamp": "2026-01-15T11:16:48.621422"
+    }
+  }
+}

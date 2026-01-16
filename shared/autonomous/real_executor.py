@@ -1,13 +1,15 @@
 """
 Real Code Execution Module
-Integrates OpenHands SDK for actual code generation and execution
+Three-phase approach: Deep Understanding → Optimal Implementation → Verification
 """
 import os
 import asyncio
+import subprocess
 from typing import Dict, Any, Optional
 from datetime import datetime
 import logging
 from .code_executor import CodeExecutor
+from .project_memory import ProjectMemory
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -15,8 +17,10 @@ logger = logging.getLogger(__name__)
 
 class RealExecutor:
     """
-    Real code executor using OpenHands SDK
-    Replaces mock execution with actual code generation and file modification
+    Real code executor with three-phase approach:
+    1. Deep project understanding
+    2. Optimal implementation
+    3. Verification and self-correction
     """
     
     def __init__(
@@ -43,6 +47,10 @@ class RealExecutor:
         # Initialize code executor for actual file writing
         self.code_executor = CodeExecutor(workspace_path)
         
+        # Initialize project memory for cross-task continuity
+        project_id = os.path.basename(workspace_path)
+        self.project_memory = ProjectMemory(project_id)
+        
         # Check if OpenHands is available
         self.openhands_available = self._check_openhands()
         
@@ -57,9 +65,159 @@ class RealExecutor:
         except ImportError:
             return False
     
+    def _get_project_context(self) -> str:
+        """
+        Build comprehensive project context by reading key files
+        """
+        context_parts = []
+        
+        # Key files to read for understanding
+        key_files = [
+            'package.json',
+            'README.md',
+            'drizzle/schema.ts',
+            'server/routers.ts',
+            'server/db.ts',
+            'client/src/App.tsx',
+            'todo.md'
+        ]
+        
+        for file_path in key_files:
+            full_path = os.path.join(self.workspace_path, file_path)
+            if os.path.exists(full_path):
+                try:
+                    with open(full_path, 'r', encoding='utf-8') as f:
+                        content = f.read()
+                        # Limit size to avoid token overflow
+                        if len(content) > 5000:
+                            content = content[:5000] + "\n... (truncated)"
+                        context_parts.append(f"\n### {file_path}\n```\n{content}\n```")
+                except Exception as e:
+                    logger.warning(f"Could not read {file_path}: {e}")
+        
+        # ITERATION 3: Comprehensive project structure mapping with import analysis
+        context_parts.append("\n### 📁 COMPLETE PROJECT STRUCTURE MAP")
+        
+        # Map all TypeScript/JavaScript files with their exports and imports
+        project_map = {}
+        for directory in ['server', 'client/src', 'drizzle']:
+            dir_path = os.path.join(self.workspace_path, directory)
+            if os.path.exists(dir_path):
+                for root, dirs, filenames in os.walk(dir_path):
+                    for filename in filenames:
+                        if filename.endswith(('.ts', '.tsx', '.js', '.jsx')):
+                            file_path = os.path.join(root, filename)
+                            rel_path = os.path.relpath(file_path, self.workspace_path)
+                            
+                            # Analyze file for imports and exports
+                            try:
+                                with open(file_path, 'r', encoding='utf-8') as f:
+                                    content = f.read()
+                                    imports = []
+                                    exports = []
+                                    
+                                    # Extract imports
+                                    for line in content.split('\n')[:50]:  # First 50 lines
+                                        if 'import' in line and 'from' in line:
+                                            imports.append(line.strip())
+                                        if line.startswith('export'):
+                                            exports.append(line.strip()[:80])  # First 80 chars
+                                    
+                                    project_map[rel_path] = {
+                                        'imports': imports[:10],  # First 10 imports
+                                        'exports': exports[:5],   # First 5 exports
+                                        'size': len(content)
+                                    }
+                            except Exception as e:
+                                project_map[rel_path] = {'error': str(e)}
+        
+        # Format project map for LLM
+        map_lines = []
+        for file_path, info in sorted(project_map.items()):
+            if 'error' in info:
+                map_lines.append(f"  {file_path} (error reading)")
+            else:
+                map_lines.append(f"  {file_path} ({info['size']} bytes)")
+                if info['imports']:
+                    map_lines.append(f"    Imports: {len(info['imports'])} found")
+                    for imp in info['imports'][:3]:  # Show first 3
+                        map_lines.append(f"      {imp}")
+                if info['exports']:
+                    map_lines.append(f"    Exports: {len(info['exports'])} found")
+        
+        context_parts.append("\n".join(map_lines))
+        
+        # Add critical import paths guide
+        context_parts.append("\n### 🎯 CRITICAL IMPORT PATHS GUIDE")
+        context_parts.append("""EXISTING FILES - DO NOT CREATE NEW ONES:
+- drizzle/schema.ts - Database schema (import from '../drizzle/schema')
+- server/db.ts - Database helpers (import from './db')
+- server/routers.ts - Main router (import from './routers')
+- server/_core/* - Core utilities (import from './_core/...')
+
+WHEN ADDING CODE:
+1. Check if file EXISTS in project map above
+2. If EXISTS: MODIFY the existing file (show complete modified version)
+3. If NOT EXISTS: Create new file in appropriate directory
+4. ALWAYS use correct relative import paths based on file location
+5. NEVER create duplicate files (e.g., server/schema.ts when drizzle/schema.ts exists)
+""")
+        
+        result = "\n".join(context_parts)
+        logger.info(f"📊 Project map generated: {len(project_map)} files analyzed")
+        return result
+    
+    def _run_build(self) -> Dict[str, Any]:
+        """
+        Run project build and return results
+        
+        Returns:
+            {
+                'success': bool,
+                'stdout': str,
+                'stderr': str,
+                'errors': list[str]
+            }
+        """
+        try:
+            result = subprocess.run(
+                ['pnpm', 'run', 'build'],
+                cwd=self.workspace_path,
+                capture_output=True,
+                text=True,
+                timeout=120
+            )
+            
+            # Parse errors from output
+            errors = []
+            for line in (result.stdout + result.stderr).split('\n'):
+                if 'ERROR' in line or 'error' in line.lower():
+                    errors.append(line.strip())
+            
+            return {
+                'success': result.returncode == 0,
+                'stdout': result.stdout[-2000:],  # Last 2000 chars
+                'stderr': result.stderr[-2000:],
+                'errors': errors
+            }
+        except subprocess.TimeoutExpired:
+            return {
+                'success': False,
+                'stdout': '',
+                'stderr': 'Build timeout after 120 seconds',
+                'errors': ['Build timeout']
+            }
+        except Exception as e:
+            return {
+                'success': False,
+                'stdout': '',
+                'stderr': str(e),
+                'errors': [str(e)]
+            }
+    
     async def execute_task(self, task: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Execute a task with real code generation
+        Execute a task with three-phase approach
         
         Args:
             task: Task dictionary with id, type, title, description, prompt
@@ -79,8 +237,8 @@ class RealExecutor:
                 # Use OpenHands for real execution
                 result = await self._execute_with_openhands(task_id, prompt)
             else:
-                # Fallback to direct LLM call
-                result = await self._execute_with_direct_llm(task_id, prompt)
+                # Fallback to three-phase LLM approach
+                result = await self._execute_with_three_phase_llm(task_id, title, prompt)
             
             return {
                 'task_id': task_id,
@@ -104,84 +262,19 @@ class RealExecutor:
             }
     
     async def _execute_with_openhands(self, task_id: str, prompt: str) -> Dict[str, Any]:
-        """
-        Execute task using OpenHands SDK
-        
-        Args:
-            task_id: Task identifier
-            prompt: Task prompt/instructions
-        
-        Returns:
-            Execution result
-        """
-        try:
-            from openhands.sdk import LLM, Agent, Conversation, Tool
-            from openhands.tools.terminal import TerminalTool
-            from openhands.tools.file_editor import FileEditorTool
-            from openhands.tools.task_tracker import TaskTrackerTool
-            
-            start_time = datetime.utcnow()
-            
-            # Create LLM instance
-            llm = LLM(
-                model=self.llm_model,
-                api_key=self.llm_api_key,
-                base_url=self.llm_base_url
-            )
-            
-            # Create agent with tools
-            agent = Agent(
-                llm=llm,
-                tools=[
-                    Tool(name=TerminalTool.name),
-                    Tool(name=FileEditorTool.name),
-                    Tool(name=TaskTrackerTool.name)
-                ]
-            )
-            
-            # Create conversation
-            conversation = Conversation(
-                agent=agent,
-                workspace=self.workspace_path
-            )
-            
-            # Send task prompt
-            conversation.send_message(prompt)
-            
-            # Run agent
-            conversation.run()
-            
-            # Get results
-            messages = conversation.get_messages()
-            artifacts = conversation.get_artifacts()
-            
-            execution_time = (datetime.utcnow() - start_time).total_seconds()
-            
-            # Extract files modified
-            files_modified = []
-            for artifact in artifacts:
-                if artifact.get('type') == 'file':
-                    files_modified.append(artifact.get('path', 'unknown'))
-            
-            return {
-                'mode': 'openhands',
-                'execution_time': f"{execution_time:.1f} seconds",
-                'files_modified': files_modified,
-                'messages': len(messages),
-                'artifacts': len(artifacts),
-                'details': f"Task completed via OpenHands SDK"
-            }
-        
-        except Exception as e:
-            logger.error(f"OpenHands execution failed: {str(e)}")
-            raise
+        """Execute task using OpenHands SDK"""
+        raise NotImplementedError("OpenHands not available")
     
-    async def _execute_with_direct_llm(self, task_id: str, prompt: str) -> Dict[str, Any]:
+    async def _execute_with_three_phase_llm(self, task_id: str, title: str, prompt: str) -> Dict[str, Any]:
         """
-        Execute task using direct LLM API call (fallback)
+        Execute task using THREE-PHASE approach:
+        Phase 1: Deep Understanding
+        Phase 2: Optimal Implementation
+        Phase 3: Verification & Self-Correction
         
         Args:
             task_id: Task identifier
+            title: Task title
             prompt: Task prompt/instructions
         
         Returns:
@@ -195,57 +288,293 @@ class RealExecutor:
             # Create Anthropic client
             client = anthropic.Anthropic(api_key=self.llm_api_key)
             
-            # Enhanced prompt with execution context
-            enhanced_prompt = f"""You are an autonomous coding agent working on a project.
+            # Get project context
+            logger.info("📚 Building project context...")
+            project_context = self._get_project_context()
+            
+            # ITERATION 4: Get project memory for cross-task continuity
+            project_memory_context = self.project_memory.get_context_for_task(task_id, title)
+            
+            # 🎯 PHASE 1: DEEP UNDERSTANDING
+            logger.info("🔍 Phase 1: Deep Understanding...")
+            understanding_prompt = f"""You are an ENTERPRISE-LEVEL senior software engineer analyzing a codebase.
 
-WORKSPACE: {self.workspace_path}
+PROJECT WORKSPACE: {self.workspace_path}
 
-TASK:
+PROJECT CONTEXT (Key Files):
+{project_context}
+
+{project_memory_context}
+
+TASK TO UNDERSTAND: {title}
 {prompt}
 
-INSTRUCTIONS:
-1. Analyze the task requirements
-2. Generate the necessary code
-3. Provide clear implementation steps
-4. List all files that need to be created or modified
-5. Include complete, production-ready code
+PHASE 1 OBJECTIVE: DEEP UNDERSTANDING
+Before writing any code, you must thoroughly understand:
 
-Respond with a structured plan and implementation."""
-            
-            # Call Claude
-            response = client.messages.create(
+1. **Architecture Analysis**
+   - What is the overall architecture? (React + tRPC + Express + Drizzle ORM)
+   - What patterns are used? (tRPC procedures, React hooks, etc.)
+   - How do components communicate?
+
+2. **Existing Implementations**
+   - What similar features already exist?
+   - What patterns do they follow?
+   - What utilities/helpers are available?
+   - CRITICAL: What files already exist in server/ directory?
+
+3. **Database Schema**
+   - What tables exist?
+   - What fields are relevant to this task?
+   - What relationships exist?
+
+4. **Dependencies & Integration Points**
+   - What files will need to be modified?
+   - What existing code will this interact with?
+   - What imports/exports are needed?
+   - CRITICAL: Use the PROJECT STRUCTURE MAP above to check what files EXIST!
+   - CRITICAL: Use the IMPORT PATHS GUIDE to use correct import paths!
+
+5. **Best Approach**
+   - What is the OPTIMAL way to implement this?
+   - Should I modify existing files or create new ones?
+   - What edge cases need handling?
+   - What could go wrong?
+
+OUTPUT: Provide a detailed analysis covering all 5 points above. Be thorough and specific.
+
+MUST INCLUDE:
+- List of EXISTING files that will be MODIFIED (from project map)
+- List of NEW files that will be CREATED (if any)
+- EXACT import paths for each file (based on project structure)
+- Explanation of WHY you chose to modify vs create new files
+"""
+
+            understanding_response = client.messages.create(
                 model=self.llm_model,
                 max_tokens=4096,
                 messages=[{
                     "role": "user",
-                    "content": enhanced_prompt
+                    "content": understanding_prompt
                 }]
             )
             
-            # Extract response
-            content = response.content[0].text if response.content else ""
+            understanding = understanding_response.content[0].text if understanding_response.content else ""
+            logger.info(f"✅ Understanding complete ({len(understanding)} chars)")
             
-            # 🔥 ACTUALLY EXECUTE THE CODE!
-            logger.info("📝 Parsing LLM response and executing code...")
-            exec_result = self.code_executor.execute_task(content, task_id)
+            # 🎯 PHASE 2: OPTIMAL IMPLEMENTATION
+            logger.info("🚀 Phase 2: Optimal Implementation...")
+            implementation_prompt = f"""You are an ENTERPRISE-LEVEL senior software engineer implementing a feature.
+
+PROJECT WORKSPACE: {self.workspace_path}
+
+YOUR UNDERSTANDING (from Phase 1):
+{understanding}
+
+TASK: {title}
+{prompt}
+
+PHASE 2 OBJECTIVE: OPTIMAL IMPLEMENTATION
+Now that you deeply understand the project, implement this task with EXCELLENCE.
+
+CRITICAL REQUIREMENTS:
+1. **Follow Existing Patterns** - Match the style and architecture of existing code
+2. **Complete Implementation** - No TODOs, no placeholders, no "// implement later"
+3. **Production Quality** - Error handling, logging, validation, edge cases
+4. **Seamless Integration** - Works perfectly with existing code
+5. **Enterprise Standards** - Clean, maintainable, documented
+6. **NEVER BREAK EXISTING CODE** - When modifying files, preserve ALL existing imports, exports, and functionality
+7. **ADD, DON'T REPLACE** - Add new code alongside existing code, don't delete working code
+8. **VERIFY MENTALLY** - Before outputting, verify all imports/exports still work
+9. **MODIFY EXISTING FILES** - If a file already exists (like stripeRouter.ts), MODIFY it, don't create a new one
+10. **CHECK FILE STRUCTURE** - Based on Phase 1, use EXISTING file paths, don't invent new ones
+
+OUTPUT FORMAT - You MUST use this exact format for ALL code files:
+
+```language path/to/file.ext
+// Complete, production-ready code
+// Follows existing patterns
+// Handles all edge cases
+```
+
+EXAMPLES:
+
+```typescript server/routers.ts
+import {{ router, publicProcedure, protectedProcedure }} from './_core/trpc';
+import {{ z }} from 'zod';
+// ... complete implementation following existing pattern
+```
+
+```typescript client/src/pages/Feature.tsx
+import React from 'react';
+import {{ trpc }} from '@/lib/trpc';
+// ... complete implementation following existing pattern
+```
+
+RULES:
+- ALWAYS specify the full file path after the language
+- Write COMPLETE implementations (no "// TODO" comments)
+- Follow the EXACT patterns you observed in Phase 1
+- Include proper TypeScript types
+- Add error handling and validation
+- Test your logic mentally before outputting
+- If modifying existing files, show the COMPLETE modified version
+- NEVER delete existing imports - only add new ones
+- NEVER remove existing router definitions - only add new ones
+- When adding to routers.ts, ADD to the existing router object, don't replace it
+- Preserve ALL existing functionality - your changes should be ADDITIVE only
+- If a file like server/stripeRouter.ts already exists, MODIFY that file, don't create server/routers/stripe.ts
+
+Now implement this task with ENTERPRISE QUALITY based on your deep understanding:"""
+
+            implementation_response = client.messages.create(
+                model=self.llm_model,
+                max_tokens=8192,  # More tokens for complete implementations
+                messages=[{
+                    "role": "user",
+                    "content": implementation_prompt
+                }]
+            )
+            
+            implementation = implementation_response.content[0].text if implementation_response.content else ""
+            logger.info(f"✅ Implementation complete ({len(implementation)} chars)")
+            
+            # 🔥 EXECUTE THE CODE (WITHOUT COMMITTING YET)!
+            logger.info("📝 Parsing and executing code...")
+            exec_result = self.code_executor.execute_task(implementation, task_id, skip_commit=True)
+            
+            # 🎯 PHASE 3: VERIFICATION & SELF-CORRECTION (MULTI-ATTEMPT)
+            logger.info("🔍 Phase 3: Verification & Self-Correction...")
+            logger.info("📊 Running build to verify code quality...")
+            build_result = self._run_build()
+            logger.info(f"📊 Build result: {'✅ PASSED' if build_result['success'] else '❌ FAILED'}")
+            if not build_result['success']:
+                logger.warning(f"⚠️  Build errors detected: {len(build_result.get('errors', []))} errors")
+                for i, err in enumerate(build_result.get('errors', [])[:3], 1):
+                    logger.warning(f"   Error {i}: {err[:100]}...")
+            
+            max_fix_attempts = 5
+            fix_attempt = 0
+            previous_errors = []
+            
+            while not build_result['success'] and fix_attempt < max_fix_attempts:
+                fix_attempt += 1
+                logger.warning(f"⚠️  Build failed! Starting self-correction attempt {fix_attempt}/{max_fix_attempts}...")
+                logger.info(f"🧠 Analyzing errors and generating fix..." )
+                
+                # Build fix prompt with learning from previous attempts
+                error_history = ""
+                if previous_errors:
+                    error_history = "\n\nPREVIOUS FIX ATTEMPTS THAT FAILED:\n" + "\n".join(
+                        f"Attempt {i+1}: {err}" for i, err in enumerate(previous_errors)
+                    )
+                
+                fix_prompt = f"""The code has build errors. Fix them now.
+
+ORIGINAL TASK: {title} - {prompt[:200]}
+
+CURRENT BUILD ERRORS:
+{chr(10).join(build_result['errors'])}
+
+BUILD OUTPUT:
+{build_result['stderr']}{error_history}
+
+IMPORTANT:
+- Analyze what went wrong
+- Fix ONLY the errors shown above
+- Do NOT break existing working code
+- Provide complete, working files
+- Use the EXACT format: ```language path/to/file.ext
+
+Provide the corrected code now:"""
+
+                fix_response = client.messages.create(
+                    model=self.llm_model,
+                    max_tokens=8192,
+                    messages=[{
+                        "role": "user",
+                        "content": fix_prompt
+                    }]
+                )
+                
+                fix_implementation = fix_response.content[0].text if fix_response.content else ""
+                logger.info(f"🔧 Fix attempt {fix_attempt} generated ({len(fix_implementation)} chars)")
+                
+                # Execute the fix (without committing yet)
+                logger.info(f"📝 Executing fix attempt {fix_attempt}...")
+                fix_result = self.code_executor.execute_task(fix_implementation, f"{task_id}_fix_{fix_attempt}", skip_commit=True)
+                logger.info(f"✅ Fix executed, wrote {fix_result.get('files_count', 0)} files")
+                
+                # Verify fix worked
+                logger.info(f"📊 Re-running build to verify fix...")
+                build_result = self._run_build()
+                logger.info(f"📊 Build result after fix: {'✅ PASSED' if build_result['success'] else '❌ FAILED'}")
+                
+                if build_result['success']:
+                    logger.info(f"✅ Self-correction successful on attempt {fix_attempt}!")
+                    break
+                else:
+                    # Store this attempt's errors for next iteration
+                    previous_errors.append(chr(10).join(build_result['errors'][:3]))  # First 3 errors
+                    logger.warning(f"❌ Fix attempt {fix_attempt} failed, trying again...")
+            
+            # If all attempts failed, DISCARD CHANGES (git reset --hard)
+            if not build_result['success']:
+                logger.error(f"❌ All {max_fix_attempts} self-correction attempts failed! DISCARDING CHANGES...")
+                # Discard uncommitted changes
+                result = subprocess.run(
+                    ['git', 'reset', '--hard', 'HEAD'],
+                    cwd=self.workspace_path,
+                    capture_output=True,
+                    text=True
+                )
+                if result.returncode == 0:
+                    logger.info("✅ Changes discarded, back to clean state")
+                    build_result['success'] = False
+                else:
+                    logger.error("❌ Failed to discard changes!")
+            else:
+                # BUILD PASSED! NOW COMMIT!
+                logger.info("✅ Build passed! Committing changes...")
+                commit_message = f"Task: {task_id}\n\n{prompt[:200]}"
+                committed = self.code_executor.commit_changes(commit_message)
+                if committed:
+                    logger.info("✅ Changes committed successfully!")
+                    
+                    # ITERATION 4: Record task completion in project memory
+                    self.project_memory.record_task_completion(task_id, {
+                        'title': title,
+                        'files_created': [f for f in exec_result['files_written'] if 'created' in str(f).lower()],
+                        'files_modified': exec_result['files_written'],
+                        'patterns_used': [],  # Could extract from understanding phase
+                        'decisions': [{'decision': f"Completed {title}", 'rationale': prompt[:200]}],
+                        'lessons': []  # Could extract from self-correction attempts
+                    })
+                    logger.info("🧠 Project memory updated!")
+                else:
+                    logger.error("❌ Commit failed!")
             
             execution_time = (datetime.utcnow() - start_time).total_seconds()
             
             return {
-                'mode': 'direct_llm',
+                'mode': 'three_phase_llm',
                 'execution_time': f"{execution_time:.1f} seconds",
                 'files_modified': exec_result['files_written'],
                 'files_count': exec_result['files_count'],
                 'commands_executed': exec_result['commands_executed'],
                 'commands_succeeded': exec_result['commands_succeeded'],
                 'committed': exec_result['committed'],
-                'success': exec_result['success'],
+                'success': exec_result['success'] and build_result['success'],
+                'build_passed': build_result['success'],
                 'details': exec_result['summary'],
-                'llm_response_length': len(content)
+                'understanding_length': len(understanding),
+                'implementation_length': len(implementation)
             }
         
         except Exception as e:
-            logger.error(f"Direct LLM execution failed: {str(e)}")
+            logger.error(f"Three-phase LLM execution failed: {str(e)}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
             raise
     
     async def execute_batch(self, tasks: list[Dict[str, Any]]) -> list[Dict[str, Any]]:
@@ -276,49 +605,5 @@ Respond with a structured plan and implementation."""
             'openhands_available': self.openhands_available,
             'llm_configured': bool(self.llm_api_key),
             'llm_model': self.llm_model,
-            'execution_mode': 'openhands' if self.openhands_available else 'direct_llm'
+            'execution_mode': 'three_phase_llm'
         }
-
-
-# Example usage
-async def test_real_executor():
-    """Test the real executor"""
-    
-    # Create executor
-    executor = RealExecutor(
-        workspace_path="/home/ubuntu/test-workspace"
-    )
-    
-    # Check status
-    status = executor.get_status()
-    print(f"Executor Status: {status}")
-    
-    # Test task
-    test_task = {
-        'task_id': 'test_001',
-        'task_type': 'create_page',
-        'title': 'Create About Page',
-        'description': 'Create a professional about page',
-        'prompt': """Create an about page (about.html) with the following:
-- Professional header with company name
-- Mission statement section
-- Team section with 3 team members
-- Contact information
-- Modern, clean design with CSS
-- Responsive layout
-
-Generate complete HTML and CSS code."""
-    }
-    
-    # Execute
-    result = await executor.execute_task(test_task)
-    
-    print(f"\nExecution Result:")
-    print(f"Status: {result['status']}")
-    print(f"Files Modified: {result.get('files_modified', [])}")
-    print(f"Execution Time: {result.get('execution_time', 'unknown')}")
-    print(f"Details: {result.get('details', 'N/A')}")
-
-
-if __name__ == "__main__":
-    asyncio.run(test_real_executor())

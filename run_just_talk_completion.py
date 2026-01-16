@@ -98,8 +98,47 @@ async def main():
     if not success:
         print("❌ Initialization failed")
         return
-    
     print("✅ Executor initialized\n")
+    
+    # ITERATION 5: Pre-flight build check
+    print("🔍 ITERATION 5: Pre-flight build verification...")
+    import subprocess
+    try:
+        result = subprocess.run(
+            ['pnpm', 'run', 'build'],
+            cwd='/home/ubuntu/just-talk-standalone',
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        if result.returncode != 0:
+            print("⚠️  BUILD FAILED! Foundation is broken!")
+            print("🔧 Attempting automatic repair...")
+            
+            # Create repair task
+            repair_task = TaskState(
+                task_id="repair_foundation",
+                project_id=project_id,
+                title="Fix broken build before starting tasks",
+                description=f"The build is currently failing. Fix all build errors before proceeding.\n\nBuild errors:\n{result.stderr}",
+                priority='critical',
+                task_type='bugfix',
+                estimated_duration=1800
+            )
+            
+            # Execute repair task
+            repair_result = await executor.execute_tasks([repair_task])
+            
+            if repair_result.get('completed', 0) == 0:
+                print("❌ Failed to repair foundation! Cannot proceed.")
+                return
+            
+            print("✅ Foundation repaired! Proceeding with tasks...\n")
+        else:
+            print("✅ Build passes! Foundation is clean.\n")
+    except Exception as e:
+        print(f"⚠️  Could not verify build: {e}")
+        print("Proceeding anyway...\n")
     
     # Ask for confirmation
     print("="*70)

@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 class CodeExecutor:
     """
     Executes code from LLM responses
-    - Parses code blocks
+    - Parses code blocks with file paths
     - Writes files
     - Executes commands
     - Commits changes
@@ -29,6 +29,11 @@ class CodeExecutor:
         """
         Parse LLM response for code blocks and commands
         
+        Expected format:
+        ```language path/to/file.ext
+        code content here
+        ```
+        
         Returns:
             {
                 'files': [{'path': '...', 'content': '...', 'language': '...'}],
@@ -39,10 +44,8 @@ class CodeExecutor:
         files = []
         commands = []
         
-        # Extract code blocks with file paths
-        # Pattern: ```language filename
-        # code
-        # ```
+        # 🎯 IMPROVED PATTERN: Matches ```language filepath
+        # This captures: language, filepath, and code content
         code_block_pattern = r'```(\w+)\s+([^\n]+)\n(.*?)```'
         matches = re.findall(code_block_pattern, response, re.DOTALL)
         
@@ -50,8 +53,14 @@ class CodeExecutor:
             # Clean up filepath
             filepath = filepath.strip()
             
-            # Skip if it's not a real file path
-            if not ('/' in filepath or '.' in filepath):
+            # Validate it's a real file path (must have / or . for extension)
+            if not ('/' in filepath or filepath.endswith(('.ts', '.tsx', '.js', '.jsx', '.py', '.json', '.md', '.css', '.html'))):
+                logger.warning(f"⚠️  Skipping invalid filepath: {filepath}")
+                continue
+            
+            # Skip if filepath looks like code (common parsing error)
+            if any(keyword in filepath for keyword in ['const ', 'import ', 'function ', 'class ', 'export ', 'var ', 'let ']):
+                logger.warning(f"⚠️  Skipping code mistaken as filepath: {filepath[:50]}...")
                 continue
             
             files.append({
@@ -59,9 +68,10 @@ class CodeExecutor:
                 'content': content.strip(),
                 'language': language
             })
+            
+            logger.info(f"📄 Parsed file: {filepath} ({language}, {len(content)} chars)")
         
-        # Extract shell commands
-        # Pattern: $ command or `command`
+        # Extract shell commands from $ prefix
         command_pattern = r'(?:^|\n)\$\s+([^\n]+)'
         command_matches = re.findall(command_pattern, response)
         commands.extend(command_matches)
@@ -72,10 +82,12 @@ class CodeExecutor:
         for block in command_blocks:
             commands.extend([line.strip() for line in block.split('\n') if line.strip() and not line.strip().startswith('#')])
         
-        # Extract summary (first paragraph or heading)
+        # Extract summary (first heading or paragraph)
         summary_match = re.search(r'^#+\s+(.+)$|^(.+?)(?:\n\n|\n#)', response, re.MULTILINE)
         summary = summary_match.group(1) or summary_match.group(2) if summary_match else "Code changes applied"
         summary = summary.strip()[:200]  # Limit to 200 chars
+        
+        logger.info(f"📊 Parsed: {len(files)} files, {len(commands)} commands")
         
         return {
             'files': files,
@@ -103,12 +115,21 @@ class CodeExecutor:
             if not filepath.startswith('/'):
                 filepath = os.path.join(self.workspace_path, filepath)
             
+            # Validate path is within workspace (security check)
+            abs_workspace = os.path.abspath(self.workspace_path)
+            abs_filepath = os.path.abspath(filepath)
+            if not abs_filepath.startswith(abs_workspace):
+                logger.error(f"❌ Security: Path outside workspace: {filepath}")
+                continue
+            
             try:
                 # Create directory if needed
-                os.makedirs(os.path.dirname(filepath), exist_ok=True)
+                dir_path = os.path.dirname(filepath)
+                if dir_path:
+                    os.makedirs(dir_path, exist_ok=True)
                 
                 # Write file
-                with open(filepath, 'w') as f:
+                with open(filepath, 'w', encoding='utf-8') as f:
                     f.write(content)
                 
                 written.append(filepath)
@@ -133,7 +154,8 @@ class CodeExecutor:
         
         for cmd in commands:
             # Skip dangerous commands
-            if any(danger in cmd.lower() for danger in ['rm -rf /', 'dd if=', 'mkfs', ':(){:|:&};:']):
+            dangerous_patterns = ['rm -rf /', 'dd if=', 'mkfs', ':(){:|:&};:', 'format ', '> /dev/']
+            if any(danger in cmd.lower() for danger in dangerous_patterns):
                 logger.warning(f"⚠️  Skipped dangerous command: {cmd}")
                 continue
             
@@ -208,7 +230,7 @@ class CodeExecutor:
             )
             
             if not status.stdout.strip():
-                logger.info("No changes to commit")
+                logger.info("ℹ️  No changes to commit")
                 return True
             
             # Commit
@@ -219,20 +241,21 @@ class CodeExecutor:
                 capture_output=True
             )
             
-            logger.info(f"✅ Committed: {message}")
+            logger.info(f"✅ Committed: {message[:100]}")
             return True
         
         except subprocess.CalledProcessError as e:
             logger.error(f"❌ Git commit failed: {e}")
             return False
     
-    def execute_task(self, llm_response: str, task_title: str) -> Dict[str, Any]:
+    def execute_task(self, llm_response: str, task_title: str, skip_commit: bool = False) -> Dict[str, Any]:
         """
         Execute a complete task from LLM response
         
         Args:
             llm_response: Raw LLM response text
             task_title: Task title for commit message
+            skip_commit: If True, don't commit changes (for build verification first)
         
         Returns:
             Execution result
@@ -248,14 +271,18 @@ class CodeExecutor:
         # Execute commands
         command_results = self.execute_commands(parsed['commands'])
         
-        # Commit changes
-        commit_message = f"Task: {task_title}\n\n{parsed['summary']}"
-        committed = self.commit_changes(commit_message)
+        # Commit changes (unless skipped for build verification)
+        committed = False
+        if not skip_commit:
+            commit_message = f"Task: {task_title}\n\n{parsed['summary']}"
+            committed = self.commit_changes(commit_message)
         
         execution_time = (datetime.utcnow() - start_time).total_seconds()
         
+        success = len(files_written) > 0 or any(r.get('success') for r in command_results)
+        
         return {
-            'success': len(files_written) > 0 or any(r['success'] for r in command_results),
+            'success': success,
             'files_written': files_written,
             'files_count': len(files_written),
             'commands_executed': len(command_results),
@@ -264,3 +291,33 @@ class CodeExecutor:
             'execution_time': f"{execution_time:.1f}s",
             'summary': parsed['summary']
         }
+
+    
+    def rollback_last_commit(self) -> bool:
+        """
+        Rollback the last git commit
+        
+        Returns:
+            True if rollback successful, False otherwise
+        """
+        try:
+            logger.info("🔄 Rolling back last commit...")
+            
+            result = subprocess.run(
+                ['git', 'reset', '--hard', 'HEAD~1'],
+                cwd=self.workspace_path,
+                capture_output=True,
+                text=True,
+                timeout=10
+            )
+            
+            if result.returncode == 0:
+                logger.info("✅ Rollback successful")
+                return True
+            else:
+                logger.error(f"❌ Rollback failed: {result.stderr}")
+                return False
+        
+        except Exception as e:
+            logger.error(f"❌ Rollback exception: {e}")
+            return False
