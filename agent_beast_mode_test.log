@@ -1622,3 +1622,303 @@ INFO:autonomous.real_executor:📊 Build result after fix: ❌ FAILED
 WARNING:autonomous.real_executor:❌ Fix attempt 4 failed, trying again...
 WARNING:autonomous.real_executor:⚠️  Build failed! Starting self-correction attempt 5/5...
 INFO:autonomous.real_executor:🧠 Analyzing errors and generating fix...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:🔧 Fix attempt 5 generated (17964 chars)
+INFO:autonomous.real_executor:📝 Executing fix attempt 5...
+INFO:autonomous.code_executor:📄 Parsed file: client/src/pages/Dashboard.tsx (typescript, 4365 chars)
+INFO:autonomous.code_executor:📄 Parsed file: client/src/App.tsx (typescript, 2542 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/procedures.ts (typescript, 987 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/context.ts (typescript, 187 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/index.ts (typescript, 531 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/authRouter.ts (typescript, 1975 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/db.ts (typescript, 2841 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/stripeRouter.ts (typescript, 1802 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/ttsRouter.ts (typescript, 1537 chars)
+INFO:autonomous.code_executor:📊 Parsed: 9 files, 0 commands
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/client/src/pages/Dashboard.tsx
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/client/src/App.tsx
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/procedures.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/context.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/index.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/authRouter.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/db.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/stripeRouter.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/ttsRouter.ts
+INFO:autonomous.real_executor:✅ Fix executed, wrote 9 files
+INFO:autonomous.real_executor:📊 Re-running build to verify fix...
+INFO:autonomous.real_executor:🔍 Running TypeScript type check...
+WARNING:autonomous.real_executor:❌ TypeScript check failed with 1029 errors
+INFO:autonomous.real_executor:📊 Build result after fix: ❌ FAILED
+WARNING:autonomous.real_executor:❌ Fix attempt 5 failed, trying again...
+ERROR:autonomous.real_executor:❌ All 5 self-correction attempts failed! DISCARDING CHANGES...
+INFO:autonomous.real_executor:✅ Changes discarded, back to clean state
+INFO:autonomous.autonomous_executor_v2:[REAL EXECUTION] Task task_11
+INFO:autonomous.real_executor:Executing task task_11: Verify all environment variables
+INFO:autonomous.real_executor:🔬 Researching evidence-based approaches for: Verify all environment variables
+INFO:autonomous.real_executor:📊 Project map generated: 1877 files analyzed
+INFO:autonomous.research_engine:🔬 Researching empirical evidence for: Verify all environment variables
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.research_engine:✅ Research completed for: Verify all environment variables
+INFO:autonomous.research_engine:   - 3 key findings
+INFO:autonomous.research_engine:   - 6 best practices
+INFO:autonomous.real_executor:📚 Building project context...
+INFO:autonomous.real_executor:📊 Project map generated: 1877 files analyzed
+INFO:autonomous.real_executor:🔍 Phase 1: Deep Understanding (Job → Outcome → Method)...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:✅ Understanding complete (9706 chars)
+INFO:autonomous.real_executor:🚀 Phase 2: Optimal Implementation...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:✅ Implementation complete (12602 chars)
+INFO:autonomous.real_executor:📝 Parsing and executing code...
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/env.ts (typescript, 2783 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/config.ts (typescript, 4367 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/index.ts (typescript, 3504 chars)
+INFO:autonomous.code_executor:📊 Parsed: 3 files, 0 commands
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/env.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/config.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/index.ts
+INFO:autonomous.real_executor:🔍 Phase 3: Verification & Self-Correction...
+INFO:autonomous.real_executor:📊 Running build to verify code quality...
+INFO:autonomous.real_executor:🔍 Running TypeScript type check...
+WARNING:autonomous.real_executor:❌ TypeScript check failed with 955 errors
+INFO:autonomous.real_executor:📊 Build result: ❌ FAILED
+WARNING:autonomous.real_executor:⚠️  Build errors detected: 955 errors
+WARNING:autonomous.real_executor:   Error 1: [TypeScript] client/src/App.tsx(31,10): error TS2559: Type '{ children: Element[]; }' has no propert...
+WARNING:autonomous.real_executor:   Error 2: [TypeScript] client/src/components/AIChatBox.tsx(226,12): error TS2322: Type '{ children: Element; c...
+WARNING:autonomous.real_executor:   Error 3: [TypeScript] client/src/components/DashboardLayout.tsx(205,14): error TS2559: Type '{ children: Elem...
+WARNING:autonomous.real_executor:⚠️  Build failed! Starting self-correction attempt 1/5...
+INFO:autonomous.real_executor:🧠 Analyzing errors and generating fix...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:🔧 Fix attempt 1 generated (11117 chars)
+INFO:autonomous.real_executor:📝 Executing fix attempt 1...
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/env.ts (typescript, 2193 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/errorLogger.ts (typescript, 1054 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/db.ts (typescript, 291 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/index.ts (typescript, 871 chars)
+INFO:autonomous.code_executor:📄 Parsed file: client/src/App.tsx (typescript, 1748 chars)
+INFO:autonomous.code_executor:📄 Parsed file: client/src/main.tsx (typescript, 1027 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/db.ts (typescript, 291 chars)
+INFO:autonomous.code_executor:📄 Parsed file: client/src/hooks/usePersistFn.ts (typescript, 534 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/routes/index.ts (typescript, 493 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/trpc.ts (typescript, 876 chars)
+INFO:autonomous.code_executor:📊 Parsed: 10 files, 0 commands
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/env.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/errorLogger.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/db.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/index.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/client/src/App.tsx
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/client/src/main.tsx
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/db.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/client/src/hooks/usePersistFn.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/routes/index.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/trpc.ts
+INFO:autonomous.real_executor:✅ Fix executed, wrote 10 files
+INFO:autonomous.real_executor:📊 Re-running build to verify fix...
+INFO:autonomous.real_executor:🔍 Running TypeScript type check...
+WARNING:autonomous.real_executor:❌ TypeScript check failed with 1041 errors
+INFO:autonomous.real_executor:📊 Build result after fix: ❌ FAILED
+WARNING:autonomous.real_executor:❌ Fix attempt 1 failed, trying again...
+WARNING:autonomous.real_executor:⚠️  Build failed! Starting self-correction attempt 2/5...
+INFO:autonomous.real_executor:🧠 Analyzing errors and generating fix...
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:🔧 Fix attempt 2 generated (17609 chars)
+INFO:autonomous.real_executor:📝 Executing fix attempt 2...
+INFO:autonomous.code_executor:📄 Parsed file: client/src/components/ui/toaster.tsx (tsx, 786 chars)
+INFO:autonomous.code_executor:📄 Parsed file: client/src/hooks/use-toast.ts (tsx, 3717 chars)
+INFO:autonomous.code_executor:📄 Parsed file: client/src/components/ui/toast.tsx (tsx, 4853 chars)
+INFO:autonomous.code_executor:📄 Parsed file: client/src/App.tsx (tsx, 3673 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/env.ts (typescript, 1753 chars)
+INFO:autonomous.code_executor:📄 Parsed file: server/_core/config.ts (typescript, 1596 chars)
+INFO:autonomous.code_executor:📊 Parsed: 6 files, 0 commands
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/client/src/components/ui/toaster.tsx
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/client/src/hooks/use-toast.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/client/src/components/ui/toast.tsx
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/client/src/App.tsx
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/env.ts
+INFO:autonomous.code_executor:✅ Wrote file: /home/ubuntu/just-talk-standalone/server/_core/config.ts
+INFO:autonomous.real_executor:✅ Fix executed, wrote 6 files
+INFO:autonomous.real_executor:📊 Re-running build to verify fix...
+INFO:autonomous.real_executor:🔍 Running TypeScript type check...
+WARNING:autonomous.real_executor:❌ TypeScript check failed with 1039 errors
+INFO:autonomous.real_executor:📊 Build result after fix: ❌ FAILED
+WARNING:autonomous.real_executor:❌ Fix attempt 2 failed, trying again...
+WARNING:autonomous.real_executor:⚠️  Build failed! Starting self-correction attempt 3/5...
+INFO:autonomous.real_executor:🧠 Analyzing errors and generating fix...
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.404913 seconds
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.970290 seconds
+ERROR:autonomous.real_executor:Three-phase LLM execution failed: Connection error.
+ERROR:autonomous.real_executor:Traceback: Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/http11.py", line 231, in _receive_event
+    raise RemoteProtocolError(msg)
+httpcore.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_base_client.py", line 1069, in request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.RemoteProtocolError: Server disconnected without sending a response.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/distributed-ai-agent-complete/shared/autonomous/real_executor.py", line 673, in _execute_with_three_phase_llm
+    {chr(10).join(build_result['errors'])}
+                                   ^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_utils/_utils.py", line 282, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/resources/messages/messages.py", line 932, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_base_client.py", line 1361, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_base_client.py", line 1101, in request
+    raise APIConnectionError(request=request) from err
+anthropic.APIConnectionError: Connection error.
+
+ERROR:autonomous.real_executor:Task task_11 failed: Connection error.
+INFO:autonomous.autonomous_executor_v2:[REAL EXECUTION] Task task_12
+INFO:autonomous.real_executor:Executing task task_12: Fix trial banner not showing
+INFO:autonomous.real_executor:🔬 Researching evidence-based approaches for: Fix trial banner not showing
+INFO:autonomous.real_executor:📊 Project map generated: 1880 files analyzed
+INFO:autonomous.research_engine:🔬 Researching empirical evidence for: Fix trial banner not showing
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.405968 seconds
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.803380 seconds
+ERROR:autonomous.research_engine:Research failed: Connection error.
+INFO:autonomous.real_executor:📚 Building project context...
+INFO:autonomous.real_executor:📊 Project map generated: 1880 files analyzed
+INFO:autonomous.real_executor:🔍 Phase 1: Deep Understanding (Job → Outcome → Method)...
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.428453 seconds
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.964899 seconds
+INFO:httpx:HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"
+INFO:autonomous.real_executor:✅ Understanding complete (7039 chars)
+INFO:autonomous.real_executor:🚀 Phase 2: Optimal Implementation...
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.416370 seconds
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.879434 seconds
+ERROR:autonomous.real_executor:Three-phase LLM execution failed: Request timed out or interrupted. This could be due to a network timeout, dropped connection, or request cancellation. See https://docs.anthropic.com/en/api/errors#long-requests for more details.
+ERROR:autonomous.real_executor:Traceback: Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection.py", line 101, in handle_request
+    raise exc
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection.py", line 78, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_sync/connection.py", line 156, in _connect
+    stream = stream.start_tls(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_backends/sync.py", line 154, in start_tls
+    with map_exceptions(exc_map):
+  File "/usr/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/usr/local/lib/python3.11/dist-packages/httpcore/_exceptions.py", line 14, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore.ConnectTimeout: _ssl.c:975: The handshake operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_base_client.py", line 1069, in request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 914, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 942, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 979, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_client.py", line 1014, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 249, in handle_request
+    with map_httpcore_exceptions():
+  File "/usr/lib/python3.11/contextlib.py", line 155, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/usr/local/lib/python3.11/dist-packages/httpx/_transports/default.py", line 118, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectTimeout: _ssl.c:975: The handshake operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/distributed-ai-agent-complete/shared/autonomous/real_executor.py", line 612, in _execute_with_three_phase_llm
+    - Test your logic mentally before outputting
+                                          ^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_utils/_utils.py", line 282, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/resources/messages/messages.py", line 932, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_base_client.py", line 1361, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/dist-packages/anthropic/_base_client.py", line 1087, in request
+    raise APITimeoutError(request=request) from err
+anthropic.APITimeoutError: Request timed out or interrupted. This could be due to a network timeout, dropped connection, or request cancellation. See https://docs.anthropic.com/en/api/errors#long-requests for more details.
+
+ERROR:autonomous.real_executor:Task task_12 failed: Request timed out or interrupted. This could be due to a network timeout, dropped connection, or request cancellation. See https://docs.anthropic.com/en/api/errors#long-requests for more details.
+INFO:autonomous.autonomous_executor_v2:[REAL EXECUTION] Task task_13
+INFO:autonomous.real_executor:Executing task task_13: Fix AI memory across sessions
+INFO:autonomous.real_executor:🔬 Researching evidence-based approaches for: Fix AI memory across sessions
+INFO:autonomous.real_executor:📊 Project map generated: 1880 files analyzed
+INFO:autonomous.research_engine:🔬 Researching empirical evidence for: Fix AI memory across sessions
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.453345 seconds
+INFO:anthropic._base_client:Retrying request to /v1/messages in 0.775798 seconds
+ERROR:autonomous.research_engine:Research failed: Request timed out or interrupted. This could be due to a network timeout, dropped connection, or request cancellation. See https://docs.anthropic.com/en/api/errors#long-requests for more details.
+INFO:autonomous.real_executor:📚 Building project context...
+INFO:autonomous.real_executor:📊 Project map generated: 1880 files analyzed
+INFO:autonomous.real_executor:🔍 Phase 1: Deep Understanding (Job → Outcome → Method)...
