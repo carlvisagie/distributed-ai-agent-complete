@@ -1,0 +1,8 @@
+{
+  "project_id": "just_talk_standalone",
+  "project_path": "/home/ubuntu/just-talk-standalone",
+  "project_name": "Just Talk - AI Coaching Platform",
+  "auto_pr": false,
+  "checkpoint_interval": 3,
+  "todo_file": "todo.md"
+}

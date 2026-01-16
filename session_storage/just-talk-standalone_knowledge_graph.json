@@ -1,8 +1,8 @@
 {
   "project_id": "just-talk-standalone",
   "created_at": 1768532205.463388,
-  "last_updated": 1768532878.665902,
-  "tasks_completed": 2,
+  "last_updated": 1768561620.603669,
+  "tasks_completed": 5,
   "architectural_decisions": [
     {
       "task_id": "test_task_1",
@@ -17,6 +17,27 @@
       "rationale": "Add structured logging to track webhook events, including timestamps, event types, and outcomes",
       "files_affected": [],
       "timestamp": 1768532878.665225
+    },
+    {
+      "task_id": "task_1",
+      "decision": "Completed Merge todo.md with research-backed format",
+      "rationale": "From section: Phase 0: Infrastructure Setup (Research-Backed Agent Foundation)\n\nMerge todo.md with research-backed format",
+      "files_affected": [],
+      "timestamp": 1768560840.031337
+    },
+    {
+      "task_id": "task_3",
+      "decision": "Completed Create session start routine",
+      "rationale": "From section: Phase 0: Infrastructure Setup (Research-Backed Agent Foundation)\n\nCreate session start routine",
+      "files_affected": [],
+      "timestamp": 1768561448.673324
+    },
+    {
+      "task_id": "task_4",
+      "decision": "Completed Create session end routine",
+      "rationale": "From section: Phase 0: Infrastructure Setup (Research-Backed Agent Foundation)\n\nCreate session end routine",
+      "files_affected": [],
+      "timestamp": 1768561620.60305
     }
   ],
   "implementation_patterns": {},
@@ -37,6 +58,30 @@
       "created_by": "unknown",
       "purpose": "Modified by test_task_1",
       "last_modified_by": "test_task_1",
+      "dependencies": []
+    },
+    "/home/ubuntu/just-talk-standalone/todo.md": {
+      "created_by": "unknown",
+      "purpose": "Modified by task_1",
+      "last_modified_by": "task_3",
+      "dependencies": []
+    },
+    "/home/ubuntu/just-talk-standalone/server/sessionManager.ts": {
+      "created_by": "unknown",
+      "purpose": "Modified by task_3",
+      "last_modified_by": "task_4",
+      "dependencies": []
+    },
+    "/home/ubuntu/just-talk-standalone/server/sessionRouter.ts": {
+      "created_by": "unknown",
+      "purpose": "Modified by task_3",
+      "last_modified_by": "task_4",
+      "dependencies": []
+    },
+    "/home/ubuntu/just-talk-standalone/server/routers.ts": {
+      "created_by": "unknown",
+      "purpose": "Modified by task_3",
+      "last_modified_by": "task_3",
       "dependencies": []
     }
   },

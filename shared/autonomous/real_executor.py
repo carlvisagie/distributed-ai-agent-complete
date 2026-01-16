@@ -10,6 +10,7 @@ from datetime import datetime
 import logging
 from .code_executor import CodeExecutor
 from .project_memory import ProjectMemory
+from .research_engine import ResearchEngine
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -50,6 +51,13 @@ class RealExecutor:
         # Initialize project memory for cross-task continuity
         project_id = os.path.basename(workspace_path)
         self.project_memory = ProjectMemory(project_id)
+        
+        # Initialize research engine for evidence-based decisions
+        self.research_engine = ResearchEngine(
+            llm_api_key=self.llm_api_key,
+            llm_model=self.llm_model
+        )
+        logger.info("🔬 Research engine initialized for evidence-based implementation")
         
         # Check if OpenHands is available
         self.openhands_available = self._check_openhands()
@@ -169,7 +177,7 @@ WHEN ADDING CODE:
     
     def _run_build(self) -> Dict[str, Any]:
         """
-        Run project build and return results
+        Run comprehensive build validation including TypeScript type checking
         
         Returns:
             {
@@ -179,8 +187,56 @@ WHEN ADDING CODE:
                 'errors': list[str]
             }
         """
+        all_errors = []
+        all_stdout = []
+        all_stderr = []
+        
+        # Step 1: TypeScript type checking (CRITICAL - catches type errors)
         try:
-            result = subprocess.run(
+            logger.info("🔍 Running TypeScript type check...")
+            ts_result = subprocess.run(
+                ['npx', 'tsc', '--noEmit'],
+                cwd=self.workspace_path,
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
+            
+            all_stdout.append("=== TypeScript Check ===")
+            all_stdout.append(ts_result.stdout)
+            all_stderr.append(ts_result.stderr)
+            
+            # TypeScript errors are CRITICAL
+            if ts_result.returncode != 0:
+                for line in (ts_result.stdout + ts_result.stderr).split('\n'):
+                    if 'error TS' in line or ': error' in line:
+                        all_errors.append(f"[TypeScript] {line.strip()}")
+                
+                logger.warning(f"❌ TypeScript check failed with {len(all_errors)} errors")
+                return {
+                    'success': False,
+                    'stdout': '\n'.join(all_stdout),
+                    'stderr': '\n'.join(all_stderr),
+                    'errors': all_errors
+                }
+            else:
+                logger.info("✅ TypeScript check passed")
+        
+        except subprocess.TimeoutExpired:
+            return {
+                'success': False,
+                'stdout': '',
+                'stderr': 'TypeScript check timeout after 60 seconds',
+                'errors': ['TypeScript check timeout']
+            }
+        except Exception as e:
+            logger.warning(f"TypeScript check failed: {e}")
+            all_errors.append(f"TypeScript check error: {str(e)}")
+        
+        # Step 2: Vite build (catches runtime issues)
+        try:
+            logger.info("🏗️  Running Vite build...")
+            build_result = subprocess.run(
                 ['pnpm', 'run', 'build'],
                 cwd=self.workspace_path,
                 capture_output=True,
@@ -188,32 +244,98 @@ WHEN ADDING CODE:
                 timeout=120
             )
             
-            # Parse errors from output
-            errors = []
-            for line in (result.stdout + result.stderr).split('\n'):
-                if 'ERROR' in line or 'error' in line.lower():
-                    errors.append(line.strip())
+            all_stdout.append("\n=== Vite Build ===")
+            all_stdout.append(build_result.stdout)
+            all_stderr.append(build_result.stderr)
             
-            return {
-                'success': result.returncode == 0,
-                'stdout': result.stdout[-2000:],  # Last 2000 chars
-                'stderr': result.stderr[-2000:],
-                'errors': errors
-            }
+            # Parse build errors
+            for line in (build_result.stdout + build_result.stderr).split('\n'):
+                if 'ERROR' in line or 'error' in line.lower():
+                    if 'error TS' not in line:  # Already caught by TypeScript check
+                        all_errors.append(f"[Build] {line.strip()}")
+            
+            if build_result.returncode != 0:
+                logger.warning("❌ Vite build failed")
+                return {
+                    'success': False,
+                    'stdout': '\n'.join(all_stdout),
+                    'stderr': '\n'.join(all_stderr),
+                    'errors': all_errors
+                }
+            else:
+                logger.info("✅ Vite build passed")
+        
         except subprocess.TimeoutExpired:
             return {
                 'success': False,
-                'stdout': '',
+                'stdout': '\n'.join(all_stdout),
                 'stderr': 'Build timeout after 120 seconds',
-                'errors': ['Build timeout']
+                'errors': all_errors + ['Build timeout']
             }
         except Exception as e:
+            all_errors.append(f"Build error: {str(e)}")
+        
+        # Step 3: tRPC router validation (if applicable)
+        trpc_errors = self._validate_trpc_routers()
+        if trpc_errors:
+            all_errors.extend(trpc_errors)
+            logger.warning(f"❌ tRPC validation failed: {len(trpc_errors)} issues")
             return {
                 'success': False,
-                'stdout': '',
-                'stderr': str(e),
-                'errors': [str(e)]
+                'stdout': '\n'.join(all_stdout),
+                'stderr': '\n'.join(all_stderr),
+                'errors': all_errors
             }
+        
+        # All checks passed
+        logger.info("✅ All build validations passed!")
+        return {
+            'success': len(all_errors) == 0,
+            'stdout': '\n'.join(all_stdout)[-2000:],
+            'stderr': '\n'.join(all_stderr)[-2000:],
+            'errors': all_errors
+        }
+    
+    def _validate_trpc_routers(self) -> list[str]:
+        """
+        Validate tRPC router structure to prevent naming collisions
+        
+        Returns:
+            List of validation errors (empty if valid)
+        """
+        errors = []
+        routers_path = os.path.join(self.workspace_path, 'server', 'routers.ts')
+        
+        if not os.path.exists(routers_path):
+            return errors  # No tRPC routers to validate
+        
+        try:
+            with open(routers_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            
+            # Check for reserved tRPC method names in router definitions
+            reserved_names = ['useContext', 'useUtils', 'Provider', 'createClient']
+            
+            for reserved in reserved_names:
+                # Check if reserved name is used as a router key
+                if f'{reserved}:' in content or f'"{reserved}"' in content or f"'{reserved}'" in content:
+                    errors.append(
+                        f"[tRPC] Router uses reserved name '{reserved}' which collides with tRPC built-in methods. "
+                        f"Rename this router to avoid conflicts."
+                    )
+            
+            # Check that router is properly exported
+            if 'export const appRouter' not in content and 'export default' not in content:
+                errors.append(
+                    "[tRPC] Router must export 'appRouter' or use default export"
+                )
+            
+            logger.info(f"🔍 tRPC validation: {len(errors)} issues found")
+        
+        except Exception as e:
+            logger.warning(f"Could not validate tRPC routers: {e}")
+        
+        return errors
     
     async def execute_task(self, task: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -232,13 +354,23 @@ WHEN ADDING CODE:
         
         logger.info(f"Executing task {task_id}: {title}")
         
+        # PHASE 0: Research evidence-based approaches
+        logger.info(f"🔬 Researching evidence-based approaches for: {title}")
+        research_guidance = self.research_engine.get_implementation_guidance(
+            task_description=f"{title}: {prompt}",
+            project_context=self._get_project_context()[:1000]  # Brief context
+        )
+        
+        # Enhance prompt with research findings
+        enhanced_prompt = f"{prompt}\n\n{research_guidance}"
+        
         try:
             if self.openhands_available and self.llm_api_key:
                 # Use OpenHands for real execution
-                result = await self._execute_with_openhands(task_id, prompt)
+                result = await self._execute_with_openhands(task_id, enhanced_prompt)
             else:
                 # Fallback to three-phase LLM approach
-                result = await self._execute_with_three_phase_llm(task_id, title, prompt)
+                result = await self._execute_with_three_phase_llm(task_id, title, enhanced_prompt)
             
             return {
                 'task_id': task_id,
