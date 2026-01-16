@@ -18,18 +18,21 @@ if (-not $isAdmin) {
     exit 1
 }
 
-Write-Host "[1/8] Disabling Windows Notifications..." -ForegroundColor Green
+Write-Host "[1/7] Disabling Windows Notifications..." -ForegroundColor Green
 
 # Disable all notification types
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications" -Name "ToastEnabled" -Value 0 -Force
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" -Name "NOC_GLOBAL_SETTING_ALLOW_NOTIFICATION_SOUND" -Value 0 -Force
-Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" -Name "NOC_GLOBAL_SETTING_ALLOW_TOASTS_ABOVE_LOCK" -Value 0 -Force
+New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications" -Force -ErrorAction SilentlyContinue | Out-Null
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\PushNotifications" -Name "ToastEnabled" -Value 0 -Force -ErrorAction SilentlyContinue
+
+New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" -Force -ErrorAction SilentlyContinue | Out-Null
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" -Name "NOC_GLOBAL_SETTING_ALLOW_NOTIFICATION_SOUND" -Value 0 -Force -ErrorAction SilentlyContinue
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" -Name "NOC_GLOBAL_SETTING_ALLOW_TOASTS_ABOVE_LOCK" -Value 0 -Force -ErrorAction SilentlyContinue
 
 # Disable notification center
-New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Force | Out-Null
-Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Value 1 -Force
+New-Item -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Force -ErrorAction SilentlyContinue | Out-Null
+Set-ItemProperty -Path "HKCU:\Software\Policies\Microsoft\Windows\Explorer" -Name "DisableNotificationCenter" -Value 1 -Force -ErrorAction SilentlyContinue
 
-Write-Host "[2/8] Stopping Email and Communication Apps..." -ForegroundColor Green
+Write-Host "[2/7] Stopping Email and Communication Apps..." -ForegroundColor Green
 
 # Stop common email/communication apps
 $appsToStop = @(
@@ -51,51 +54,36 @@ foreach ($app in $appsToStop) {
     Get-Process -Name $app -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
 }
 
-Write-Host "[3/8] Disabling Startup Programs..." -ForegroundColor Green
+Write-Host "[3/7] Disabling Startup Programs..." -ForegroundColor Green
 
 # Disable common startup programs (registry method)
 $startupPaths = @(
     "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run",
-    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run",
-    "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run"
+    "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run"
 )
 
-# Backup current startup items
-$backupFile = "$env:USERPROFILE\Desktop\helios_startup_backup.txt"
-"Helios Startup Backup - $(Get-Date)" | Out-File $backupFile
-"" | Out-File $backupFile -Append
-
-foreach ($path in $startupPaths) {
-    if (Test-Path $path) {
-        "Registry Path: $path" | Out-File $backupFile -Append
-        Get-ItemProperty -Path $path | Out-File $backupFile -Append
-        "" | Out-File $backupFile -Append
-    }
-}
-
-Write-Host "   Startup items backed up to: $backupFile" -ForegroundColor Yellow
-
-# Disable startup items (keep only essential ones)
+# Essential startup items to keep
 $essentialStartup = @(
     "SecurityHealth",
     "Windows Defender",
-    "WindowsDefender",
-    "OneDrive"  # Remove this if you don't want OneDrive
+    "WindowsDefender"
 )
 
 foreach ($path in $startupPaths) {
     if (Test-Path $path) {
-        $items = Get-ItemProperty -Path $path
-        $items.PSObject.Properties | ForEach-Object {
-            if ($_.Name -notin @("PSPath", "PSParentPath", "PSChildName", "PSDrive", "PSProvider") -and 
-                $_.Name -notin $essentialStartup) {
-                Remove-ItemProperty -Path $path -Name $_.Name -Force -ErrorAction SilentlyContinue
+        $items = Get-ItemProperty -Path $path -ErrorAction SilentlyContinue
+        if ($items) {
+            $items.PSObject.Properties | ForEach-Object {
+                if ($_.Name -notin @("PSPath", "PSParentPath", "PSChildName", "PSDrive", "PSProvider") -and 
+                    $_.Name -notin $essentialStartup) {
+                    Remove-ItemProperty -Path $path -Name $_.Name -Force -ErrorAction SilentlyContinue
+                }
             }
         }
     }
 }
 
-Write-Host "[4/8] Disabling Windows Services (Non-Essential)..." -ForegroundColor Green
+Write-Host "[4/7] Disabling Windows Services (Non-Essential)..." -ForegroundColor Green
 
 # Services to disable (non-essential for AI agent work)
 $servicesToDisable = @(
@@ -122,9 +110,9 @@ foreach ($service in $servicesToDisable) {
     }
 }
 
-Write-Host "[5/8] Stopping Browser Processes (Keep Only Essential)..." -ForegroundColor Green
+Write-Host "[5/7] Stopping Browser Processes..." -ForegroundColor Green
 
-# Close all browser instances (you can reopen when needed)
+# Close all browser instances
 $browsersToClose = @(
     "chrome",
     "firefox",
@@ -137,7 +125,7 @@ foreach ($browser in $browsersToClose) {
     Get-Process -Name $browser -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
 }
 
-Write-Host "[6/8] Disabling Windows Update (Temporary - for AI work)..." -ForegroundColor Green
+Write-Host "[6/7] Disabling Windows Update (Temporary)..." -ForegroundColor Green
 
 # Disable Windows Update temporarily
 Stop-Service -Name wuauserv -Force -ErrorAction SilentlyContinue
@@ -146,25 +134,7 @@ Set-Service -Name wuauserv -StartupType Disabled -ErrorAction SilentlyContinue
 Write-Host "   WARNING: Windows Update disabled. Re-enable later with:" -ForegroundColor Yellow
 Write-Host "   Set-Service -Name wuauserv -StartupType Automatic" -ForegroundColor Yellow
 
-Write-Host "[7/8] Disabling Scheduled Tasks (Non-Essential)..." -ForegroundColor Green
-
-# Disable common scheduled tasks that cause notifications
-$tasksToDisable = @(
-    "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser",
-    "\Microsoft\Windows\Application Experience\ProgramDataUpdater",
-    "\Microsoft\Windows\Autochk\Proxy",
-    "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator",
-    "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip",
-    "\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector",
-    "\Microsoft\Windows\Maintenance\WinSAT",
-    "\Microsoft\Windows\Windows Error Reporting\QueueReporting"
-)
-
-foreach ($task in $tasksToDisable) {
-    Disable-ScheduledTask -TaskName $task -ErrorAction SilentlyContinue
-}
-
-Write-Host "[8/8] Cleaning Up System Tray..." -ForegroundColor Green
+Write-Host "[7/7] Cleaning Up System Tray..." -ForegroundColor Green
 
 # Kill system tray notification processes
 $trayProcesses = @(
@@ -174,8 +144,7 @@ $trayProcesses = @(
     "iCloudServices",
     "SpotifyWebHelper",
     "AdobeNotificationClient",
-    "CCXProcess",
-    "Creative Cloud"
+    "CCXProcess"
 )
 
 foreach ($proc in $trayProcesses) {
@@ -196,12 +165,10 @@ Write-Host "  - Browser processes closed" -ForegroundColor White
 Write-Host "  - Windows Update temporarily disabled" -ForegroundColor White
 Write-Host "  - System tray cleaned up" -ForegroundColor White
 Write-Host ""
-Write-Host "Backup saved to: $backupFile" -ForegroundColor Cyan
-Write-Host ""
 Write-Host "NEXT STEPS:" -ForegroundColor Yellow
 Write-Host "1. Restart Helios for all changes to take effect" -ForegroundColor White
 Write-Host "2. After restart, only Docker and AI agent will run" -ForegroundColor White
-Write-Host "3. To restore settings, run: restore_helios_settings.ps1" -ForegroundColor White
+Write-Host "3. To restore settings, run: .\restore_helios_settings.ps1" -ForegroundColor White
 Write-Host ""
 Write-Host "Press any key to restart now, or Ctrl+C to restart later..." -ForegroundColor Yellow
 pause
